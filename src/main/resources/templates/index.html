@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<div style="magrin:20px;">
+    <form>
+        <table style="magrin:20px">
+            账号 <input type="text" id="phone"/>
+        </table>
+        <table style="magrin:20px">
+            <input type="password" id="password"/>
+            <button type="button" id="getCode">获取验证码</button>
+        </table>
+        <button type="button" id="enter">注册</button>
+    </form>
+</div>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript">
+    $("#enter").on('click', function () {
+        var phone = $("#phone").val();
+        var password = $("#password").val();
+        console.log(phone);
+        console.log(password);
+        $.ajax({
+            type: 'POST',
+            url: '/api/account/register/',
+            data: {
+                username: phone,
+                password: password
+            },
+            dataType: "json",
+            error: function () {
+                alert("！！！");
+            },
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+</script>
+<script type="text/javascript">
+    $("#getCode").on('click', function () {
+        var phoneNumb = $("#phone").val();
+        $.ajax({
+            type: 'POST',
+            url: '/api/account/getVerifyCode/',
+            data: {
+                phone: phoneNumb
+            },
+            dataType: "json",
+            error: function () {
+                alert("！！！");
+            },
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+</script>
+</body>
+</html>

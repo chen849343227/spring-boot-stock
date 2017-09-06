@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "spring.velocity.resourceLoaderPath",
+      "type": "java.lang.String",
+      "description": "Description for spring.velocity.resourceLoaderPath."
+  }
+] }
