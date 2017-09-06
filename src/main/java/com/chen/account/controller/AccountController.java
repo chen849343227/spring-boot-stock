@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import static com.chen.account.constant.AccountConstant.CODE_SIGN_UP_FAIL;
-import static com.chen.account.constant.AccountConstant.SIGN_UP_FAIL;
+import static com.chen.account.constant.AccountConstant.*;
 
 /**
  * author long
@@ -23,7 +24,7 @@ import static com.chen.account.constant.AccountConstant.SIGN_UP_FAIL;
  * desc
  */
 @RestController
-@RequestMapping(value = "/api/account")
+@RequestMapping(value = "/web/account")
 public class AccountController {
 
     @Autowired
@@ -40,7 +41,7 @@ public class AccountController {
     public Response register(HttpServletRequest request) {
         String phoneNumber = request.getParameter("username");
         String password = request.getParameter("password");
-        System.out.println("username=" + phoneNumber + ",password=" + password);
+        System.out.println("register:" + "username=" + phoneNumber + ",password=" + password);
         String randomStr = StringUtils.getRandomString(8);
 
 
@@ -52,5 +53,32 @@ public class AccountController {
             return TransmitUtils.transmitErrorResponse(SIGN_UP_FAIL, CODE_SIGN_UP_FAIL, SIGN_UP_FAIL);
         }
         return response;
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public Response login(HttpServletRequest request, HttpServletResponse httpServletResponse) {
+        String phoneNumber = request.getParameter("phoneNumber");
+        String password = request.getParameter("password");
+        System.out.println("login:" + "username=" + phoneNumber + ",password=" + password);
+        Response response;
+        try {
+            response = service.login(phoneNumber, password);
+            if (response.getIsSuccess()) {
+                HttpSession session = request.getSession();
+                session.setAttribute("user", phoneNumber);
+                System.out.println(phoneNumber + " " + "登录成功");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return TransmitUtils.transmitErrorResponse(LOGIN_FAIL, CODE_LOGIN_FAIL, LOGIN_FAIL);
+        }
+        return response;
+    }
+
+    @RequestMapping(value = "/logOut", method = RequestMethod.POST)
+    public String logOut(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.removeAttribute("user");
+        return "index";
     }
 }

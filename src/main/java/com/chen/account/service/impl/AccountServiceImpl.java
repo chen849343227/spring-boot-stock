@@ -26,8 +26,8 @@ public class AccountServiceImpl implements IAccountService {
     private UserMapper userMapper;
 
     @Override
-    public Response getVerifyCode(String phone) {
-        SendSmsResponse sendSmsResponse = AliyunMessageUtil.requestSmsCode(phone);
+    public Response getVerifyCode(String phoneNumber) {
+        SendSmsResponse sendSmsResponse = AliyunMessageUtil.requestSmsCode(phoneNumber);
         SendSmsResponse.Result result;
         SendSmsResponse.Error_response errorResponse = null;
         try {
@@ -42,17 +42,17 @@ public class AccountServiceImpl implements IAccountService {
     }
 
     @Override
-    public Response register(String phone, String pwd, String randomStr) {
+    public Response register(String phoneNumber, String password, String randomStr) {
         //判断查询到的手机号是否为空,不为空就是账号已存在
-        if (userMapper.selectByPhone(phone) != null) {
+        if (userMapper.selectByPhone(phoneNumber) != null) {
             return TransmitUtils.transmitErrorResponse(AccountConstant.SIGN_UP_USER_ALREADY_EXIST,
                     AccountConstant.CODE_SIGN_UP_ALREADY_EXIST, AccountConstant.SIGN_UP_USER_ALREADY_EXIST);
         }
         //这里开始加密密码
-        pwd = StringUtils.md5(pwd, randomStr);
+        password = StringUtils.md5(password, randomStr);
         User user = new User();
-        user.setUserName(phone);
-        user.setUserPwd(pwd);
+        user.setUserName(phoneNumber);
+        user.setUserPwd(password);
         user.setUserRandom(randomStr);
         int signUpRes = userMapper.insert(user);
         if (signUpRes == 1) {
@@ -65,7 +65,30 @@ public class AccountServiceImpl implements IAccountService {
     }
 
     @Override
-    public Response login(String username, String pwd) {
-        return null;
+    public Response login(String phoneNumber, String password) {
+        User user = userMapper.selectByPhone(phoneNumber);
+        //检测用户是否存在
+        if (user == null) {
+            return TransmitUtils.transmitErrorResponse(AccountConstant.LOGIN_FAIL, AccountConstant.CODE_LOGIN_USER_NOT_EXIST,
+                    AccountConstant.LOGIN_USER_NOT_EXIST);
+        }
+
+        String randomStr = user.getUserRandom();
+        String psd = StringUtils.md5(password, randomStr);
+
+        //登录成功
+        if (psd.equals(user.getUserPwd())) {
+            user.setUserPwd("");
+            user.setUserRandom("");
+            return TransmitUtils.transmitResponse(true,
+                    AccountConstant.LOGIN_SUCCESS, user);
+        } else {
+            //用户名密码不匹配
+            return TransmitUtils.transmitErrorResponse(
+                    AccountConstant.LOGIN_FAIL,
+                    AccountConstant.CODE_LOGIN_PASSWORD_ERROR,
+                    AccountConstant.LOGIN_PASSWORD_ERROR
+            );
+        }
     }
 }
