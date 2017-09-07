@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8"/>
+    <title>模拟股票系统</title>
+    <style type="text/css">
+
+        /*登录界面CSS*/
+        body {
+            overflow: auto;
+            overflow-x: hidden;
+            position: relative;
+            min-width: 500px;
+            /*background-image:url("../img/login-2.jpg");*/
+            background-size: cover;
+            background: no-repeat top;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        h2 {
+            position: absolute;
+            top: 57px;
+            left: 10%;
+            width: 76%;
+            background-color: rgba(121, 125, 126, 0.5);
+            font-size: 32px;
+            font-family: "SimSun", "SimHei", serif;
+            line-height: 50px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .main {
+            width: 336px;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: rgba(250, 250, 250, 0.6);
+            position: absolute;
+            left: calc(50% - 168px);
+            top: 197px;
+        }
+
+        .main > p {
+            font-size: 20px;
+            color: #1765D9;
+            line-height: 40px;
+            border-bottom: 3px solid #1765D9;
+        }
+
+        form span {
+            display: block;
+            height: 35px;
+            line-height: 35px;
+            margin-left: 15%;
+            color: red;
+        }
+
+        input[type="text"], input[type="password"] {
+            font-size: 14px;
+            color: #373D46;
+            width: 74%;
+            min-width: 200px;
+            height: 40px;
+            margin: 0 13% 3.5% 13%;
+            padding-left: 10px;
+            border: 2px solid #9CA6B6;
+            border-radius: 10px;
+            outline: 0;
+        }
+
+        input:hover {
+            border: 2px solid #1765D9;
+        }
+
+        input:focus {
+            border: 2px solid #1765D9;
+        }
+
+        form a {
+            text-decoration: none;
+            margin-left: 66%;
+        }
+
+        input[type="button"] {
+            width: 74%;
+            height: 40px;
+            border-radius: 10px;
+            border: 0;
+            background-color: #12aee7;
+            color: #fff;
+            margin: 10px 13%;
+            font-size: 18px;
+            font-family: Microsoft YaHei;
+        }
+
+        input[type="button"]:hover {
+            cursor: pointer;
+            background-color: #004DFE;
+        }
+    </style>
+</head>
+<body>
+<h2>股票管理系统</h2>
+<div class="main">
+    <p>用户登录</p>
+    <form name="login" action="">
+        <input type="text" name="username" id="username" placeholder="用户名"/>
+        <input type="password" name="password" id="password" placeholder="密码"/>
+        <a href="#">立即注册</a>
+        <a href="#">忘记密码？</a>
+        <input type="button" name="login" id="enterGo" value="登录"/>
+    </form>
+</div>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript">
+    window.onload = function () {
+        $("#username").focus();
+
+    };
+    function getRootPath() {
+        var pathName = window.location.pathname.substring(1);
+        var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
+        return window.location.protocol + '//' + window.location.host + '/' + webName;
+    }
+    $("#enterGo").on('click', function (e) {
+        var phoneNumber = $("#username").val();
+        var password = $("#password").val();
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "/web/account/login",
+            dataType: "json",
+            data: {
+                phoneNumber: phoneNumber,
+                password: password
+            },
+            error: function (data) {
+                console.log(data);
+                alert("请求失败，网络异常" + data.message);
+            },
+            success: function (data) {
+                /**
+                 * {
+                 *   "isSuccess": false,
+                 *   "code": 1,
+                 *   "message": "登录失败，请稍后重试",
+                 *   "errorResponse": {
+                 *      "code": 10005,
+                 *      "message": "用户不存在"
+                 *      },
+                 *   "response": null
+                 *  }
+                 */
+                if (data.isSuccess) {
+                    window.location.href = getRootPath() + 'home';
+                    window.sessionStorage.setItem('user', data.response.phone);
+                } else {
+                    console.log(data.errorResponse.message);
+                    alert(data.errorResponse.message);
+                }
+                console.log(data);
+            }
+        });
+    });
+</script>
+</body>
+</html>

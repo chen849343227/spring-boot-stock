@@ -2,6 +2,7 @@ package com.chen.account.service.impl;
 
 import com.chen.account.constant.AccountConstant;
 import com.chen.account.dao.UserMapper;
+import com.chen.account.dao.UserMapperExtends;
 import com.chen.account.entity.SendSmsResponse;
 import com.chen.account.entity.User;
 import com.chen.account.service.IAccountService;
@@ -23,7 +24,7 @@ import org.springframework.stereotype.Service;
 public class AccountServiceImpl implements IAccountService {
 
     @Autowired
-    private UserMapper userMapper;
+    private UserMapperExtends userMapper;
 
     @Override
     public Response getVerifyCode(String phoneNumber) {
@@ -51,13 +52,16 @@ public class AccountServiceImpl implements IAccountService {
         //这里开始加密密码
         password = StringUtils.md5(password, randomStr);
         User user = new User();
-        user.setUserName(phoneNumber);
-        user.setUserPwd(password);
-        user.setUserRandom(randomStr);
+        long createAt = System.currentTimeMillis();
+        user.setCreateat(createAt);
+        user.setUpdateat(createAt);
+        user.setPhone(phoneNumber);
+        user.setPassword(password);
+        user.setRandomstr(randomStr);
         int signUpRes = userMapper.insert(user);
         if (signUpRes == 1) {
-            user.setUserPwd("");
-            user.setUserRandom("");
+            user.setPassword("");
+            user.setRandomstr("");
             return TransmitUtils.transmitResponse(true, AccountConstant.SIGN_UP_SUCCESS, user);
         } else {
             return TransmitUtils.transmitErrorResponse(AccountConstant.SIGN_UP_FAIL, AccountConstant.CODE_SIGN_UP_FAIL, AccountConstant.SIGN_UP_FAIL);
@@ -69,17 +73,18 @@ public class AccountServiceImpl implements IAccountService {
         User user = userMapper.selectByPhone(phoneNumber);
         //检测用户是否存在
         if (user == null) {
+            System.out.println("用户不存在");
             return TransmitUtils.transmitErrorResponse(AccountConstant.LOGIN_FAIL, AccountConstant.CODE_LOGIN_USER_NOT_EXIST,
                     AccountConstant.LOGIN_USER_NOT_EXIST);
         }
 
-        String randomStr = user.getUserRandom();
+        String randomStr = user.getRandomstr();
         String psd = StringUtils.md5(password, randomStr);
 
         //登录成功
-        if (psd.equals(user.getUserPwd())) {
-            user.setUserPwd("");
-            user.setUserRandom("");
+        if (psd.equals(user.getPassword())) {
+            user.setPassword("");
+            user.setRandomstr("");
             return TransmitUtils.transmitResponse(true,
                     AccountConstant.LOGIN_SUCCESS, user);
         } else {

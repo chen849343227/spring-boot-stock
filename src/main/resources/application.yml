@@ -3,7 +3,13 @@ spring:
     active: dev
 
   datasource:
-    url: jdbc:mysql://localhost:3306/Login?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306/stock?useUnicode=true&characterEncoding=utf8
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: 960930
+
+
+#  mvc:
+ #   static-path-pattern: /**
+ # resources:
+ #   static-locations: classpath:/META-INF/resources/,classpath:/resources/,\  classpath:/static/,classpath:/public/,file:${web.upload-path}

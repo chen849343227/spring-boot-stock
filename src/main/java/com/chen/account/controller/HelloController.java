@@ -27,9 +27,8 @@ public class HelloController {
      *   http://localhost:8080/hello?name=cn.7player
      */
 
-    @RequestMapping("/login")
-    public String greeting() {
-        logger.info("hello");
+    @RequestMapping("/index")
+    public String index() {
         return "index";
     }
 

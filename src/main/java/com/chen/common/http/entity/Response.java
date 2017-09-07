@@ -76,4 +76,16 @@ public class Response {
             this.message = message;
         }
     }
+
+
+    @Override
+    public String toString() {
+        return "Response{" +
+                "isSuccess=" + isSuccess +
+                ", code=" + code +
+                ", message='" + message + '\'' +
+                ", errorResponse=" + errorResponse +
+                ", response=" + response +
+                '}';
+    }
 }

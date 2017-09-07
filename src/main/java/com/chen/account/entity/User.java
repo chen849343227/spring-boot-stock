@@ -1,43 +1,64 @@
 package com.chen.account.entity;
 
+
 public class User {
-    private Integer userId;
+    private Integer id;
 
-    private String userName;
+    private String phone;
 
-    private String userPwd;
+    private String password;
 
-    private String userRandom;
+    private String randomstr;
 
-    public Integer getUserId() {
-        return userId;
+    private Long createat;
+
+    private Long updateat;
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getUserPwd() {
-        return userPwd;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserPwd(String userPwd) {
-        this.userPwd = userPwd;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getUserRandom() {
-        return userRandom;
+    public String getRandomstr() {
+        return randomstr;
     }
 
-    public void setUserRandom(String userRandom) {
-        this.userRandom = userRandom;
+    public void setRandomstr(String randomstr) {
+        this.randomstr = randomstr;
+    }
+
+    public Long getCreateat() {
+        return createat;
+    }
+
+    public void setCreateat(Long createat) {
+        this.createat = createat;
+    }
+
+    public Long getUpdateat() {
+        return updateat;
+    }
+
+    public void setUpdateat(Long updateat) {
+        this.updateat = updateat;
     }
 }
