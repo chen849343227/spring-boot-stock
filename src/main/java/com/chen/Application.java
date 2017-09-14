@@ -4,6 +4,8 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
+import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.ComponentScan;
 
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -48,6 +50,11 @@ public class Application {
     public PlatformTransactionManager transactionManager() {
         return new DataSourceTransactionManager(dataSource());
     }
+
+   /* @Bean
+    public EmbeddedServletContainerFactory servletContainer() {
+        return new TomcatEmbeddedServletContainerFactory();
+    }*/
 
     /**
      * Main Start

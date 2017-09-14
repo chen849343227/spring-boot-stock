@@ -32,6 +32,11 @@ public class HelloController {
         return "index";
     }
 
+    @RequestMapping("/welcome")
+    public String welcome() {
+        return "welcome";
+    }
+
 
     @RequestMapping("/home")
     public String home() {

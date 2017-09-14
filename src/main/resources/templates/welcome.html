@@ -17,7 +17,7 @@
         <button type="button" id="enter">注册</button>
     </form>
 </div>
-<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../tools/jquery.min.js"></script>
 <script type="text/javascript">
     $("#enter").on('click', function () {
         var phone = $("#phone").val();
@@ -46,7 +46,7 @@
         var phoneNumb = $("#phone").val();
         $.ajax({
             type: 'POST',
-            url: '/web/account/getVerifyCode/',
+            url: '/web/account/getVerifyCode',
             data: {
                 phone: phoneNumb
             },

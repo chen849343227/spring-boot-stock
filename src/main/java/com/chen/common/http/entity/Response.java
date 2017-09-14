@@ -1,9 +1,5 @@
 package com.chen.common.http.entity;
 
-
-/**
- * 返回数据封装的公共类
- */
 public class Response {
     private boolean isSuccess;
     private int code;

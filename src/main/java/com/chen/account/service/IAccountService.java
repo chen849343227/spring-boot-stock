@@ -10,6 +10,7 @@ import com.chen.common.http.entity.Response;
  * desc
  */
 public interface IAccountService {
+
     Response getVerifyCode(String phone);
 
     Response register(String phoneNumber, String password, String randomStr);

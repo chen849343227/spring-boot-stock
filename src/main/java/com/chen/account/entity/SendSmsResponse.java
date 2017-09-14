@@ -7,7 +7,6 @@ public class SendSmsResponse {
     //错误结果
     private Error_response error_response;
 
-
     public void setAlibaba_aliqin_fc_sms_num_send_response(
             Alibaba_aliqin_fc_sms_num_send_response alibaba_aliqin_fc_sms_num_send_response) {
         this.alibaba_aliqin_fc_sms_num_send_response = alibaba_aliqin_fc_sms_num_send_response;
