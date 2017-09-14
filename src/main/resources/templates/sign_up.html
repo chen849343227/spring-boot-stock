@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>注册</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<style type="text/css" >
+	.sign{
+		height: 100%;
+		min-height: 750px;
+		text-align: center;
+		font-size: 14px;
+		background-color: #f1f1f1;
+	}
+	.main{
+    width: 400px;
+    margin: 60px auto 0;
+    padding: 50px 50px 30px;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 0 8px rgba(0,0,0,.1);
+    vertical-align: middle;
+    display: inline-block;
+	}
+	.main h4{
+		font-size: 18px;
+		margin: 0 auto 50px;
+		padding: 10px;
+		font-weight: 400;
+		color: #969696;
+	}
+	.sign_up_title{
+		font-weight: 700;
+		color: #ea6f5a;
+		border-bottom: 2px solid #ea6f5a;
+		padding: 10px;
+	}
+	.input-prepend{
+		position: relative;
+		width: 100%;
+		margin-bottom: 20px;
+	}
+	.restyle{
+		margin-bottom:0;
+	}
+	.sign form .input-prepend input{
+		width: 100%;
+		height: 50px;
+		margin-bottom: 0;
+		padding: 4px 12px 4px 35px;
+		border: 1px solid #c8c8c8;
+		border-radius: 0 0 4px 4px;
+		background-color: hsla(0,0%,71%,.1);
+		vertical-align: middle;
+	}
+	.sign form .restyle input {
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+	}
+	.sign form .no-radius input {
+    border-radius: 0;
+	}
+	.sign .btn-up-resend {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    width: 100px;
+    height: 36px;
+    font-size: 13px;
+    color: #fff;
+    background-color: #42c02e;
+    border-radius: 20px;
+    line-height: 36px;
+	}
+	.sign-up-button{
+		width: 100%;
+		padding: 9px 18px;
+		font-size: 18px;
+		border: none;
+		border-radius: 25px;
+		color: #fff;
+		background: #42c02e;
+		cursor: pointer;
+		outline: none;
+		display: block;
+		clear: both;
+		margin:30px 0 50px 0;
+	}
+	.sign .disable, .sign .disable-gray {
+	    opacity: .5;
+	    pointer-events: none;
+	}
+	/*** 消息警示框 ***/
+	.warnMain{
+		position:absolute;
+		left:500px;
+		top:100px;
+		margin-left:10px;
+		display: none;
+	}
+	.warnContainer{
+		width:200px;
+		padding:8px 10px; 
+		border:1px solid #ea6f5a; 
+		border-radius: 4px;
+		position:relative;
+		background-color: #fff;
+	}
+	.warnContainer span{
+		width:0; height:0; 
+		font-size:0; 
+		overflow:hidden; 
+		position:absolute;
+	}
+	.warnContainer span.bot{
+    border-width:6px 6px 6px 0;
+    border-style:solid; 
+    border-color:transparent #ea6f5a transparent transparent; 
+    left:-6px; 
+    bottom:10px;
+	}
+	.warnContainer span.top{
+    border-width:6px 6px 6px 0;
+    border-style:solid; 
+    border-color:transparent #fff transparent transparent; 
+    left:-4px; 
+    bottom:10px;
+	}
+	/** 模式窗口 **/
+	#window{
+	    width:400px;
+	    height: 160px;
+	    text-align: center;
+	    background-color: #fff;
+	    margin:20px auto;
+	    display: none;
+	}
+	#window p{
+	    font-size: 18px;
+	    font-weight: 600;
+	    line-height: 100px;
+	    color:#555;
+	}
+	#window a{
+	    border:1px solid #333;
+	    display: inline-block;
+	    width:80px;
+	    margin-right:20px;
+	    height:38px;
+	    font-size: 16px;
+	    font-weight: 600;
+	    color:#555;
+	    float:right;
+	    text-align: center;
+	    line-height: 38px;
+	}
+	#window a:hover{
+	    background-color: #e5e5e5;
+	}
+	</style>
+</head>
+<body>
+<div class="sign">
+	<div class="main">
+		<h4>
+			<a href="#" class="sign_up_title">注册</a>
+		</h4>
+		<div class="sign_up_container">
+			<form>
+				<div class="input-prepend restyle">
+					<input type="text" name="" id="userId" placeholder="你的昵称">
+				</div>
+				<div class="input-prepend restyle no-radius">
+					<input type="text" name="" id="phoneNumber" placeholder="手机号">
+				</div>
+				<div class="input-prepend restyle no-radius">
+					<input type="text" name="" id="phoneCode" placeholder="手机验证码">
+					<a class="btn-up-resend disable" id="getPhoneCode" href="#">发送验证码</a>
+				</div>
+				<div class="input-prepend">
+					<input type="password" name="" id="userPWD" placeholder="设置密码">
+				</div>
+				<input class="sign-up-button" type="submit" id="sign_up" name="" value="注册">
+			</form>
+		</div>
+		<div class="warnMain">
+			<div class="warnContainer">
+				<span class="bot"></span>
+				<span class="top"></span>
+				<em class="warnContent">这里是消息警示框!!!</em>
+			</div>
+		</div>
+	</div>
+	<div id="window">
+      <p>注册成功</p>
+      <a href="#" id="closeWindow">确认</a>
+  </div>
+</div>
+<script type="text/javascript" src="JS/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+$().ready(function(){
+warnMain=$warnMain.detach();
+content=$('#window').detach();
+});
+/***** 声明变量 *****/
+var $userId=$("#userId"),
+		$phoneNumber=$("#phoneNumber"),
+		$phoneCode=$("#phoneCode"),
+		$userPWD=$("#userPWD"),
+		$getPhoneCode=$("#getPhoneCode");
+var $warnMain=$(".warnMain"),
+		$warmContent=$(".warnContent");
+var warnMain;
+var phoneNumber=0;
+/***** 函数事件 *****/
+
+//用户昵称
+$userId.on('focus',function(){
+	if($("#inputUser")){
+		warnMain=$warnMain.detach();
+	}
+});
+$userId.on('blur',function(){
+	var thisLeft=this.getBoundingClientRect().left+this.offsetWidth;
+	var thisTop=this.getBoundingClientRect().top;
+	console.log("正在检验用户ID规范性...");
+	if(this.value==""||this.value==null){
+    console.log(thisLeft+"/////"+thisTop);
+    $(".main").prepend(warnMain);
+    $warnMain.attr("id","inputUser");
+    $warmContent.text("用户名不符合规范");
+    $warnMain.css({
+    	"left":thisLeft,
+    	"top":thisTop,
+    	"display":"block"
+    });
+	}
+});
+
+//填写手机号码
+$phoneNumber.on('keyup',function(){
+	console.log("手机号码在更改");
+	phoneNumber=this.value;
+	console.log(phoneNumber);
+	if (getStringLen(phoneNumber)===11) {
+		$getPhoneCode.removeClass("disable");
+	}else{
+		$getPhoneCode.addClass("disable");
+	}
+});
+
+//发送验证码
+$getPhoneCode.on('click',function(){
+	var timer=6;
+	var $this=$(this);
+	$this.text("发送成功 ( "+timer+" )");
+	$this.addClass("disable");
+	$phoneNumber.attr("disabled",true);
+	var time=setInterval(function(){
+	    timer=timer-1;
+	    $this.text("发送成功 ( "+timer+" )");
+	    if(timer<=0){
+	        $this.text("发送验证码").removeClass("disable");
+	        $phoneNumber.attr("disabled",false);
+	        clearInterval(time);
+	    }
+	},900)
+	bool=true;
+});
+
+//填写密码
+$userPWD.on('focus',function(){
+	if($("#inputPWDr")){
+		warnMain=$warnMain.detach();
+	}
+});
+
+//开始注册
+$("#sign_up").on('click',function(e){
+	console.log("正在进行注册...");
+	e.preventDefault();
+	var userId=$userId.val(),
+			phoneNumber=$phoneNumber.val(),
+			phoneCode=$phoneCode.val(),
+			userPWD=$userPWD.val();
+	if(($("#inputUser")==true)||userId==""||userId==null){
+		var userWarn=warnMain.clone();
+		userWarn.attr('id',"userWarn");
+		userWarn.css({
+			"left":$userId[0].getBoundingClientRect().left+$userId[0].offsetWidth,
+			"top":$userId[0].getBoundingClientRect().top,
+			"display":"block"
+		});
+		userWarn.find("em").text("昵称未填写");
+		$(".main").prepend(userWarn);
+	};
+	if(phoneNumber==""||phoneNumber==null){
+		var pnWarn=warnMain.clone();
+		pnWarn.attr('id',"pnWarn");
+		pnWarn.css({
+			"left":$phoneNumber[0].getBoundingClientRect().left+$phoneNumber[0].offsetWidth,
+			"top":$phoneNumber[0].getBoundingClientRect().top,
+			"display":"block"
+		});
+		pnWarn.find("em").text("手机号未填写");
+		$(".main").prepend(pnWarn);
+	};
+	if(phoneCode==""||phoneCode==null){
+		var pcWarn=warnMain.clone();
+		pcWarn.attr('id',"pcWarn");
+		pcWarn.css({
+			"left":$phoneCode[0].getBoundingClientRect().left+$phoneCode[0].offsetWidth,
+			"top":$phoneCode[0].getBoundingClientRect().top,
+			"display":"block"
+		});
+		pcWarn.find("em").text("验证码未填写");
+		$(".main").prepend(pcWarn);
+	};
+	if(userPWD==""||userPWD==null){
+		var pwdWarn=warnMain.clone();
+		pwdWarn.attr('id',"pwdWarn");
+		pwdWarn.css({
+			"left":$userPWD[0].getBoundingClientRect().left+$userPWD[0].offsetWidth,
+			"top":$userPWD[0].getBoundingClientRect().top,
+			"display":"block"
+		});
+		pwdWarn.find("em").text("密码未填写");
+		$(".main").prepend(pwdWarn);
+		return false;
+	};
+	$.ajax({
+		async:true,
+		type:"post",
+		url:"",
+		data:"",
+		dataType:"json",
+		success:function(data){
+
+		},
+		error:function(data){
+		    alert("ajax请求失败，网络异常"+data); 
+		}
+	})
+});
+
+
+/***** 模式窗口 *****/
+var modal=(function(){
+    var $window=$(window);
+    var $modal=$('<div class="modal"/>');
+    var $content=$('<div class="modal-content"/>');
+    var $close=$("#closeWindow");
+    $modal.append($content);
+    $close=$("#closeWindow");
+    $close.on('click',function(e){
+        console.log("点击触发");
+        e.preventDefault();
+        modal.close();
+    });
+    return {
+        center:function(){
+            var top=Math.max($window.height()-$modal.outerHeight())/2;
+            var left=Math.max($window.width()-$modal.outerWidth())/2;
+            $modal.css({
+                'position':"absolute",
+                'top':top,
+                'left':left,
+                'text-align':'center',
+                'background-color':'#E5E5E5',
+                'z-index':"111"
+            });
+            content.css("display","block");
+            console.log(content);
+        },
+        open:function(settings){
+            var $div=$('<div class="moda"></div>');
+            $div.css({
+                "position":"absolute",
+                "width":"100%",
+                "height":"100%",
+                "top":0,
+                'background-color':'rgba(255,255,255,0.2)',
+                'z-index':"100"
+            });
+            $div.appendTo("body");
+            $content.empty().append(settings.content);
+            $modal.css({
+                width:settings.width||'auto',
+                height:settings.height||'auto'
+            }).appendTo('body');
+            modal.center();
+            $(window).on('resize',modal.center);
+        },
+        close:function(){
+            $(".moda").remove();
+            $content.empty();
+            $modal.detach();
+            window.close();
+            $(window).off('resize',modal.center);
+        }
+    }
+})();
+
+function getStringLen(val) {
+    var len = 0;
+    for (var i = 0; i < val.length; i++) {
+        var a = val.charAt(i);
+        if (a.match(/[^\x00-\xff]/ig) != null) {
+            len += 2;
+        }
+        else {
+            len += 1;
+        }
+    }
+    return len;
+}
+</script>
+</body>
+</html>
