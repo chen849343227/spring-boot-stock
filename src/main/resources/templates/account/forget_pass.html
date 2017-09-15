@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>找回密码</title>
+    <link rel="stylesheet" href="/register/css/reset.css"/>
+    <link rel="stylesheet" href="/register/css/getPass.css"/>
+<style type="text/css">
+body{
+background-color:#fff;
+}
+</style>
+</head>
+<body>
+<header class="header">
+	<img src="" alt="logo"/>
+</header>
+<div class="mod-nav">
+	<h1 class="page-type-notab">找回密码</h1>
+</div>
+<div id="content">
+	<div class="mod-forgot">
+		<ul class="mod-sub-nav">
+			<li class="mod-sub-list1 list1-active">确认帐号</li>
+			<li class="mod-sub-list2 ">安全验证</li>
+			<li class="mod-sub-list3 ">重置密码</li>
+		</ul>
+		<form id="step_1">
+			<div >
+				<p class="tip">请填写您需要找回的账号:</p>
+				<div class="process_1">
+					<input type="text" id="userId" placeholder="请您输入用户名/邮箱/手机"/>
+					<span class="user-input-msg dpNo">请您输入用户名/邮箱/手机</span>
+				</div>
+				<div class="process_1">
+					<input type="text" id="verify-img" placeholder="填写验证码"/>
+					<img src="/register/img/5DXC.jpg" id="img" class="vcode-img" alt="验证码图片" title="验证码图片"/>
+                    <span class="vcod-img-msg dpNo" style="margin-left:8px;">验证码有误</span>
+				</div>
+				<div>
+					<input type="submit" name="" value="下一步" class="pass-submit" id="submit-next_1"/>
+				</div>
+			</div>
+		</form>
+        <form id="step_2">
+            <div>
+                <p class="tip">为了您的账号安全，请进行身份验证</p>
+                <div class="process_1">
+                    <p style="font-weight: 700;font-size: 14px;">手机验证</p>
+                </div>
+                <div class="process_1 line36">
+                    <label style="padding-left:6px;">手机号：</label>
+                    <em id="phoneNumber" class="onstyle">123456</em>
+                </div>
+                <p style="font-weight: 700;font-size: 14px;line-height: 30px;">验证码：</p>
+                <div class="process_1">
+                    <input type="text" id="verify-phone" placeholder="填写验证码"/>
+                    <button type="button" href="#" class="verify-phone" id="getVerifyCode">发送验证码</button>
+                    <span class="dpNo" >验证码有误</span>
+                </div>
+                <div>
+                    <input type="submit" name="" value="下一步" class="pass-submit" id="submit-next_2"/>
+                </div>
+            </div>
+        </form>
+        <form id="step_3">
+            <div >
+                <div class="process_1">
+                    <p style="font-size: 12px;display: inline-block;">您正找回的账号是:</p>
+                    <em class="onstyle" id="findId">FIND</em>
+                </div>
+                <div class="process_1">
+                    <input type="password" id="newPassWord" placeholder="填写6位数以上的新密码"/>
+                    <span class="dpNo">填写6位数以上密码</span>
+                </div>
+                <div class="process_1">
+                    <input type="password" id="repeatPassWord" placeholder="请您填写确认密码"/>
+                    <span class="dpNo">请您填写确认密码</span>
+                </div>
+                <div>
+                    <input type="submit" name="" value="确定" class="pass-submit" id="submit-next_3"/>
+                </div>
+            </div>
+        </form>
+	</div>
+    <div id="window">
+        <p>密码修改成功</p>
+        <a href="#" id="closeWindow">确认</a>
+    </div>
+</div>
+<script type="text/javascript" src="/tools/jquery.min.js"></script>
+<script type="text/javascript" src="/register/js/getPass.js"></script>
+</body>
+</html>

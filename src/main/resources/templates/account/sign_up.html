@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>注册</title>
+    <link rel="stylesheet" type="text/css" href="/register/css/reset.css"/>
+    <link rel="stylesheet" href="/register/css/signUp.css"/>
+</head>
+<body>
+<div class="sign">
+    <div class="main">
+        <h4>
+            <a href="#" class="sign_up_title">注册</a>
+        </h4>
+        <div class="sign_up_container">
+            <form>
+                <div class="input-prepend restyle">
+                    <input type="text" name="" id="userId" placeholder="你的昵称"/>
+                </div>
+                <div class="input-prepend restyle no-radius">
+                    <input type="text" name="" id="phoneNumber" placeholder="手机号"/>
+                </div>
+                <div class="input-prepend restyle no-radius">
+                    <input type="text" name="" id="phoneCode" placeholder="手机验证码"/>
+                    <a class="btn-up-resend disable" id="getPhoneCode" href="#">发送验证码</a>
+                </div>
+                <div class="input-prepend">
+                    <input type="password" name="" id="userPWD" placeholder="设置密码"/>
+                </div>
+                <input class="sign-up-button" type="submit" id="sign_up" name="" value="注册"/>
+            </form>
+        </div>
+        <div class="warnMain">
+            <div class="warnContainer">
+                <span class="bot"></span>
+                <span class="top"></span>
+                <em class="warnContent">这里是消息警示框!!!</em>
+            </div>
+        </div>
+    </div>
+    <div id="window">
+        <p>注册成功</p>
+        <a href="#" id="closeWindow">确认</a>
+    </div>
+</div>
+<script type="text/javascript" src="../tools/jquery.min.js"></script>
+<script type="text/javascript" src="/register/js/signUp.js"></script>
+</body>
+</html>
