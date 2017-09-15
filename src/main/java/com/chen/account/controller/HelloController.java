@@ -32,9 +32,9 @@ public class HelloController {
         return "index";
     }
 
-    @RequestMapping("/getPass")
+    @RequestMapping("/forget")
     public String getpass() {
-        return "getPass";
+        return "forget_pass";
     }
 
     @RequestMapping("/welcome")
