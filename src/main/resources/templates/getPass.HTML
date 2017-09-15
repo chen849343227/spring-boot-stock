@@ -1,206 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <title>找回密码</title>
-<link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="/css/reset.css"/>
+    <link rel="stylesheet" href="/css/getPass.css"/>
 <style type="text/css">
 body{
 background-color:#fff;
-}
-form{
-    margin-bottom: 30px;
-}
-input[type='text'],input[type='password']{
-    border: 1px solid #ddd;
-}
-.header{
-	box-shadow: none;
-}
-.mod-nav {
-    width:100%;
-    height:50px;
-    padding-left: calc((100% - 980px)/2);
-    margin-left: auto;
-    margin-right: auto;
-    background-color:#FAFAFA;
-	box-shadow: 3px 0 3px #333;
-}
-.page-type-notab {
-    color: #333;
-    font-size: 16px;
-    font-weight: 700;
-    float: left;
-    margin-left: 70px;
-    line-height: 46px;
-    display: inline;
-}
-#content{
-    width: 980px;
-    height: auto;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-}
-#content .mod-forgot {
-    min-height: 500px;
-    height: auto;
-}
-.mod-forgot {
-    height: 450px;
-    margin-left: 70px;
-    width: 910px;
-}
-.mod-sub-nav {
-    height: 34px;
-    background: url(img/mod_sub_nav.png) no-repeat 0 0;
-    margin: 30px 0;
-    line-height: 34px;
-    color: #666;
-    font-size: 16px;
-    font-family: "Microsoft Yahei",\5fae\8f6f\96c5\9ed1,\9ed1\4f53;
-}
-.mod-sub-nav li {
-    float: left;
-    padding-left: 68px;
-}
-.mod-sub-nav li.list1-active {
-    background: url(img/sub_nav_1.png) no-repeat 0 0;
-    color: #2e82ff;
-}
-.mod-sub-nav li.list2-active {
-    background: url(img/sub_nav_2.png) no-repeat 0 0;
-    color: #2e82ff;
-    margin-left: -12px;
-    padding-left: 78px;
-}
-.mod-sub-nav li.list3-active {
-    background: url(img/sub_nav_3.png) no-repeat 0 0;
-    color: #2e82ff;
-    margin-left: -22px;
-    padding-left: 88px;
-    width: 238px;
-}
-.mod-sub-list2 {
-    width: 240px;
-}
-.mod-sub-list1 {
-    width: 241px;
-}
-.tip{
-	font-size: 12px;
-    padding-bottom: 10px;
-}
-.process_1{
-margin-bottom: 20px;
-}
-.line36{
-    line-height: 36px;
-}
-/***** input输入框 *****/
-#userId,#verify-img,.pass-submit,#newPassWord,#repeatPassWord{
-width:320px;
-height:36px;
-padding-left:6px;
-}
-.pass-submit{
-    height: 40px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    color: #fff;
-    border-radius: 3px;
-    border: 0;
-    background-color: #3f89ec;
-}
-.pass-submit:hover{
-    background-color: #4490f7;
-}
-#verify-img{
-    width:204px;
-}
-
-/***** 验证码 *****/
-.vcode-img{
-    display: inline-block;
-    vertical-align: middle;
-    width: 100px;
-    height: 38px;
-    border: 1px solid #ddd;
-    margin-left: 10px;
-}
-
-/***** 下一步 *****/
-.onstyle{
-    font-style: normal;
-}
-#verify-phone{
-    width:196px;
-    height:36px;
-    padding-left:6px;
-}
-.verify-phone{
-    display: inline-block;
-    width: 120px;
-    height: 36px;
-    border: 1px solid #ccc;
-    background: #f7f7f7;
-    color: #666;
-    line-height: 36px;
-    text-align: center;
-    vertical-align: middle;
-}
-/***** 34 *****/
-.dpNo{
-    display: none;
-    color:red;
-}
-#step_2{
-    display: none;
-    margin-left:980px;
-}
-#step_3{
-    display: none;
-    margin-left:980px;
-}
-#step_1,#step_2,#step_3{
-    position: absolute;
-}
-#window{
-    width:400px;
-    height: 160px;
-    text-align: center;
-    background-color: #fff;
-    margin:20px auto;
-    display: none;
-}
-#window p{
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 100px;
-    color:#555;
-}
-#window a{
-    border:1px solid #333;
-    display: inline-block;
-    width:80px;
-    margin-right:20px;
-    height:38px;
-    font-size: 16px;
-    font-weight: 600;
-    color:#555;
-    float:right;
-    text-align: center;
-    line-height: 38px;
-}
-#window a:hover{
-    background-color: #e5e5e5;
 }
 </style>
 </head>
 <body>
 <header class="header">
-	<img src="img/logo-3.png" alt="logo">
+	<img src="" alt="logo"/>
 </header>
 <div class="mod-nav">
 	<h1 class="page-type-notab">找回密码</h1>
@@ -216,16 +29,16 @@ padding-left:6px;
 			<div >
 				<p class="tip">请填写您需要找回的账号:</p>
 				<div class="process_1">
-					<input type="text" id="userId" placeholder="请您输入用户名/邮箱/手机">
+					<input type="text" id="userId" placeholder="请您输入用户名/邮箱/手机"/>
 					<span class="user-input-msg dpNo">请您输入用户名/邮箱/手机</span>
 				</div>
 				<div class="process_1">
-					<input type="text" id="verify-img" placeholder="填写验证码">
-					<img src="img/5DXC.jpg" id="img" class="vcode-img" alt="验证码图片" title="验证码图片">
+					<input type="text" id="verify-img" placeholder="填写验证码"/>
+					<img src="/img/5DXC.jpg" id="img" class="vcode-img" alt="验证码图片" title="验证码图片"/>
                     <span class="vcod-img-msg dpNo" style="margin-left:8px;">验证码有误</span>
 				</div>
 				<div>
-					<input type="submit" name="" value="下一步" class="pass-submit" id="submit-next_1">
+					<input type="submit" name="" value="下一步" class="pass-submit" id="submit-next_1"/>
 				</div>
 			</div>
 		</form>
@@ -241,12 +54,12 @@ padding-left:6px;
                 </div>
                 <p style="font-weight: 700;font-size: 14px;line-height: 30px;">验证码：</p>
                 <div class="process_1">
-                    <input type="text" id="verify-phone" placeholder="填写验证码">
+                    <input type="text" id="verify-phone" placeholder="填写验证码"/>
                     <button type="button" href="#" class="verify-phone" id="getVerifyCode">发送验证码</button>
                     <span class="dpNo" >验证码有误</span>
                 </div>
                 <div>
-                    <input type="submit" name="" value="下一步" class="pass-submit" id="submit-next_2">
+                    <input type="submit" name="" value="下一步" class="pass-submit" id="submit-next_2"/>
                 </div>
             </div>
         </form>
@@ -257,15 +70,15 @@ padding-left:6px;
                     <em class="onstyle" id="findId">FIND</em>
                 </div>
                 <div class="process_1">
-                    <input type="password" id="newPassWord" placeholder="填写6位数以上的新密码">
+                    <input type="password" id="newPassWord" placeholder="填写6位数以上的新密码"/>
                     <span class="dpNo">填写6位数以上密码</span>
                 </div>
                 <div class="process_1">
-                    <input type="password" id="repeatPassWord" placeholder="请您填写确认密码">
+                    <input type="password" id="repeatPassWord" placeholder="请您填写确认密码"/>
                     <span class="dpNo">请您填写确认密码</span>
                 </div>
                 <div>
-                    <input type="submit" name="" value="确定" class="pass-submit" id="submit-next_3">
+                    <input type="submit" name="" value="确定" class="pass-submit" id="submit-next_3"/>
                 </div>
             </div>
         </form>
@@ -275,421 +88,7 @@ padding-left:6px;
         <a href="#" id="closeWindow">确认</a>
     </div>
 </div>
-<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-<script type="text/javascript">
-window.onload=function(){
-    console.log("页面加载完毕，onload启动;");
-    //updateImg();
-    content=$('#window').detach();
-    console.log("onload执行完毕;");
-}
-/***** 获取字符串长度函数 *****/
-function getStringLen(val) {
-    var len = 0;
-    for (var i = 0; i < val.length; i++) {
-        var a = val.charAt(i);
-        if (a.match(/[^\x00-\xff]/ig) != null) {
-            len += 2;
-        }
-        else {
-            len += 1;
-        }
-    }
-    return len;
-}
-/***** 删除部分元素 *****/
-/***** 声明全局变量 *****/
-var bool=false;
-var phone;
-var userName;
-/***** 缓存要用到的DOM对象 *****/
-    /*** 输入框 ***/
-var userId=$("#userId");
-var verifyImg=$("#verify-img");
-var verifyPhone=$("#verify-phone");
-var newPassWord=$("#newPassWord");
-var repeatPassWord=$("#repeatPassWord");
-    /*** 按钮 ***/
-var submitOne=$("#submit-next_1");
-var submitTwo=$("#submit-next_2");
-var submitThree=$("#submit-next_3");
-var vcodeImgChange=$(".vcode-img-change");
-var getVerifyCode=$("#getVerifyCode");
-var $close=$("#closeWindow");
-    /*** 提示信息 ***/
-var userIdError=userId.next();
-var vcodImgError=verifyImg.nextAll().last();
-var getVerifyCodeError=getVerifyCode.nextAll().last();
-var newPWError=newPassWord.next();
-var repeatNPWError=repeatPassWord.next();
-    /*** 反馈信息 ***/
-var phoneNumber=$("#phoneNumber");
-var findId=$("#findId");
-    /** 图片验证码 **/
-var vcodImg=verifyImg.next();
-    /* 模块 */
-var step_1=$("#step_1");
-var step_2=$("#step_2");
-var step_3=$("#step_3");
-
-/***** focus\blur事件 *****/
-var inputText=$(":text");
-var inputTextLen=inputText.length;
-console.log(inputTextLen);
-for(var i=0;i<inputTextLen;i++){
-    inputText[i].addEventListener('focus',function(){
-        this.style.borderColor="#ddd";
-        $(this).nextAll().last().css({
-            "display":"none"
-        })
-    });
-    inputText[i].addEventListener('blur',function(){
-        if(this.value==""||this.value==null){
-            this.style.borderColor="red";
-            $(this).nextAll().last().css({
-                "display":"inline"
-            })
-        }
-    });
-};
-    /* 重置密码 */
-newPassWord[0].addEventListener('focus',function(){
-    this.style.borderColor="#ddd";
-    $(this).nextAll().last().css({
-        "display":"none"
-    })
-});
-newPassWord[0].addEventListener('blur',function(){
-    var string=this.value;
-    var stringLen=getStringLen(string);
-    console.log("字符数："+stringLen);
-    if(this.value==""||this.value==null||stringLen<6){
-        this.style.borderColor="red";
-        $(this).nextAll().last().css({
-            "display":"inline"
-        })
-    }
-});
-repeatPassWord[0].addEventListener('focus',function(){
-    this.style.borderColor="#ddd";
-    this.value="";
-    $(this).nextAll().last().css({
-        "display":"none"
-    })
-});
-repeatPassWord[0].addEventListener('blur',function(){
-    var thisValue=this.value;
-    var newPW=newPassWord[0].value;
-    var bool=false;
-    if(this.value==""||this.value==null){
-        this.style.borderColor="red";
-        $(this).nextAll().last().css({
-            "display":"inline"
-        })
-    }
-    if(newPW===thisValue){
-        bool=true;
-    }else{
-        this.style.borderColor="red";
-        $(this).nextAll().last().text("与上一次输入不相符")
-            .css({"display":"inline"});
-    }
-});
-
-/***** 点击事件函数 *****/
-//更新图片
-vcodeImgChange.on('click',function(){
-    console.log("验证码图片切换触发;");
-    //更新图片
-    updateImg();
-});
-
-//发送手机验证码
-getVerifyCode.on('click',function(){
-    console.log("正在发送手机验证码...")
-    var timer=60;
-    getVerifyCode.text("发送成功 ( "+timer+" )").css("opacity","0.6");
-    getVerifyCode.attr('disabled',"true");
-
-    getPhoneVerifyCode();
-
-    var time=setInterval(function(){
-        timer=timer-1;
-        getVerifyCode.text("发送成功 ( "+timer+" )");
-        if(timer<=0){
-            clearInterval(time);
-            getVerifyCode.text("获取验证码").css("opacity","1");
-            getVerifyCode.removeAttr("disabled");
-        }
-    },900)
-    bool=true;
-});
-
-/***** 第一步 *****/
-$(submitOne).on('click',function(e){
-    console.log("第一步正在执行...");
-    e.preventDefault();
-    var userIdval=userId.val();
-    var string=verifyImg.val();
-    if (userIdval==""||userIdval==null) {
-        userId.css({"borderColor":"red"});
-        userIdError.css({"display":"inline"});
-    }else if(string==""||string==null){
-        verifyImg.css({"borderColor":"red"});
-        vcodImgError.css({"display":"inline"});
-    }else if(string.toLowerCase()!='5dxc'){
-        verifyImg.css({"borderColor":"red"});
-        vcodImgError.css({"display":"inline"});
-    }
-    else{
-        console.log("正在进行账号验证...");
-        ajaxOne(userIdval);
-    }
-
-});
-
-/***** 第二步 *****/
-$(submitTwo).on('click',function(e){
-    console.log("第二步正在执行...");
-
-    e.preventDefault();
-    var string=verifyPhone.val();
-    if(bool===false){
-        getVerifyCodeError.text("请先获取验证码")
-        .css({"display":"inline"});
-        return false;
-    }else{
-        getVerifyCodeError.text("验证码有误");
-    }
-    if (string==""||string==null) {
-        verifyPhone.css({"borderColor":"red"});
-        getVerifyCodeError.css({"display":"inline"});
-    }else{
-        console.log("正在进行手机验证...");
-        ajaxTwo(string);
-    }
-
-});
-
-/***** 第三步 *****/
-$(submitThree).on('click',function(e){
-    console.log("第三步正在执行...");
-
-    e.preventDefault();
-    var newPW=newPassWord.val();
-    var repeatPW=repeatPassWord.val();
-    var string=getStringLen(newPW);
-    if (string<6) {
-        newPassWord.css({"borderColor":"red"});
-        newPWError.css({"display":"inline"});
-        return false;
-    }
-    if(newPW!=repeatPW){
-        repeatPassWord.css({"borderColor":"red"});
-        repeatNPWError.css({"display":"inline"});
-        return false;
-    }else{
-        console.log("正在上传新密码...");
-        ajaxThree(repeatPW);
-    }
-});
-/***** ajax请求 *****/
-function ajaxOne(user){
-    $.ajax({
-        async:true,
-        type:"post",
-        url:,
-        data:"userid="+user,
-        dataType:"json",
-        success:function(data){
-            phone=data.phone;
-            console.log("账号验证通过："+data);
-            callBackOne();
-        },
-        error:function(data){
-            alert("ajax请求失败，网络异常"+data); 
-        }
-
-    })
-};
-function ajaxTwo(phoneCode){
-    $.ajax({
-        async:true,
-        type:"post",
-        url:,
-        data:"code="+phoneCode,
-        dataType:"json",
-        success:function(data){
-            var code = data.status;
-            if(code==200){
-                userName=data.name;
-                console.log("账号验证通过："+data);
-                callBackTwo();
-            }else{
-                console.log("账号验证未通过："+data);
-                getVerifyCodeError.css('display','inline');
-            }
-        },
-        error:function(data){
-            alert("ajax请求失败，网络异常"+data); 
-        }
-
-    })
-};
-function ajaxThree(newpassword){
-    $.ajax({
-        async:true,
-        type:"post",
-        url:,
-        data:"newpwd="+newpassword,
-        dataType:"json",
-        success:function(data){
-            var code = data.status;
-            if(code==200){
-                console.log("密码修改成功："+data);
-                modal.open({content:content,width:440,height:200});
-            }else{
-                console.log("密码修改失败："+data);
-            }
-        },
-        error:function(data){
-            alert("ajax请求失败，网络异常"+data); 
-        }
-
-    })
-};
-
-function updateImg(){
-    var img = document.getElementById("img"); 
-    img.src =getRootPath()+"user/refurbishimg.do?date=" + new Date();
-};
-function getPhoneVerifyCode(){
-    console.log("手机号："+phone);
-    $.ajax({
-        async:true,
-        type:"post",
-        url:,
-        data:"phone="+phone,
-        dataType:"json",
-        success:function(data){
-            var code = data.status;
-            if(code==200){
-                console.log("已发送手机验证码："+data);
-            
-            }else{
-                console.log("发送手机验证码异常："+data);
-            }
-        },
-        error:function(data){
-            alert("ajax请求失败，网络异常"+data);
-            console.log(data);
-        }
-
-    })
-};
-/***** 请求完成后的回调函数 *****/
-function callBackOne(){
-    step_1.stop(true,true).animate({
-        "marginLeft":"-300px",
-        "opacity":"0"
-    },300,function(){
-        $(this).css("display","none");
-    })
-    step_2.css({
-        "display":"block",
-        "opacity":0
-    }).stop(true,true).animate({
-        "marginLeft":"0",
-        "opacity":1
-    });
-    var dataPhone=phone;
-    var newPhone=dataPhone.substring(3,7);
-    phoneNumber.text(dataPhone.replace(newPhone,'****'));
-    $(".mod-sub-list1").removeClass("list1-active");
-    $(".mod-sub-list2").addClass("list2-active");
-};
-function callBackTwo(){
-    step_2.stop(true,true).animate({
-        "marginLeft":"-300px",
-        "opacity":"0"
-    },300,function(){
-        $(this).css("display","none");
-    })
-    step_3.css({
-        "display":"block",
-        "opacity":0
-    }).stop(true,true).animate({
-        "marginLeft":"0",
-        "opacity":1
-    });
-    findId.text(userName);
-    $(".mod-sub-list2").removeClass("list2-active");
-    $(".mod-sub-list3").addClass("list3-active");
-};
-
-/***** 模式窗口 *****/
-var modal=(function(){
-    var $window=$(window);
-    var $modal=$('<div class="modal"/>');
-    var $content=$('<div class="modal-content"/>');
-    var $close=$("#closeWindow");
-    $modal.append($content);
-    $close=$("#closeWindow");
-    $close.on('click',function(e){
-        console.log("点击触发");
-        e.preventDefault();
-        modal.close();
-    });
-    return {
-        center:function(){
-            var top=Math.max($window.height()-$modal.outerHeight())/2;
-            var left=Math.max($window.width()-$modal.outerWidth())/2;
-            $modal.css({
-                'position':"absolute",
-                'top':top,
-                'left':left,
-                'text-align':'center',
-                'background-color':'#E5E5E5',
-                'z-index':"111"
-            });
-            content.css("display","block");
-            console.log(content);
-        },
-        open:function(settings){
-            var $div=$('<div class="moda"></div>');
-            $div.css({
-                "position":"absolute",
-                "width":"100%",
-                "height":"100%",
-                "top":0,
-                'background-color':'rgba(255,255,255,0.2)',
-                'z-index':"100"
-            });
-            $div.appendTo("body");
-            $content.empty().append(settings.content);
-            $modal.css({
-                width:settings.width||'auto',
-                height:settings.height||'auto'
-            }).appendTo('body');
-            modal.center();
-            $(window).on('resize',modal.center);
-        },
-        close:function(){
-            $(".moda").remove();
-            $content.empty();
-            $modal.detach();
-            window.close();
-            $(window).off('resize',modal.center);
-        }
-    }
-})();
-
-/***** 获取绝对路径 *****/
-function getRootPath() {
-    var pathName = window.location.pathname.substring(1);
-    var webName = pathName == '' ? '' : pathName.substring(0, pathName.indexOf('/'));
-    return window.location.protocol + '//' + window.location.host + '/'+ webName + '/';
-}
-</script>
+<script type="text/javascript" src="/tools/jquery.min.js"></script>
+<script type="text/javascript" src="../js/getPass.js"></script>
 </body>
 </html>

@@ -37,6 +37,11 @@ public class HelloController {
         return "getPass";
     }
 
+    @RequestMapping("/signUp")
+    public String sign_up() {
+        return "sign_up";
+    }
+
     @RequestMapping("/welcome")
     public String welcome() {
         return "welcome";

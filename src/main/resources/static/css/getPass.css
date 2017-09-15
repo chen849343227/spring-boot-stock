@@ -1,0 +1,188 @@
+form{
+    margin-bottom: 30px;
+}
+input[type='text'],input[type='password']{
+    border: 1px solid #ddd;
+}
+.header{
+    box-shadow: none;
+}
+.mod-nav {
+    width:100%;
+    height:50px;
+    padding-left: calc((100% - 980px)/2);
+    margin-left: auto;
+    margin-right: auto;
+    background-color:#FAFAFA;
+    box-shadow: 3px 0 3px #333;
+}
+.page-type-notab {
+    color: #333;
+    font-size: 16px;
+    font-weight: 700;
+    float: left;
+    margin-left: 70px;
+    line-height: 46px;
+    display: inline;
+}
+#content{
+    width: 980px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+#content .mod-forgot {
+    min-height: 500px;
+    height: auto;
+}
+.mod-forgot {
+    height: 450px;
+    margin-left: 70px;
+    width: 910px;
+}
+.mod-sub-nav {
+    height: 34px;
+    background: url(/img/mod_sub_nav.png) no-repeat 0 0;
+    margin: 30px 0;
+    line-height: 34px;
+    color: #666;
+    font-size: 16px;
+    font-family: "Microsoft Yahei",\5fae\8f6f\96c5\9ed1,\9ed1\4f53;
+}
+.mod-sub-nav li {
+    float: left;
+    padding-left: 68px;
+}
+.mod-sub-nav li.list1-active {
+    background: url(/img/sub_nav_1.png) no-repeat 0 0;
+    color: #2e82ff;
+}
+.mod-sub-nav li.list2-active {
+    background: url(/img/sub_nav_2.png) no-repeat 0 0;
+    color: #2e82ff;
+    margin-left: -12px;
+    padding-left: 78px;
+}
+.mod-sub-nav li.list3-active {
+    background: url(/img/sub_nav_3.png) no-repeat 0 0;
+    color: #2e82ff;
+    margin-left: -22px;
+    padding-left: 88px;
+    width: 238px;
+}
+.mod-sub-list2 {
+    width: 240px;
+}
+.mod-sub-list1 {
+    width: 241px;
+}
+.tip{
+    font-size: 12px;
+    padding-bottom: 10px;
+}
+.process_1{
+    margin-bottom: 20px;
+}
+.line36{
+    line-height: 36px;
+}
+/***** input输入框 *****/
+#userId,#verify-img,.pass-submit,#newPassWord,#repeatPassWord{
+    width:320px;
+    height:36px;
+    padding-left:6px;
+}
+.pass-submit{
+    height: 40px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    color: #fff;
+    border-radius: 3px;
+    border: 0;
+    background-color: #3f89ec;
+}
+.pass-submit:hover{
+    background-color: #4490f7;
+}
+#verify-img{
+    width:204px;
+}
+
+/***** 验证码 *****/
+.vcode-img{
+    display: inline-block;
+    vertical-align: middle;
+    width: 100px;
+    height: 38px;
+    border: 1px solid #ddd;
+    margin-left: 10px;
+}
+
+/***** 下一步 *****/
+.onstyle{
+    font-style: normal;
+}
+#verify-phone{
+    width:196px;
+    height:36px;
+    padding-left:6px;
+}
+.verify-phone{
+    display: inline-block;
+    width: 120px;
+    height: 36px;
+    border: 1px solid #ccc;
+    background: #f7f7f7;
+    color: #666;
+    line-height: 36px;
+    text-align: center;
+    vertical-align: middle;
+}
+/***** 34 *****/
+.dpNo{
+    display: none;
+    color:red;
+}
+#step_2{
+    display: none;
+    margin-left:980px;
+}
+#step_3{
+    display: none;
+    margin-left:980px;
+}
+#step_1,#step_2,#step_3{
+    position: absolute;
+}
+#window{
+    width:400px;
+    height: 160px;
+    text-align: center;
+    background-color: #fff;
+    margin:20px auto;
+    display: none;
+}
+#window p{
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 100px;
+    color:#555;
+}
+#window a{
+    border:1px solid #333;
+    display: inline-block;
+    width:80px;
+    margin-right:20px;
+    height:38px;
+    font-size: 16px;
+    font-weight: 600;
+    color:#555;
+    float:right;
+    text-align: center;
+    line-height: 38px;
+}
+#window a:hover{
+    background-color: #e5e5e5;
+}
