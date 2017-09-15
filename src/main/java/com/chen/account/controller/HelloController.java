@@ -32,6 +32,14 @@ public class HelloController {
         return "index";
     }
 
+    @RequestMapping("/consult")
+    public String consult() {
+        return "consult";
+    }
+
+    @RequestMapping("/personal")
+    public String personal() { return "personal"; }
+
     @RequestMapping("/forget")
     public String getPass() {
         return "forget_pass";
