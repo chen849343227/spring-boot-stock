@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
  * <p>
  * date 17-9-4
  * <p>
- * desc
+ * desc 调试页面
  */
 @Controller
 public class HelloController {
@@ -33,12 +33,12 @@ public class HelloController {
     }
 
     @RequestMapping("/forget")
-    public String getpass() {
+    public String getPass() {
         return "forget_pass";
     }
 
     @RequestMapping("/signUp")
-    public String sign_up() {
+    public String signUp() {
         return "sign_up";
     }
 
@@ -47,6 +47,10 @@ public class HelloController {
         return "welcome";
     }
 
+    @RequestMapping("/stockAll")
+    public String stockAll(){
+        return "";
+    }
 
     @RequestMapping("/home")
     public String home() {
