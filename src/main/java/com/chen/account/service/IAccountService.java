@@ -13,7 +13,7 @@ public interface IAccountService {
 
     Response getVerifyCode(String phone);
 
-    Response register(String phoneNumber, String password, String randomStr);
+    Response register(String phoneNumber, String password,String smsCode, String randomStr);
 
     Response login(String phoneNumber, String password);
 }

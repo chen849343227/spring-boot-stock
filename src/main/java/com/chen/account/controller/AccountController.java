@@ -44,11 +44,12 @@ public class AccountController {
     public Response register(HttpServletRequest request) {
         String phoneNumber = request.getParameter("username");
         String password = request.getParameter("password");
-        logger.info("register:" + "username=" + phoneNumber + ",password=" + password);
+        String code = request.getParameter("code");
+        logger.info("register:" + "username=" + phoneNumber + ",password=" + password + ",code=" + code);
         String randomStr = StringUtils.getRandomString(8);
         Response response;
         try {
-            response = service.register(phoneNumber, password, randomStr);
+            response = service.register(phoneNumber, password, code, randomStr);
         } catch (Exception e) {
             e.printStackTrace();
             return TransmitUtils.transmitErrorResponse(SIGN_UP_FAIL, CODE_SIGN_UP_FAIL, SIGN_UP_FAIL);

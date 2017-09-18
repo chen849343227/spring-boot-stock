@@ -32,7 +32,7 @@ public class StockMarketController {
     }
 
     @RequestMapping(value = "/hk", method = RequestMethod.POST)
-    private Response requestHKStockMartek(HttpServletRequest request, HttpServletResponse httpServletResponse) {
+    private Response getHKStockMartek(HttpServletRequest request, HttpServletResponse httpServletResponse) {
         String num = request.getParameter("num");
         Response response = null;
         if (num != null) {
