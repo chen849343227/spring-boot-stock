@@ -10,8 +10,8 @@
     <result column="createAt" jdbcType="BIGINT" property="createat" />
     <result column="updateAt" jdbcType="BIGINT" property="updateat" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, phone, password, randomStr, createAt, updateAt
+  <sql id="Base_Column_List">
+    id, phone, username, password, randomStr, createAt, updateAt
   </sql>
   <select id="selectByPhone" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
