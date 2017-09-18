@@ -213,7 +213,8 @@ $("#sign_up").on('click',function(e){
         type:"post",
         url:"/web/account/register",
         data:{
-            username: phoneNumber,
+            phoneNumber:phoneNumber,
+            username: userId,
             password: userPWD,
             code: phoneCode
         },

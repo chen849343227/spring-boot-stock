@@ -21,6 +21,7 @@ $("#loginBtn").on('click', function (e) {
             alert("请求失败，网络异常" + data.message);
         },
         success: function (data) {
+            console.log(data);
             /**
              * {
                  *   "isSuccess": false,
