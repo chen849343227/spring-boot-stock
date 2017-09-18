@@ -129,6 +129,8 @@ vcodeImgChange.on('click',function(){
 getVerifyCode.on('click',function(){
     console.log("正在发送手机验证码...")
     var timer=60;
+    $ajax
+
     getVerifyCode.text("发送成功 ( "+timer+" )").css("opacity","0.6");
     getVerifyCode.attr('disabled',"true");
 
@@ -142,7 +144,7 @@ getVerifyCode.on('click',function(){
             getVerifyCode.text("获取验证码").css("opacity","1");
             getVerifyCode.removeAttr("disabled");
         }
-    },900)
+    },900);
     bool=true;
 });
 

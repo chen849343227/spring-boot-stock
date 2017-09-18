@@ -15,7 +15,13 @@ public class AliyunMessageUtil {
 
     private static SendSmsResponse sendSmsResponse;
 
-    public static SendSmsResponse requestSmsCode(String phone) {
+    /**
+     * 请求阿里云短信接口
+     * @param phone 手机号
+     * @param code 需要发送的验证码
+     * @return 短信发送的结果
+     */
+    public static SendSmsResponse requestSmsCode(String phone,String code) {
         Gson gson = new Gson();
         // 服务url
         String url = "http://gw.api.taobao.com/router/rest";
@@ -23,8 +29,6 @@ public class AliyunMessageUtil {
         String appkey = "23567754";
         // secret
         String secret = "d02bd556928889a88b811aa28a9ec5c7";
-        // 生成随机的6位数字
-        String code = RandomUtil.createRandomVcode();
         TaobaoClient client = new DefaultTaobaoClient(url, appkey, secret);
         AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
         req.setExtend("1");

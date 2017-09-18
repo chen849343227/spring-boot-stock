@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>个人中心</title>
+    <link rel="stylesheet" href="/tools/simple-line-icons/simple-line-icons.min.css" />
+    <link rel="stylesheet" href="/tools/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/tools/components.min.css" />
+    <link rel="stylesheet" href="/tools/layout.min.css" />
+    <link rel="stylesheet" href="/tools/darkblue.min.css" />
+    <link rel="stylesheet" href="/css/common.css" />
+    <link rel="stylesheet" href="/personal/css/personal.css" />
+</head>
+<body>
+<header>
+    <div class="page-header navbar navbar-fixed-top">
+        <div class="page-header-inner ">
+            <div class="page-logo">
+                <a>
+                    <img src="" alt="logo" class="logo-default" /> </a>
+                <!--侧边栏导航控制按钮-->
+                <div class="menu-toggler sidebar-toggler"> </div>
+            </div>
+            <div class="top-menu">
+                <ul class="nav navbar-nav pull-right">
+                    <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
+                        <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <i class="icon-bell"></i>
+                            <span class="badge badge-default"> 2 </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="external">
+                                <h3><span class="bold">工作提醒</span>&nbsp;&nbsp;任务</h3>
+                                <a>查看所有</a>
+                            </li>
+                            <li>
+                                <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
+                                    <li>
+                                        <a>
+                                            <span class="time">20分钟之后</span>
+                                            <span class="details">
+                                            <span class="label label-sm label-icon label-warning">
+                                                <i class="fa fa-bell-o"></i>
+                                            </span>组装零件
+                                        </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <span class="time">2小时之后</span>
+                                            <span class="details">
+                                            <span class="label label-sm label-icon label-warning">
+                                                <i class="fa fa-bell-o"></i>
+                                            </span>自检组装情况
+                                        </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
+                        <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <i class="icon-envelope-open"></i>
+                            <span class="badge badge-default"> 4 </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="external">
+                                <h3>你有
+                                    <span class="bold">4条&nbsp;&nbsp;</span>未读消息</h3>
+                                <a>查看所有</a>
+                            </li>
+                            <li>
+                                <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
+                                    <li>
+                                        <a>
+                                                <span class="photo">
+                                                    <img src="img/avatar2.jpg" class="img-circle" alt="" /> </span>
+                                            <span class="subject">
+                                                    <span class="from"> 组长 </span>
+                                                    <span class="time"> 一分钟前 </span>
+                                                </span>
+                                            <span class="message"> 今日工作验收合格。 </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                                <span class="photo">
+                                                    <img src="img/avatar2.jpg" class="img-circle" alt="" /> </span>
+                                            <span class="subject">
+                                                    <span class="from"> 组长 </span>
+                                                    <span class="time"> 20分钟前 </span>
+                                                </span>
+                                            <span class="message"> 5分钟后进行工作验收 </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                                <span class="photo">
+                                                    <img src="img/avatar1.jpg" class="img-circle" alt="" /> </span>
+                                            <span class="subject">
+                                                    <span class="from"> 主管 </span>
+                                                    <span class="time"> 3小时前 </span>
+                                                </span>
+                                            <span class="message"> 明天生产线设备维修，放假两天。 </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                                <span class="photo">
+                                                    <img src="img/avatar1.jpg" class="img-circle" alt="" /> </span>
+                                            <span class="subject">
+                                                    <span class="from"> 主管 </span>
+                                                    <span class="time"> 1天前 </span>
+                                                </span>
+                                            <span class="message"> 产品检验合格。 </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown dropdown-user">
+                        <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <img alt="..." class="img-circle" src="img/avatar2.jpg" />
+                            <span class="username username-hide-on-mobile"> 梓凡 </span>
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-default">
+                            <li>
+                                <a href="userCenterPage.html"><i class="icon-user"></i> 个人中心 </a>
+                            </li>
+                            <li>
+                                <a href="userCenterPage.html"><i class="icon-calendar"></i> 工作日期 </a>
+                            </li>
+                            <li>
+                                <a href="userCenterPage.html"><i class="icon-envelope-open"></i> 我的消息</a>
+                            </li>
+                            <li class="divider"> </li>
+                            <li>
+                                <a><i class="icon-key"></i> 忘记密码 </a>
+                            </li>
+                            <li>
+                                <a href="login.html"><i class="icon-rocket"></i> 退出登录 </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="main">
+    <div class="page-container">
+        <div class="page-sidebar-wrapper">
+            <div class="page-sidebar navbar-collapse collapse">
+                <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+                    <li class="sidebar-toggler-wrapper hide">
+                        <div class="sidebar-toggler"> </div>
+                    </li>
+                    <li class="nav-item start">
+                        <a class="nav-link nav-toggle">
+                            <i class="icon-magnifier"></i>
+                            <span class="title">账户首页</span>
+                            <span class="selected"></span>
+                            <span class="arrow open"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item start active open">
+                        <a class="nav-link ">
+                            <i class="icon-bar-chart"></i>
+                            <span id="quick" class="title">自选持仓</span>
+                            <span class="selected"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item start ">
+                        <a class="nav-link ">
+                            <i class="icon-bag"></i>
+                            <span id="static" class="title">模拟账户</span>
+                        </a>
+                    </li>
+                    <li class="nav-item start ">
+                        <a class="nav-link ">
+                            <i class="icon-graph"></i>
+                            <span id="product" class="title">通知中心</span>
+                        </a>
+                    </li>
+                    <li class="nav-item start ">
+                        <a class="nav-link ">
+                            <i class="icon-graph"></i>
+                            <span id="" class="title">账户中心</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="page-content-wrapper">
+            <div class="page-content">
+                <!--账户首页 开始-->
+                <div class="dynamic">
+                    <div class="note note-info">
+                        <h3> 最近动态 </h3>
+                    </div>
+                    <div class="note-content">
+                        没有可以显示的动态
+                    </div>
+                </div>
+                <!--账户首页 结束-->
+                <!--自选持仓 开始-->
+                <div class="position"></div>
+                <!--自选持仓 结束-->
+                <!--模拟账户 开始-->
+                <div class="demo-account"></div>
+                <!--模拟账户 结束-->
+                <!--通知中心 开始-->
+                <div class="inform-center"></div>
+                <!--通知中心 结束-->
+                <!--账户中心 开始-->
+                <div class="set"></div>
+                <!--账户中心 结束-->
+            </div>
+        </div>
+    </div>
+</div>
+<footer></footer>
+<script src="/tools/jquery.min.js"></script>
+<script src="/tools/bootstrap/js/bootstrap.min.js"></script>
+<script src="/tools/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script src="/tools/morris.min.js"></script>
+<script src="/tools/app.min.js"></script>
+<script src="/tools/layout.min.js"></script>
+</body>
+</html>

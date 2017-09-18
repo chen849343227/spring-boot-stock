@@ -44,3 +44,11 @@ $("#loginBtn").on('click', function (e) {
         }
     });
 });
+
+$("#signUp").on('click', function () {
+    window.location.href = 'signUp';
+});
+
+$("#forget-password").on('click', function () {
+    window.location.href = 'forget';
+});

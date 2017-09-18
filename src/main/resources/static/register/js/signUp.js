@@ -51,21 +51,36 @@ $phoneNumber.on('keyup',function(){
 
 //发送验证码
 $getPhoneCode.on('click',function(){
-    var timer=6;
+    var timer=60;
     var $this=$(this);
-    $this.text("发送成功 ( "+timer+" )");
-    $this.addClass("disable");
-    $phoneNumber.attr("disabled",true);
-    var time=setInterval(function(){
-        timer=timer-1;
-        $this.text("发送成功 ( "+timer+" )");
-        if(timer==0){
-            $this.text("发送验证码").removeClass("disable");
-            $phoneNumber.attr("disabled",false);
-            clearInterval(time);
+    var phoneNumber = $("#phoneNumber").val();
+    $.ajax({
+        type: 'POST',
+        url: '/web/account/getVerifyCode',
+        dataType: 'json',
+        data:{
+            phone: phoneNumber
+        },
+        error: function (data) {
+            console.log(data.message);
+            alert("请求失败，网络异常" + data.message);
+        },
+        success: function (data) {
+            $this.text("发送成功 ( "+timer+" )");
+            $this.addClass("disable");
+            $phoneNumber.attr("disabled",true);
+            var time=setInterval(function(){
+                timer=timer-1;
+                $this.text("发送成功 ( "+timer+" )");
+                if(timer==0){
+                    $this.text("发送验证码").removeClass("disable");
+                    $phoneNumber.attr("disabled",false);
+                    clearInterval(time);
+                }
+            },900);
+            bool=true;
         }
-    },900)
-    bool=true;
+    });
 });
 
 //填写密码
@@ -131,11 +146,15 @@ $("#sign_up").on('click',function(e){
     $.ajax({
         async:true,
         type:"post",
-        url:"",
-        data:"",
+        url:"/web/account/register",
+        data:{
+            username: phoneNumber,
+            password: userPWD,
+            code: phoneCode
+        },
         dataType:"json",
         success:function(data){
-
+            alert(data.message);
         },
         error:function(data){
             alert("ajax请求失败，网络异常"+data);
