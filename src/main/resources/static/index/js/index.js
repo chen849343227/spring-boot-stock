@@ -34,7 +34,7 @@ $("#loginBtn").on('click', function (e) {
                  *  }
              */
             if (data.isSuccess) {
-                window.location.href = 'home';
+                window.location.href = 'consult';
                 window.sessionStorage.setItem('user', data.response.phone);
             } else {
                 console.log(data.errorResponse.message);

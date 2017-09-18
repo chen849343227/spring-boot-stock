@@ -10,5 +10,8 @@ import com.chen.account.entity.User;
  * desc
  */
 public interface UserMapperExtends extends  UserMapper{
-    User selectByPhone(String userName);
+    User selectByPhone(String phone);
+
+    User selectByUsername(String username);
+
 }
