@@ -58,11 +58,16 @@ public class AccountServiceImpl implements IAccountService {
     }
 
     @Override
-    public Response register(String phoneNumber, String password, String smsCode, String randomStr) {
+    public Response register(String phoneNumber, String username, String password, String smsCode, String randomStr) {
+        //检测用户名
+        if (userMapper.selectByUsername(username) != null) {
+            return TransmitUtils.transmitErrorResponse(AccountConstant.SIGN_UP_USER_EXIST,
+                    AccountConstant.CODE_SIGN_UP_USERNAME_EXIST, AccountConstant.SIGN_UP_USER_EXIST);
+        }
         //判断查询到的手机号是否为空,不为空就是账号已存在
         if (userMapper.selectByPhone(phoneNumber) != null) {
-            return TransmitUtils.transmitErrorResponse(AccountConstant.SIGN_UP_USER_ALREADY_EXIST,
-                    AccountConstant.CODE_SIGN_UP_ALREADY_EXIST, AccountConstant.SIGN_UP_USER_ALREADY_EXIST);
+            return TransmitUtils.transmitErrorResponse(AccountConstant.SIGN_UP_PHONE_EXIST,
+                    AccountConstant.CODE_SIGN_UP_ALREADY_EXIST, AccountConstant.SIGN_UP_PHONE_EXIST);
         }
         //设置验证码的有效期为两分钟之内
         if (System.currentTimeMillis() - verifyCodeEntity.getCreateTime() > 120000) {
@@ -80,6 +85,7 @@ public class AccountServiceImpl implements IAccountService {
             user.setCreateat(createAt);
             user.setUpdateat(createAt);
             user.setPhone(phoneNumber);
+            user.setUsername(username);
             user.setPassword(password);
             user.setRandomstr(randomStr);
             int signUpRes = userMapper.insert(user);
@@ -88,6 +94,7 @@ public class AccountServiceImpl implements IAccountService {
                 user.setRandomstr("");
                 user.setUpdateat(0L);
                 user.setCreateat(0L);
+                verifyCodeEntity = null;
                 return TransmitUtils.transmitResponse(true, AccountConstant.SIGN_UP_SUCCESS, user);
             } else {
                 return TransmitUtils.transmitErrorResponse(AccountConstant.SIGN_UP_FAIL, AccountConstant.CODE_SIGN_UP_FAIL, AccountConstant.SIGN_UP_FAIL);

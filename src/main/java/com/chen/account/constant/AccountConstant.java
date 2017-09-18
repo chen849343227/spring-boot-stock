@@ -13,7 +13,8 @@ public interface AccountConstant {
      */
     String SIGN_UP_FAIL = "注册失败，请稍后重试";
     String SIGN_UP_SUCCESS = "注册成功";
-    String SIGN_UP_USER_ALREADY_EXIST = "该手机号码已经被注册";
+    String SIGN_UP_PHONE_EXIST = "该手机号码已经被注册";
+    String SIGN_UP_USER_EXIST = "用户名已存在";
     String SIGN_UP_VERIFY_CODE_ERROR = "验证码错误";
     String SIGN_UP_VERIFY_CODE_TIME_OUT = "验证码超时";
 
@@ -30,6 +31,7 @@ public interface AccountConstant {
     int CODE_SIGN_UP_ALREADY_EXIST = 10002;  //用户已经存在
     int CODE_SIGN_UP_SMSCODE_ERROR = 10003;  //验证码错误
     int CODE_SIGN_UP_SMSCODE_TIME_OUT = 10004; //验证码超时
+    int CODE_SIGN_UP_USERNAME_EXIST = 10002;  //用户名已经存在
 
     int CODE_LOGIN_FAIL = 10003; //登录失败
     int CODE_LOGIN_PASSWORD_ERROR = 10004; //用户名密码错误

@@ -1,10 +1,11 @@
 package com.chen.account.entity;
 
-
 public class User {
     private Integer id;
 
     private String phone;
+
+    private String username;
 
     private String password;
 
@@ -28,6 +29,14 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

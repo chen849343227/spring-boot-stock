@@ -42,14 +42,15 @@ public class AccountController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public Response register(HttpServletRequest request) {
-        String phoneNumber = request.getParameter("username");
+        String phoneNumber = request.getParameter("phoneNumber");
+        String username = request.getParameter("username");
         String password = request.getParameter("password");
         String code = request.getParameter("code");
         logger.info("register:" + "username=" + phoneNumber + ",password=" + password + ",code=" + code);
         String randomStr = StringUtils.getRandomString(8);
         Response response;
         try {
-            response = service.register(phoneNumber, password, code, randomStr);
+            response = service.register(phoneNumber, username, password, code, randomStr);
         } catch (Exception e) {
             e.printStackTrace();
             return TransmitUtils.transmitErrorResponse(SIGN_UP_FAIL, CODE_SIGN_UP_FAIL, SIGN_UP_FAIL);
