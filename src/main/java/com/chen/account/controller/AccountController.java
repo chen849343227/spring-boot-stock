@@ -46,7 +46,7 @@ public class AccountController {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String code = request.getParameter("code");
-        logger.info("register:" + "username=" + phoneNumber + ",password=" + password + ",code=" + code);
+        logger.info("register:"+"phoneNumber="+phoneNumber + ",username=" + username + ",password=" + password + ",code=" + code);
         String randomStr = StringUtils.getRandomString(8);
         Response response;
         try {
