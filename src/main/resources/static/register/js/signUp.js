@@ -12,12 +12,15 @@ var $warnMain=$(".warnMain"),
     $warmContent=$(".warnContent");
 var warnMain;
 var phoneNumber=0;
+var phoneCodeError;
+var bool=false;
+var Bool=true;
 /***** 函数事件 *****/
 
 //用户昵称
 $userId.on('focus',function(){
-    if($("#inputUser")){
-        warnMain=$warnMain.detach();
+    if($("#userWarn").length>0){
+        $("#userWarn").remove();
     }
 });
 $userId.on('blur',function(){
@@ -27,7 +30,7 @@ $userId.on('blur',function(){
     if(this.value==""||this.value==null){
         console.log(thisLeft+"/////"+thisTop);
         $(".main").prepend(warnMain);
-        $warnMain.attr("id","inputUser");
+        $warnMain.attr("id","userWarn");
         $warmContent.text("用户名不符合规范");
         $warnMain.css({
             "left":thisLeft,
@@ -39,16 +42,38 @@ $userId.on('blur',function(){
 
 //填写手机号码
 $phoneNumber.on('keyup',function(){
-    console.log("手机号码在更改");
     phoneNumber=this.value;
-    console.log(phoneNumber);
+    if($("#pnError").length>0){
+        $("#pnError").remove();
+    }
     if (getStringLen(phoneNumber)===11) {
-        $getPhoneCode.removeClass("disable");
+        if(!(/^1[34578]\d{9}$/.test(phoneNumber))){
+            if($("#pnError").length>0){
+                return false;
+            }else{
+                var pnError=warnMain.clone();
+                pnError.attr('id',"pnError");
+                pnError.css({
+                    "left":$phoneNumber[0].getBoundingClientRect().left+$phoneNumber[0].offsetWidth,
+                    "top":$phoneNumber[0].getBoundingClientRect().top,
+                    "display":"block"
+                });
+                pnError.find("em").text("请填写正确的手机号格式");
+                $(".main").prepend(pnError);
+                return false;
+            }
+        }else{
+            $getPhoneCode.removeClass("disable");
+        }
     }else{
         $getPhoneCode.addClass("disable");
     }
 });
-
+$phoneNumber.on('focus',function(){
+    if($("#pnWarn").length>0){
+        $("#pnWarn").remove();
+    }
+})
 //发送验证码
 $getPhoneCode.on('click',function(){
     var timer=60;
@@ -82,23 +107,31 @@ $getPhoneCode.on('click',function(){
         }
     });
 });
+//填写验证码
+$phoneCode.on('focus',function(){
+    if($("#pcWarn").length>0){
+        $("#pcWarn").remove();
+    }
+});
 
 //填写密码
 $userPWD.on('focus',function(){
-    if($("#inputPWDr")){
-        warnMain=$warnMain.detach();
+    if($("#pwdWarn").length>0){
+        $("#pwdWarn").remove();
     }
 });
 
 //开始注册
 $("#sign_up").on('click',function(e){
-    console.log("正在进行注册...");
     e.preventDefault();
     var userId=$userId.val(),
         phoneNumber=$phoneNumber.val(),
         phoneCode=$phoneCode.val(),
         userPWD=$userPWD.val();
     if(($("#inputUser")==true)||userId==""||userId==null){
+        if($("#userWarn").length>0){
+            return false;
+        }
         var userWarn=warnMain.clone();
         userWarn.attr('id',"userWarn");
         userWarn.css({
@@ -108,8 +141,12 @@ $("#sign_up").on('click',function(e){
         });
         userWarn.find("em").text("昵称未填写");
         $(".main").prepend(userWarn);
+        Bool=false;
     };
     if(phoneNumber==""||phoneNumber==null){
+        if($("#pnWarn").length>0){
+            return false;
+        }
         var pnWarn=warnMain.clone();
         pnWarn.attr('id',"pnWarn");
         pnWarn.css({
@@ -119,8 +156,27 @@ $("#sign_up").on('click',function(e){
         });
         pnWarn.find("em").text("手机号未填写");
         $(".main").prepend(pnWarn);
+        Bool=false;
+    };
+    if(bool==false){
+        if($("#pcWarn").length>0){
+            return false;
+        }
+        var pcWarn=warnMain.clone();
+        pcWarn.attr('id',"pcWarn");
+        pcWarn.css({
+            "left":$phoneCode[0].getBoundingClientRect().left+$phoneCode[0].offsetWidth,
+            "top":$phoneCode[0].getBoundingClientRect().top,
+            "display":"block"
+        });
+        pcWarn.find("em").text("请先点击发送验证码");
+        $(".main").prepend(pcWarn);
+        Bool=false;
     };
     if(phoneCode==""||phoneCode==null){
+        if($("#pcWarn").length>0){
+            return false;
+        }
         var pcWarn=warnMain.clone();
         pcWarn.attr('id',"pcWarn");
         pcWarn.css({
@@ -130,8 +186,12 @@ $("#sign_up").on('click',function(e){
         });
         pcWarn.find("em").text("验证码未填写");
         $(".main").prepend(pcWarn);
+        Bool=false;
     };
     if(userPWD==""||userPWD==null){
+        if($("#pwdWarn").length>0){
+            return false;
+        }
         var pwdWarn=warnMain.clone();
         pwdWarn.attr('id',"pwdWarn");
         pwdWarn.css({
@@ -141,6 +201,11 @@ $("#sign_up").on('click',function(e){
         });
         pwdWarn.find("em").text("密码未填写");
         $(".main").prepend(pwdWarn);
+        Bool=false;
+    }else{
+        Bool=true;
+    }
+    if(Bool==false){
         return false;
     };
     $.ajax({
@@ -154,14 +219,68 @@ $("#sign_up").on('click',function(e){
         },
         dataType:"json",
         success:function(data){
-            alert(data.message);
+            console.log(data);
+            if(data.message=="验证码超时"){
+                if($("#pcWarn").length>0){
+                    return false;
+                }
+                var pcWarn=warnMain.clone();
+                pcWarn.attr('id',"pcWarn");
+                pcWarn.css({
+                    "left":$phoneCode[0].getBoundingClientRect().left+$phoneCode[0].offsetWidth,
+                    "top":$phoneCode[0].getBoundingClientRect().top,
+                    "display":"block"
+                });
+                pcWarn.find("em").text("验证码超时");
+                $(".main").prepend(pcWarn);
+            }else if(data.message=="验证码错误"){
+                if($("#pcWarn").length>0){
+                    return false;
+                }
+                var pcWarn=warnMain.clone();
+                pcWarn.attr('id',"pcWarn");
+                pcWarn.css({
+                    "left":$phoneCode[0].getBoundingClientRect().left+$phoneCode[0].offsetWidth,
+                    "top":$phoneCode[0].getBoundingClientRect().top,
+                    "display":"block"
+                });
+                pcWarn.find("em").text("验证码错误");
+                $(".main").prepend(pcWarn);
+            }else if(data.message=="该手机号码已经被注册"){
+                if($("#pnWarn").length>0){
+                    return false;
+                }
+                var pnWarn=warnMain.clone();
+                pnWarn.attr('id',"pnWarn");
+                pnWarn.css({
+                    "left":$phoneNumber[0].getBoundingClientRect().left+$phoneNumber[0].offsetWidth,
+                    "top":$phoneNumber[0].getBoundingClientRect().top,
+                    "display":"block"
+                });
+                pnWarn.find("em").text("该手机号码已经被注册");
+                $(".main").prepend(pnWarn);
+            }else if(data.message=="注册失败，请稍后重试"){
+                if($("#pcWarn").length>0){
+                    return false;
+                }
+                var pcWarn=warnMain.clone();
+                pcWarn.attr('id',"pcWarn");
+                pcWarn.css({
+                    "left":$phoneCode[0].getBoundingClientRect().left+$phoneCode[0].offsetWidth,
+                    "top":$phoneCode[0].getBoundingClientRect().top,
+                    "display":"block"
+                });
+                pcWarn.find("em").text("注册失败，请稍后重试");
+                $(".main").prepend(pcWarn);
+            }else{
+                modal.open({content:content,width:440,height:200});
+            }
         },
         error:function(data){
             alert("ajax请求失败，网络异常"+data);
         }
     })
 });
-
 
 /***** 模式窗口 *****/
 var modal=(function(){
