@@ -60,6 +60,11 @@ public class HelloController {
         return "";
     }
 
+    @RequestMapping("/simulation")
+    public String simulation(){
+        return "simulation";
+    }
+
     @RequestMapping("/home")
     public String home() {
         logger.info("hello");
