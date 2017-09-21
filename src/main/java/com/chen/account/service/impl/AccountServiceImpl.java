@@ -69,6 +69,11 @@ public class AccountServiceImpl implements IAccountService {
             return TransmitUtils.transmitErrorResponse(AccountConstant.SIGN_UP_PHONE_EXIST,
                     AccountConstant.CODE_SIGN_UP_ALREADY_EXIST, AccountConstant.SIGN_UP_PHONE_EXIST);
         }
+        if (verifyCodeEntity == null) {
+            //实体类存储的信息为空,代表用户没有请求验证码
+            return TransmitUtils.transmitErrorResponse(AccountConstant.SIGN_UP_VERIFY_CODE_ERROR,
+                    AccountConstant.CODE_SIGN_UP_SMSCODE_ERROR, AccountConstant.SIGN_UP_VERIFY_CODE_ERROR);
+        }
         //设置验证码的有效期为两分钟之内
         if (System.currentTimeMillis() - verifyCodeEntity.getCreateTime() > 120000) {
             //时间超时,将存储的信息清空
@@ -85,6 +90,7 @@ public class AccountServiceImpl implements IAccountService {
             user.setCreateat(createAt);
             user.setUpdateat(createAt);
             user.setPhone(phoneNumber);
+            user.setMoney("100000000");
             user.setUsername(username);
             user.setPassword(password);
             user.setRandomstr(randomStr);

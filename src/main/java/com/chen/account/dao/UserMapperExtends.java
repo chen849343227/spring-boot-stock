@@ -1,6 +1,7 @@
 package com.chen.account.dao;
 
 import com.chen.account.entity.User;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * author long
@@ -10,6 +11,7 @@ import com.chen.account.entity.User;
  * desc
  */
 public interface UserMapperExtends extends  UserMapper{
+
     User selectByPhone(String phone);
 
     User selectByUsername(String username);
