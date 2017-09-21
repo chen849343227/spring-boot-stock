@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>个股概要</title>
+    <link rel="stylesheet" href="/tools/bootstrap/css/bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/common.css" type="text/css"/>
+    <link rel="stylesheet" href="/consultDetail/css/consultDetail.css" type="text/css"/>
+</head>
+<body>
+    <header>
+        <!--<nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Brand</a>
+                </div>
+
+                &lt;!&ndash; Collect the nav links, forms, and other content for toggling &ndash;&gt;
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">首页 <span class="sr-only">(current)</span></a></li>
+                        <li><a href="#">行情</a></li>
+                        <li><a href="#">咨询</a></li>
+                        <li><a href="#">关于</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a id="login">登录</a></li>
+                    </ul>
+                </div>&lt;!&ndash; /.navbar-collapse &ndash;&gt;
+            </div>&lt;!&ndash; /.container-fluid &ndash;&gt;
+        </nav>-->
+    </header>
+    <div class="detail-main">
+        <div class="all-list">
+            <!-- Nav tabs -->
+            <ul class="stock-nav" role="tablist">
+                <li role="presentation"><a href="#me" aria-controls="me" role="tab" data-toggle="tab">
+                    <img src="../static/consultDetail/img/me.png" alt="" /><p>我的</p>
+                </a></li>
+                <li role="presentation" class="active"><a href="#onestock" aria-controls="onestock" role="tab" data-toggle="tab">
+                    <img src="../static/consultDetail/img/onestock.png" alt="" /><p>个股</p>
+                </a></li>
+                <li role="presentation"><a href="#market" aria-controls="consult" role="tab" data-toggle="tab">
+                    <img src="../static/consultDetail/img/market.png" alt="" /><p>行情</p>
+                </a></li>
+                <li role="presentation"><a href="#exchange" aria-controls="exchange" role="tab" data-toggle="tab">
+                    <img src="../static/consultDetail/img/exchange.png" alt="" /><p>交易</p>
+                </a></li>
+                <li role="presentation"><a href="#consult" aria-controls="consult" role="tab" data-toggle="tab">
+                    <img src="../static/consultDetail/img/consult.png" alt="" /><p>咨询</p>
+                </a></li>
+                <li role="presentation"><a href="#news" aria-controls="news" role="tab" data-toggle="tab">
+                    <img src="../static/consultDetail/img/news.png" alt="" />  <p>信息</p>
+                </a></li>
+                <li class="menu"><a><img src="../static/consultDetail/img/menu.png" alt="" /></a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content stock-tab">
+                <div role="tabpanel" class="tab-pane" id="me"></div>
+                <div role="tabpanel" class="tab-pane active" id="onestock">
+                    <div class="onestock-head">
+                        <div class="title"><h3>个股</h3></div>
+                    </div>
+                    <div class="onestock-body row">
+                        <div class="onestock-list col-md-2">
+                            <ul class="onestock-nav">
+                                <li role="presentation"><a href="#optional" aria-controls="optional" role="tab" data-toggle="tab">
+                                    <img src="../static/consultDetail/img/optional.png" alt="" />
+                                </a></li>
+                                <li role="presentation"><a href="#history" aria-controls="history" role="tab" data-toggle="tab">
+                                    <img src="../static/consultDetail/img/history.png" alt="" />
+                                </a></li>
+                                <li role="presentation"><a href="#remind" aria-controls="remind" role="tab" data-toggle="tab">
+                                    <img src="../static/consultDetail/img/remind.png" alt="" />
+                                </a></li>
+                                <li role="presentation" class="active"><a href="#stockstub" aria-controls="stockstub" role="tab" data-toggle="tab">
+                                    <img src="../static/consultDetail/img/stockstub.png" alt="" />
+                                </a></li>
+                            </ul>
+                            <div class="onestock-tab">
+                                <div role="tabpanel" class="tab-pane" id="optional"></div>
+                                <div role="tabpanel" class="tab-pane" id="history"></div>
+                                <div role="tabpanel" class="tab-pane" id="remind"></div>
+                                <div role="tabpanel" class="tab-pane active" id="stockstub">
+                                    <ul class="stockstub-nav">
+                                        <li role="presentation" class="active"><a href="#stockstub-hk" aria-controls="stockstub-hk" role="tab" data-toggle="tab">港股</a></li>
+                                        <li role="presentation"><a href="#stockstub-us" aria-controls="stockstub-us" role="tab" data-toggle="tab">美股</a></li>
+                                        <li role="presentation"><a href="#stockstub-ls" aria-controls="stockstub-ls" role="tab" data-toggle="tab">泸深</a></li>
+                                    </ul>
+                                    <div class="tab-content stockstub-tab">
+                                        <div class="tab-pane active" role="tabpanel" id="stockstub-hk"></div>
+                                        <div class="tab-pane" role="tabpanel" id="stockstub-us"></div>
+                                        <div class="tab-pane" role="tabpanel" id="stockstub-ls"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="onestock-charts col-md-7">
+                            <!--<ul class="onestock-charts-nav">
+                                <li class="lefts"><a><span></span></a></li>
+                                <li class="charts-stockname"><a>恒生指数</a></li>
+                                <li role="presentation"><a href="#charts-date" aria-controls="charts-date" role="tab" data-toggle="tab">分时</a></li>
+                                <li role="presentation"><a href="#charst-moredate" aria-controls="charst-moredate" role="tab" data-toggle="tab">多日</a></li>
+                                <li role="presentation"><a href="#charts-dateline" aria-controls="charts-dateline" role="tab" data-toggle="tab">日线</a></li>
+                                <li role="presentation"><a href="#charts-weekline" aria-controls="charts-weekline" role="tab" data-toggle="tab">周线</a></li>
+                                <li role="presentation"><a href="#charts-mouthline" aria-controls="charts-mouthline" role="tab" data-toggle="tab">月线</a></li>
+                                <li role="presentation"><a href="#charts-oneminute" aria-controls="charts-oneminute" role="tab" data-toggle="tab">1分</a></li>
+                                <li role="presentation"><a href="#charts-fiveminute" aria-controls="charts-fiveminute" role="tab" data-toggle="tab">5分</a></li>
+                                <li role="presentation" class="active"><a href="#charts-fivetminute" aria-controls="charts-fivetminute" role="tab" data-toggle="tab">15分</a></li>
+                                <li role="presentation"><a href="#charts-thirtyminut" aria-controls="charts-thirtyminut" role="tab" data-toggle="tab">30分</a></li>
+                                <li role="presentation"><a href="#charts-hours" aria-controls="charts-hours" role="tab" data-toggle="tab">60分</a></li>
+                                <li class="right"><a><span></span></a></li>
+                            </ul>-->
+                            <div class="charts-line"></div>
+                            <div class="tab-pane active" role="tabpanel" id="charts-fivetminute">
+                                <div id="highstock_2" style="height:310px;" data-highcharts-chart="1"></div>
+                            </div>
+                            <!--<div class="tab-content">
+                                <div class="tab-pane" role="tabpanel" id="charts-date">分时</div>
+                                <div class="tab-pane" role="tabpanel" id="charst-moredate">多日</div>
+                                <div class="tab-pane" role="tabpanel" id="charts-dateline">日线</div>
+                                <div class="tab-pane" role="tabpanel" id="charts-weekline">周线</div>
+                                <div class="tab-pane" role="tabpanel" id="charts-mouthline">月线</div>
+                                <div class="tab-pane" role="tabpanel" id="charts-oneminute">1分</div>
+                                <div class="tab-pane" role="tabpanel" id="charts-fiveminute">5分</div>
+                                <div class="tab-pane" role="tabpanel" id="charts-thirtyminut">30分</div>
+                                <div class="tab-pane" role="tabpanel" id="charts-hours">60分</div>
+                            </div>-->
+                            <div class="exchange-record">
+                                <ul class="record-nav">
+                                    <li role="presentation" class="active"><a href="#stock-holder" aria-controls="stock-holder" role="tab" data-toggle="tab">股票持仓</a></li>
+                                    <li role="presentation"><a href="#order-record" aria-controls="order-record" role="tab" data-toggle="tab">订单记录</a></li>
+                                    <li role="presentation"><a href="#contract-record" aria-controls="contract-record" role="tab" data-toggle="tab">成交记录</a></li>
+                                </ul>
+                                <div class="tab-content record-tab">
+                                    <div class="tab-pane active" role="tabpanel" id="stock-holder">
+                                        <table class="table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <td class="col-md-1">代码</td>
+                                                <td class="col-md-1">名称</td>
+                                                <td class="col-md-2">持有数量</td>
+                                                <td class="col-md-2">可卖数量</td>
+                                                <td class="col-md-1">市值</td>
+                                                <td class="col-md-1">成本价</td>
+                                                <td class="col-md-1">盈亏金额</td>
+                                                <td class="col-md-3">操作</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="stock-holder-table"></tbody>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane" role="tabpanel" id="order-record">
+                                        <table>
+                                            <thead>
+                                            <tr>
+                                                <td>方向</td>
+                                                <td>代码</td>
+                                                <td>名称</td>
+                                                <td>订单价格</td>
+                                                <td>订单数量</td>
+                                                <td>交易状态</td>
+                                                <td>已成交@均价</td>
+                                                <td>下单时间</td>
+                                                <td>操作</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="order-record-table"></tbody>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane" role="tabpanel" id="contract-record">
+                                        <table>
+                                            <thead>
+                                            <tr>
+                                                <td>代码</td>
+                                                <td>名称</td>
+                                                <td>成交价格</td>
+                                                <td>手续费</td>
+                                                <td>买入数量</td>
+                                                <td>卖出数量</td>
+                                                <td>成交时间时间</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="contract-record-table"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="onestock-desc col-md-3">
+                            <div class="stock-news">
+                                <span class="stock-num">800000.HK</span>
+                                <span class="stock-name">恒生指数</span>
+                            </div>
+                            <div class="stock-desc">
+                                <label>最高价：</label><span id="max-price" style="color: red;">28149.36</span>
+                                <label>最低价：</label><span id="min-price" style="color: green;">28013.11</span>
+                                <label>开盘价：</label><span id="open-price" style="color: red;">28099.99</span>
+                                <label>成交额：</label><span id="transcation-price">842.39亿</span>
+                                <label>昨收价：</label><span class="history-price">28051.41</span>
+                                <label>平均价：</label><span class="ave-price" style="color: red;">28081.21</span>
+                                <label>振幅：</label><span class="swing">0.49</span>
+                                <label>上跌：</label><span class="up-stock">19</span>
+                                <label>下跌：</label><span class="down-stock" style="color: green;">24</span>
+                                <label>平盘：</label><span class="null-stock">7</span>
+                            </div>
+                            <div class="stock-exchange">
+                                <div class="exchange-title">交易窗口</div>
+                                <div class="exchange-detail">
+                                    <div class="form-group">
+                                        <label>类型：</label><span>普通窗口</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>代码</label><input type="number" />
+                                    </div>
+                                    <div class="form-group"><label>价格</label><input type="number" /></div>
+                                    <div class="form-group"><label>数量</label><input type="number" /></div>
+                                    <div class="form-group btn-exchange">
+                                        <button class="btn btn-info">模拟买入</button>
+                                        <button class="btn btn-info">模拟买出</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="market">.行情..</div>
+                <div role="tabpanel" class="tab-pane" id="exchange">.交易..</div>
+                <div role="tabpanel" class="tab-pane" id="consult">.咨询..</div>
+                <div role="tabpanel" class="tab-pane" id="news">.信息..</div>
+            </div>
+
+        </div>
+    </div>
+    <footer></footer>
+
+    <script src="/tools/jquery.min.js" type="text/javascript"></script>
+    <script src="/tools/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/tools/highstock/js/highstock.js" type="text/javascript"></script>
+    <script src="/tools/highstock/js/themes/dark-blue.js" type="text/javascript"></script>
+    <script src="/consultDetail/js/charts-highstock.js" type="text/javascript"></script>
+   <!-- <script src="../tool/echarts/echarts.js" type="text/javascript"></script>-->
+    <!--<script src="../tool/highstock.js" type="text/javascript"></script>-->
+    <!--<script src="js/consultDetail.js" type="text/javascript"></script>-->
+</body>
+</html>
