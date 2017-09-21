@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chen.account.dao.StockMarketMapperExtends">
+    <resultMap id="BaseResultMap" type="com.chen.account.entity.StockMarket">
+        <id column="symbol" property="symbol" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="buy" property="buy" jdbcType="VARCHAR"/>
+        <result column="change_percent" property="changePercent" jdbcType="VARCHAR"/>
+        <result column="price_change" property="priceChange" jdbcType="VARCHAR"/>
+        <result column="stocks_sum" property="stocksSum" jdbcType="VARCHAR"/>
+        <result column="amount" property="amount" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        symbol, name, buy, change_percent, price_change, stocks_sum, amount
+    </sql>
+    <select id="getAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from stock_market
+    </select>
+</mapper>

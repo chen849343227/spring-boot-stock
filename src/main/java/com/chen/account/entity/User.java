@@ -9,6 +9,8 @@ public class User {
 
     private String password;
 
+    private String money;
+
     private String randomstr;
 
     private Long createat;
@@ -45,6 +47,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getMoney() {
+        return money;
+    }
+
+    public void setMoney(String money) {
+        this.money = money;
     }
 
     public String getRandomstr() {

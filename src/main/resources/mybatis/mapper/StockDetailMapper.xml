@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chen.account.dao.StockDetailMapper">
+  <resultMap id="BaseResultMap" type="com.chen.account.entity.StockDetail">
+    <id column="stock_id" jdbcType="VARCHAR" property="stockId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="open_pri" jdbcType="VARCHAR" property="openPri" />
+    <result column="form_pri" jdbcType="VARCHAR" property="formPri" />
+    <result column="max_pri" jdbcType="VARCHAR" property="maxPri" />
+    <result column="min_pri" jdbcType="VARCHAR" property="minPri" />
+    <result column="lastest_pri" jdbcType="VARCHAR" property="lastestPri" />
+    <result column="up_pic" jdbcType="VARCHAR" property="upPic" />
+    <result column="stock_limit" jdbcType="VARCHAR" property="stockLimit" />
+    <result column="in_pic" jdbcType="VARCHAR" property="inPic" />
+    <result column="out_pic" jdbcType="VARCHAR" property="outPic" />
+    <result column="tra_amount" jdbcType="VARCHAR" property="traAmount" />
+    <result column="tra_number" jdbcType="VARCHAR" property="traNumber" />
+    <result column="priearn" jdbcType="VARCHAR" property="priearn" />
+    <result column="stock_date" jdbcType="BIGINT" property="stockDate" />
+    <result column="stock_time" jdbcType="TIME" property="stockTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    stock_id, name, open_pri, form_pri, max_pri, min_pri, lastest_pri, up_pic, stock_limit, 
+    in_pic, out_pic, tra_amount, tra_number, priearn, stock_date, stock_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from stock_detail
+    where stock_id = #{stockId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from stock_detail
+    where stock_id = #{stockId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.chen.account.entity.StockDetail">
+    insert into stock_detail (stock_id, name, open_pri, 
+      form_pri, max_pri, min_pri, 
+      lastest_pri, up_pic, stock_limit, 
+      in_pic, out_pic, tra_amount, 
+      tra_number, priearn, stock_date, 
+      stock_time)
+    values (#{stockId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{openPri,jdbcType=VARCHAR}, 
+      #{formPri,jdbcType=VARCHAR}, #{maxPri,jdbcType=VARCHAR}, #{minPri,jdbcType=VARCHAR}, 
+      #{lastestPri,jdbcType=VARCHAR}, #{upPic,jdbcType=VARCHAR}, #{stockLimit,jdbcType=VARCHAR}, 
+      #{inPic,jdbcType=VARCHAR}, #{outPic,jdbcType=VARCHAR}, #{traAmount,jdbcType=VARCHAR}, 
+      #{traNumber,jdbcType=VARCHAR}, #{priearn,jdbcType=VARCHAR}, #{stockDate,jdbcType=BIGINT}, 
+      #{stockTime,jdbcType=TIME})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chen.account.entity.StockDetail">
+    insert into stock_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="stockId != null">
+        stock_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="openPri != null">
+        open_pri,
+      </if>
+      <if test="formPri != null">
+        form_pri,
+      </if>
+      <if test="maxPri != null">
+        max_pri,
+      </if>
+      <if test="minPri != null">
+        min_pri,
+      </if>
+      <if test="lastestPri != null">
+        lastest_pri,
+      </if>
+      <if test="upPic != null">
+        up_pic,
+      </if>
+      <if test="stockLimit != null">
+        stock_limit,
+      </if>
+      <if test="inPic != null">
+        in_pic,
+      </if>
+      <if test="outPic != null">
+        out_pic,
+      </if>
+      <if test="traAmount != null">
+        tra_amount,
+      </if>
+      <if test="traNumber != null">
+        tra_number,
+      </if>
+      <if test="priearn != null">
+        priearn,
+      </if>
+      <if test="stockDate != null">
+        stock_date,
+      </if>
+      <if test="stockTime != null">
+        stock_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="stockId != null">
+        #{stockId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="openPri != null">
+        #{openPri,jdbcType=VARCHAR},
+      </if>
+      <if test="formPri != null">
+        #{formPri,jdbcType=VARCHAR},
+      </if>
+      <if test="maxPri != null">
+        #{maxPri,jdbcType=VARCHAR},
+      </if>
+      <if test="minPri != null">
+        #{minPri,jdbcType=VARCHAR},
+      </if>
+      <if test="lastestPri != null">
+        #{lastestPri,jdbcType=VARCHAR},
+      </if>
+      <if test="upPic != null">
+        #{upPic,jdbcType=VARCHAR},
+      </if>
+      <if test="stockLimit != null">
+        #{stockLimit,jdbcType=VARCHAR},
+      </if>
+      <if test="inPic != null">
+        #{inPic,jdbcType=VARCHAR},
+      </if>
+      <if test="outPic != null">
+        #{outPic,jdbcType=VARCHAR},
+      </if>
+      <if test="traAmount != null">
+        #{traAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="traNumber != null">
+        #{traNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="priearn != null">
+        #{priearn,jdbcType=VARCHAR},
+      </if>
+      <if test="stockDate != null">
+        #{stockDate,jdbcType=BIGINT},
+      </if>
+      <if test="stockTime != null">
+        #{stockTime,jdbcType=TIME},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chen.account.entity.StockDetail">
+    update stock_detail
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="openPri != null">
+        open_pri = #{openPri,jdbcType=VARCHAR},
+      </if>
+      <if test="formPri != null">
+        form_pri = #{formPri,jdbcType=VARCHAR},
+      </if>
+      <if test="maxPri != null">
+        max_pri = #{maxPri,jdbcType=VARCHAR},
+      </if>
+      <if test="minPri != null">
+        min_pri = #{minPri,jdbcType=VARCHAR},
+      </if>
+      <if test="lastestPri != null">
+        lastest_pri = #{lastestPri,jdbcType=VARCHAR},
+      </if>
+      <if test="upPic != null">
+        up_pic = #{upPic,jdbcType=VARCHAR},
+      </if>
+      <if test="stockLimit != null">
+        stock_limit = #{stockLimit,jdbcType=VARCHAR},
+      </if>
+      <if test="inPic != null">
+        in_pic = #{inPic,jdbcType=VARCHAR},
+      </if>
+      <if test="outPic != null">
+        out_pic = #{outPic,jdbcType=VARCHAR},
+      </if>
+      <if test="traAmount != null">
+        tra_amount = #{traAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="traNumber != null">
+        tra_number = #{traNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="priearn != null">
+        priearn = #{priearn,jdbcType=VARCHAR},
+      </if>
+      <if test="stockDate != null">
+        stock_date = #{stockDate,jdbcType=BIGINT},
+      </if>
+      <if test="stockTime != null">
+        stock_time = #{stockTime,jdbcType=TIME},
+      </if>
+    </set>
+    where stock_id = #{stockId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chen.account.entity.StockDetail">
+    update stock_detail
+    set name = #{name,jdbcType=VARCHAR},
+      open_pri = #{openPri,jdbcType=VARCHAR},
+      form_pri = #{formPri,jdbcType=VARCHAR},
+      max_pri = #{maxPri,jdbcType=VARCHAR},
+      min_pri = #{minPri,jdbcType=VARCHAR},
+      lastest_pri = #{lastestPri,jdbcType=VARCHAR},
+      up_pic = #{upPic,jdbcType=VARCHAR},
+      stock_limit = #{stockLimit,jdbcType=VARCHAR},
+      in_pic = #{inPic,jdbcType=VARCHAR},
+      out_pic = #{outPic,jdbcType=VARCHAR},
+      tra_amount = #{traAmount,jdbcType=VARCHAR},
+      tra_number = #{traNumber,jdbcType=VARCHAR},
+      priearn = #{priearn,jdbcType=VARCHAR},
+      stock_date = #{stockDate,jdbcType=BIGINT},
+      stock_time = #{stockTime,jdbcType=TIME}
+    where stock_id = #{stockId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,12 +1,12 @@
 package com.chen.account.controller;
 
+import com.chen.account.entity.Order;
+import com.chen.account.service.impl.StockServiceImpl;
 import com.chen.common.http.entity.Response;
 import com.chen.common.utils.JuheDemo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,8 +22,37 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping(value = "/stock")
 public class StockMarketController {
 
+    @Autowired
+    private StockServiceImpl service;
+
+    @RequestMapping(value = "/all", method = RequestMethod.POST)
+    public Response getStockMarketList(HttpServletRequest request) {
+        return service.getStockMarketList();
+    }
+
+    @RequestMapping(value = "/detail", method = RequestMethod.POST)
+    public Response getStockDetail(HttpServletRequest request) {
+        String stockId = request.getParameter("stockId");
+        return service.getStockDetail(stockId);
+    }
+
+
+    @PostMapping("/commitOrder")
+    public Response commitOrder(Order order) {
+        // return service.submitOrder(order);
+        return null;
+    }
+
+
+    /**
+     * 这个是调用聚合数据
+     *
+     * @param request
+     * @param httpServletResponse
+     * @return
+     */
     @RequestMapping(value = "/hkall", method = RequestMethod.POST)
-    public Response getHKStockMartekList(HttpServletRequest request, HttpServletResponse httpServletResponse) {
+    public Response getHKStockMarketList(HttpServletRequest request, HttpServletResponse httpServletResponse) {
         String page = request.getParameter("page");
         String type = request.getParameter("type");
         Response response = JuheDemo.requestHKStockMartekList(Integer.parseInt(page), Integer.parseInt(type));
@@ -31,8 +60,15 @@ public class StockMarketController {
         return response;
     }
 
+    /**
+     * 这个是调用聚合数据
+     *
+     * @param request
+     * @param httpServletResponse
+     * @return
+     */
     @RequestMapping(value = "/hk", method = RequestMethod.POST)
-    private Response getHKStockMartek(HttpServletRequest request, HttpServletResponse httpServletResponse) {
+    private Response getHKStockMarket(HttpServletRequest request, HttpServletResponse httpServletResponse) {
         String num = request.getParameter("num");
         Response response = null;
         if (num != null) {
