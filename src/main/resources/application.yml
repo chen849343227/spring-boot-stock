@@ -9,6 +9,8 @@ spring:
     password: 960930
 
 
+
+
 #  mvc:
  #   static-path-pattern: /**
  # resources:

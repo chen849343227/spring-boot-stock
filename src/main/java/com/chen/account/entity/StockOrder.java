@@ -2,7 +2,7 @@ package com.chen.account.entity;
 
 import java.util.Date;
 
-public class Order {
+public class StockOrder {
     private Integer orderId;  //订单Id
 
     private String stockId;  //股票Id
@@ -11,17 +11,19 @@ public class Order {
 
     private String user;   //用户手机号
 
-    private Double price;  //价格
+    private Double orderPrice;  //价格
 
-    private Integer state;  //状态  1(等待成交) or 0 （已成交）
+    private Integer orderState;  //状态  1(等待成交) or 0 （已成交）
 
-    private Integer type;  //类型  1(卖) or 0（买）
+    private Integer orderType;  //类型  1(卖) or 0（买）
 
-    private Date time;    //时间
+    private Date stockTime;    //时间
 
     private Integer amount;  //数量
 
     private Date matchTime;  //成交时间   也就是撮合时间
+
+    private Double matchPrice;
 
     public Integer getOrderId() {
         return orderId;
@@ -55,36 +57,36 @@ public class Order {
         this.user = user;
     }
 
-    public Double getPrice() {
-        return price;
+    public Double getOrderPrice() {
+        return orderPrice;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setOrderPrice(Double orderPrice) {
+        this.orderPrice = orderPrice;
     }
 
-    public Integer getState() {
-        return state;
+    public Integer getOrderState() {
+        return orderState;
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+    public void setOrderState(Integer orderState) {
+        this.orderState = orderState;
     }
 
-    public Integer getType() {
-        return type;
+    public Integer getOrderType() {
+        return orderType;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setOrderType(Integer orderType) {
+        this.orderType = orderType;
     }
 
-    public Date getTime() {
-        return time;
+    public Date getStockTime() {
+        return stockTime;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setStockTime(Date stockTime) {
+        this.stockTime = stockTime;
     }
 
     public Integer getAmount() {
@@ -101,5 +103,13 @@ public class Order {
 
     public void setMatchTime(Date matchTime) {
         this.matchTime = matchTime;
+    }
+
+    public Double getMatchPrice() {
+        return matchPrice;
+    }
+
+    public void setMatchPrice(Double matchPrice) {
+        this.matchPrice = matchPrice;
     }
 }
