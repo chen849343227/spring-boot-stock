@@ -21,22 +21,11 @@ $("#loginBtn").on('click', function (e) {
             alert("请求失败，网络异常" + data.message);
         },
         success: function (data) {
-            console.log(data);
-            /**
-             * {
-                 *   "isSuccess": false,
-                 *   "code": 1,
-                 *   "message": "登录失败，请稍后重试",
-                 *   "errorResponse": {
-                 *      "code": 10005,
-                 *      "message": "用户不存在"
-                 *      },
-                 *   "response": null
-                 *  }
-             */
+            var newDta=JSON.stringify(data)
             if (data.isSuccess) {
+                window.localStorage.setItem('userData',newDta);
                 window.location.href = 'consult';
-                window.sessionStorage.setItem('user', data.response.phone);
+
             } else {
                 console.log(data.errorResponse.message);
                 alert(data.errorResponse.message);

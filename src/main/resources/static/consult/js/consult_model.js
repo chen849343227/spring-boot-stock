@@ -29,12 +29,21 @@ $(function () {
             $('#hsi-stock2').append("<tr><td>"+this.symbol+"</td><td>"+this.name+"</td><td>"+this.dividend+"</td><td>"+this.stocks_sum+"</td><td>"+this.eps+"</td><td>"+this.volume+"</td><td>"+this.stocks_sum+"</td><td><a>模拟交易</a><a><span></span>自选</a></td></tr>");
         });
     }
+    var userData=window.localStorage.getItem('userData');
+    if(userData==undefined){
+        $("#userId").text('未登录');
+    }else{
+        var newUD=JSON.parse(userData);
+        var userID=newUD.response.username;
+        $("#userName").text(userID);
+    }
+
 });
 
 /*定义oncli函数，请求个股详细信息*/
 function oncli(stockId) {
     var code=$(stockId).parent().parent().children().first().text();
-    alert(code);
+    window.sessionStorage.setItem('code',code);
     $(function () {
         $.ajax({
             url: '/stock/detail',
@@ -49,8 +58,13 @@ function oncli(stockId) {
             alert("！！！");
             },
             success: function (data) {
-            console.log(data);
+                window.location.href = 'simulation';
             }
         });
     });
+}
+
+//请求用户的信息
+function getStorang(number){
+
 }

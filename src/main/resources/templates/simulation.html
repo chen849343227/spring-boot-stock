@@ -19,9 +19,10 @@
             <ul class="nav">
                 <li><a href="#">Brand</a></li>
                 <li><a href="#">首页 </a></li>
-                <li><a href="#">行情</a></li>
+                <li><a href="#" class="active">行情</a></li>
                 <li><a href="#">咨询</a></li>
                 <li><a href="#">关于</a></li>
+                <li><a href="#">我的</a></li>
                 <li>
                     <a id="userId">name</a>
                     <ul class="userSystem">
@@ -69,8 +70,7 @@
                 <div class="div001"></div>
                 <ul id="account">
                     <li>
-                        <p class="p01">寻人启事7243179</p>
-                        <p>7243179</p>
+                        <p class="p01">null</p>
                     </li>
                     <li>
                         <p class="p01">资产总值</p>
@@ -99,8 +99,8 @@
                         </div>
                         <div class="div002">
                             <span class="price01">--</span>
-                            <span>--</span>
-                            <span>--</span>
+                            <span></span>
+                            <span></span>
                         </div>
                         <div class="fr01">
                             <span class="time001"><i></i>--</span>
@@ -179,11 +179,11 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="li02">
+                            <li class="li02" id="li02">
                                 <div class="divC01">
                                     <div class="div001">
                                         <span class="fl js-form-stockName"></span>
-                                        <span class="fr"><span class="js-form-stockPriceLabel"
+                                        <span class="fr"><span class="js-form-stockPriceLabel up"
                                                                style="cursor: pointer;"></span></span>
                                     </div>
                                 </div>
@@ -192,7 +192,7 @@
                                 <div class="divT01">价格</div>
                                 <div class="divC01">
                                     <div style="z-index:22" class="inputBar01 inputBar01W01">
-                                        <input type="text" name="price"
+                                        <input type="text" name="price" id="price"
                                                class="inputTxt01 ui-tradepriceinput js-form-stockPrice"
                                                data-market-type="3" value="0"/>
                                         <span class="row01 row02 row02-2 ui-numberinput-increase"><i class="iconfont">&#xe607;</i></span>
@@ -201,7 +201,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="li02">
+                            <li class="li02" id="li022">
                                 <div class="div001 js-onelevel-wrapper">
                                     <span class="fl">买一价 <font
                                             class="buy cursorPointer js-onelevel-buy">--</font></span>
@@ -222,7 +222,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="li02">
+                            <li class="li02" id="li0222">
                                 <div class="div001">
                                     <span class="fl">最大可买 <font
                                             class="buy js-form-buyLimit cursorPointer">0</font></span>
@@ -231,9 +231,9 @@
                                 </div>
                             </li>
                             <li class="btnLi01">
-                                <button type="button" data-action="buy" class="button btn01 js-buy-sell-btn">模拟买入
+                                <button type="button" id="buy" class="button btn01 js-buy-sell-btn">模拟买入
                                 </button>
-                                <button type="button" data-action="sell" class="button btn02 js-buy-sell-btn">模拟卖出
+                                <button type="button" id="sell" class="button btn02 js-buy-sell-btn">模拟卖出
                                 </button>
                             </li>
                         </ul>
@@ -314,7 +314,9 @@
                             </th>
                         </tr>
                         </thead>
-                        <tbody id="positions"></tbody>
+                        <tbody id="positions">
+
+                        </tbody>
                     </table>
                 </div>
             </div>
