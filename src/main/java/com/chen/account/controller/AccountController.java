@@ -24,7 +24,7 @@ import static com.chen.account.constant.AccountConstant.*;
  * <p>
  * date 17-9-4
  * <p>
- * desc
+ * desc 用户控制类
  */
 @RestController
 @RequestMapping(value = "/web/account")

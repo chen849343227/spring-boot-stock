@@ -16,35 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `order`
+-- Table structure for table `stock_data`
 --
-use stock;
-DROP TABLE IF EXISTS `order`;
+
+DROP TABLE IF EXISTS `stock_data`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `order` (
-  `order_id` int(10) NOT NULL,
+CREATE TABLE `stock_data` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `phone` varchar(45) NOT NULL,
   `stock_id` varchar(45) NOT NULL,
   `stock_name` varchar(45) NOT NULL,
-  `user` varchar(11) NOT NULL,
-  `price` double NOT NULL,
-  `state` int(1) NOT NULL,
-  `type` int(1) NOT NULL,
-  `time` datetime NOT NULL,
-  `amount` int(8) NOT NULL,
-  `match_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `have_amount` varchar(45) NOT NULL,
+  `sell_amount` varchar(45) NOT NULL,
+  `stock_money` varchar(45) NOT NULL,
+  `buy_money` varchar(45) NOT NULL,
+  `pro_amount` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `order`
+-- Dumping data for table `stock_data`
 --
 
-LOCK TABLES `order` WRITE;
-/*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (1,'00001','长和','1545678370',10.6,0,0,'2017-09-19 20:30:36',200,NULL),(2,'00001','长和','1526579293',10.1,0,1,'2017-09-19 21:30:36',300,NULL);
-/*!40000 ALTER TABLE `order` ENABLE KEYS */;
+LOCK TABLES `stock_data` WRITE;
+/*!40000 ALTER TABLE `stock_data` DISABLE KEYS */;
+INSERT INTO `stock_data` VALUES (1,'13545678370','00001','长和','500','500','100.6','100.1','0');
+/*!40000 ALTER TABLE `stock_data` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -115,6 +114,39 @@ INSERT INTO `stock_market` VALUES ('00001','长和','\01\00\01\0','\00\0.\04\00\
 UNLOCK TABLES;
 
 --
+-- Table structure for table `stock_order`
+--
+
+DROP TABLE IF EXISTS `stock_order`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stock_order` (
+  `order_id` int(10) NOT NULL,
+  `stock_id` varchar(45) NOT NULL,
+  `stock_name` varchar(45) NOT NULL,
+  `user` varchar(11) NOT NULL,
+  `order_price` double NOT NULL,
+  `order_state` int(1) NOT NULL,
+  `order_type` int(1) NOT NULL,
+  `stock_time` datetime NOT NULL,
+  `amount` int(8) NOT NULL,
+  `match_time` datetime DEFAULT NULL,
+  `match_price` double DEFAULT NULL,
+  PRIMARY KEY (`order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stock_order`
+--
+
+LOCK TABLES `stock_order` WRITE;
+/*!40000 ALTER TABLE `stock_order` DISABLE KEYS */;
+INSERT INTO `stock_order` VALUES (1,'00001','长和','1545678370',10.6,0,0,'2017-09-19 20:30:36',200,NULL,NULL),(2,'00001','长和','1526579293',10.1,0,1,'2017-09-19 21:30:36',300,NULL,NULL),(3,'00002','','11223',10.5,0,1,'2017-09-19 21:30:36',0,NULL,NULL),(4,'00003','','12',10.4,0,0,'2017-09-19 22:30:36',0,NULL,NULL),(5,'00004','','34',10.2,0,1,'2017-09-19 21:30:36',0,NULL,NULL),(6,'00005','','45',10.3,0,1,'2017-09-19 21:30:36',0,NULL,NULL),(7,'00004','','466646',10.5,0,0,'2017-09-19 21:30:36',0,NULL,NULL),(8,'00006','','34232',10.4,0,0,'2017-09-19 20:30:36',0,NULL,NULL),(9,'00003','','1234444',10.5,0,1,'2017-09-19 18:30:36',0,NULL,NULL),(10,'00001','长和','1526579293',10.2,0,1,'2017-09-18 21:30:36',300,NULL,NULL),(11,'00001','长和','1526579293',10.3,0,0,'2017-09-19 18:30:36',300,NULL,NULL),(12,'00001','长和','1526579293',10.2,0,1,'2017-09-20 21:30:36',300,NULL,NULL);
+/*!40000 ALTER TABLE `stock_order` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user`
 --
 
@@ -161,4 +193,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-09-21 15:58:06
+-- Dump completed on 2017-09-24 22:59:02

@@ -1,6 +1,6 @@
 package com.chen.account.service;
 
-import com.chen.account.entity.Order;
+import com.chen.account.entity.StockOrder;
 import com.chen.common.http.entity.Response;
 
 /**
@@ -12,11 +12,13 @@ import com.chen.common.http.entity.Response;
  */
 public interface IStockService {
 
-    Response submitOrder(Order order);
+    Response submitOrder(StockOrder order);
 
     Response getStockMarketList();
 
     Response getStockDetail(String stockId);
 
     Response getOrder(String phone);
+
+    Response getUserStockData(String phone);
 }

@@ -1,16 +1,16 @@
 package com.chen.account.service.impl;
 
 import com.chen.account.constant.StockConstant;
-import com.chen.account.dao.StockDetailMapper;
-import com.chen.account.dao.StockDetailMapperExtends;
-import com.chen.account.dao.StockMarketMapperExtends;
-import com.chen.account.entity.Order;
+import com.chen.account.dao.*;
+import com.chen.account.entity.StockData;
 import com.chen.account.entity.StockDetail;
 import com.chen.account.entity.StockMarket;
+import com.chen.account.entity.StockOrder;
 import com.chen.account.service.IStockService;
 import com.chen.common.http.entity.Response;
 import com.chen.common.http.res.TransmitUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,6 +31,12 @@ public class StockServiceImpl implements IStockService {
     @Autowired
     private StockMarketMapperExtends stockMarketMapper;
 
+    @Autowired
+    private StockOrderMapperExtends stockOrderMapperExtends;
+
+    @Autowired
+    private StockDataMapperExtends stockDataMapperExtends;
+
 
     /**
      * 提交订单
@@ -39,8 +45,12 @@ public class StockServiceImpl implements IStockService {
      * @return
      */
     @Override
-    public Response submitOrder(Order order) {
-
+    public Response submitOrder(StockOrder order) {
+        int result = stockOrderMapperExtends.insert(order);
+        if (result == 1) {
+            //插入成功
+            // TransmitUtils.transmitResponse(true,StockConstant.COMMIT_ORDER_SUCCESS,)
+        }
         return null;
     }
 
@@ -69,6 +79,21 @@ public class StockServiceImpl implements IStockService {
 
     @Override
     public Response getOrder(String phone) {
-        return null;
+        List<StockOrder> order = stockOrderMapperExtends.selectByPhone(phone);
+        if (order != null) {
+            return TransmitUtils.transmitResponse(true, StockConstant.REQUEST_DATA_SUCCESS, order);
+        } else {
+            return TransmitUtils.transmitErrorResponse(StockConstant.REQUEST_DATA_NULL, StockConstant.CODE_STOCK_DATA_NULL, null);
+        }
+    }
+
+    @Override
+    public Response getUserStockData(String phone) {
+        List<StockData> stockData = stockDataMapperExtends.selectByPhone(phone);
+        if (stockData != null) {
+            return TransmitUtils.transmitResponse(true, StockConstant.REQUEST_DATA_SUCCESS, stockData);
+        } else {
+            return TransmitUtils.transmitErrorResponse(StockConstant.REQUEST_DATA_NULL, StockConstant.CODE_STOCK_DATA_NULL, null);
+        }
     }
 }

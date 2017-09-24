@@ -7,6 +7,7 @@ package com.chen.common.utils;
  * <p>
  * desc
  */
+
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.TypeAdapter;
@@ -27,9 +28,7 @@ import java.util.TimeZone;
 public final class ImprovedDateTypeAdapter extends TypeAdapter<Date> {
 
     public static final TypeAdapterFactory FACTORY = new TypeAdapterFactory() {
-
         public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> typeToken) {
-
             @SuppressWarnings("unchecked")
             TypeAdapter<T> typeAdapter = (TypeAdapter<T>) ((typeToken.getRawType() == Date.class) ? new ImprovedDateTypeAdapter()
                     : null);
@@ -42,9 +41,7 @@ public final class ImprovedDateTypeAdapter extends TypeAdapter<Date> {
 
     public ImprovedDateTypeAdapter() {
         this.enUsFormat = DateFormat.getDateTimeInstance(2, 2, Locale.US);
-
         this.localFormat = DateFormat.getDateTimeInstance(2, 2);
-
         this.iso8601Format = buildIso8601Format();
     }
 
@@ -65,25 +62,17 @@ public final class ImprovedDateTypeAdapter extends TypeAdapter<Date> {
 
     private synchronized Date deserializeToDate(String json) {
         try {
-
             return new Date(Long.parseLong(json));
         } catch (Exception e) {
-
             try {
-
                 return this.localFormat.parse(json);
             } catch (ParseException e1) {
-
                 try {
-
                     return this.enUsFormat.parse(json);
                 } catch (ParseException e2) {
-
                     try {
-
                         return this.iso8601Format.parse(json);
                     } catch (ParseException e3) {
-
                         throw new JsonSyntaxException(json, e3);
                     }
                 }

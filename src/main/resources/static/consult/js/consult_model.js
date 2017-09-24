@@ -16,6 +16,7 @@ $(function () {
     function erryFunction() {
         alert("error");
     }
+
     function succFunction(stock) {
         // $("#list").html('');
         console.log(stock);

@@ -1,43 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.chen.account.dao.OrderMapper">
-  <resultMap id="BaseResultMap" type="com.chen.account.entity.Order">
+<mapper namespace="com.chen.account.dao.StockOrderMapper">
+  <resultMap id="BaseResultMap" type="com.chen.account.entity.StockOrder">
     <id column="order_id" jdbcType="INTEGER" property="orderId" />
     <result column="stock_id" jdbcType="VARCHAR" property="stockId" />
     <result column="stock_name" jdbcType="VARCHAR" property="stockName" />
     <result column="user" jdbcType="VARCHAR" property="user" />
-    <result column="price" jdbcType="DOUBLE" property="price" />
-    <result column="state" jdbcType="INTEGER" property="state" />
-    <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="order_price" jdbcType="DOUBLE" property="orderPrice" />
+    <result column="order_state" jdbcType="INTEGER" property="orderState" />
+    <result column="order_type" jdbcType="INTEGER" property="orderType" />
+    <result column="stock_time" jdbcType="TIMESTAMP" property="stockTime" />
     <result column="amount" jdbcType="INTEGER" property="amount" />
     <result column="match_time" jdbcType="TIMESTAMP" property="matchTime" />
+    <result column="match_price" jdbcType="DOUBLE" property="matchPrice" />
   </resultMap>
   <sql id="Base_Column_List">
-    order_id, stock_id, stock_name, user, price, state, type, time, amount, match_time
+    order_id, stock_id, stock_name, user, order_price, order_state, order_type, stock_time, 
+    amount, match_time, match_price
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from order
+    from stock_order
     where order_id = #{orderId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from order
+    delete from stock_order
     where order_id = #{orderId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.chen.account.entity.Order">
-    insert into order (order_id, stock_id, stock_name, 
-      user, price, state, 
-      type, time, amount, 
-      match_time)
+  <insert id="insert" parameterType="com.chen.account.entity.StockOrder">
+    insert into stock_order (order_id, stock_id, stock_name, 
+      user, order_price, order_state, 
+      order_type, stock_time, amount, 
+      match_time, match_price)
     values (#{orderId,jdbcType=INTEGER}, #{stockId,jdbcType=VARCHAR}, #{stockName,jdbcType=VARCHAR}, 
-      #{user,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{state,jdbcType=INTEGER}, 
-      #{type,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, #{amount,jdbcType=INTEGER}, 
-      #{matchTime,jdbcType=TIMESTAMP})
+      #{user,jdbcType=VARCHAR}, #{orderPrice,jdbcType=DOUBLE}, #{orderState,jdbcType=INTEGER}, 
+      #{orderType,jdbcType=INTEGER}, #{stockTime,jdbcType=TIMESTAMP}, #{amount,jdbcType=INTEGER}, 
+      #{matchTime,jdbcType=TIMESTAMP}, #{matchPrice,jdbcType=DOUBLE})
   </insert>
-  <insert id="insertSelective" parameterType="com.chen.account.entity.Order">
-    insert into order
+  <insert id="insertSelective" parameterType="com.chen.account.entity.StockOrder">
+    insert into stock_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="orderId != null">
         order_id,
@@ -51,23 +53,26 @@
       <if test="user != null">
         user,
       </if>
-      <if test="price != null">
-        price,
+      <if test="orderPrice != null">
+        order_price,
       </if>
-      <if test="state != null">
-        state,
+      <if test="orderState != null">
+        order_state,
       </if>
-      <if test="type != null">
-        type,
+      <if test="orderType != null">
+        order_type,
       </if>
-      <if test="time != null">
-        time,
+      <if test="stockTime != null">
+        stock_time,
       </if>
       <if test="amount != null">
         amount,
       </if>
       <if test="matchTime != null">
         match_time,
+      </if>
+      <if test="matchPrice != null">
+        match_price,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -83,17 +88,17 @@
       <if test="user != null">
         #{user,jdbcType=VARCHAR},
       </if>
-      <if test="price != null">
-        #{price,jdbcType=DOUBLE},
+      <if test="orderPrice != null">
+        #{orderPrice,jdbcType=DOUBLE},
       </if>
-      <if test="state != null">
-        #{state,jdbcType=INTEGER},
+      <if test="orderState != null">
+        #{orderState,jdbcType=INTEGER},
       </if>
-      <if test="type != null">
-        #{type,jdbcType=INTEGER},
+      <if test="orderType != null">
+        #{orderType,jdbcType=INTEGER},
       </if>
-      <if test="time != null">
-        #{time,jdbcType=TIMESTAMP},
+      <if test="stockTime != null">
+        #{stockTime,jdbcType=TIMESTAMP},
       </if>
       <if test="amount != null">
         #{amount,jdbcType=INTEGER},
@@ -101,10 +106,13 @@
       <if test="matchTime != null">
         #{matchTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="matchPrice != null">
+        #{matchPrice,jdbcType=DOUBLE},
+      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.chen.account.entity.Order">
-    update order
+  <update id="updateByPrimaryKeySelective" parameterType="com.chen.account.entity.StockOrder">
+    update stock_order
     <set>
       <if test="stockId != null">
         stock_id = #{stockId,jdbcType=VARCHAR},
@@ -115,17 +123,17 @@
       <if test="user != null">
         user = #{user,jdbcType=VARCHAR},
       </if>
-      <if test="price != null">
-        price = #{price,jdbcType=DOUBLE},
+      <if test="orderPrice != null">
+        order_price = #{orderPrice,jdbcType=DOUBLE},
       </if>
-      <if test="state != null">
-        state = #{state,jdbcType=INTEGER},
+      <if test="orderState != null">
+        order_state = #{orderState,jdbcType=INTEGER},
       </if>
-      <if test="type != null">
-        type = #{type,jdbcType=INTEGER},
+      <if test="orderType != null">
+        order_type = #{orderType,jdbcType=INTEGER},
       </if>
-      <if test="time != null">
-        time = #{time,jdbcType=TIMESTAMP},
+      <if test="stockTime != null">
+        stock_time = #{stockTime,jdbcType=TIMESTAMP},
       </if>
       <if test="amount != null">
         amount = #{amount,jdbcType=INTEGER},
@@ -133,20 +141,24 @@
       <if test="matchTime != null">
         match_time = #{matchTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="matchPrice != null">
+        match_price = #{matchPrice,jdbcType=DOUBLE},
+      </if>
     </set>
     where order_id = #{orderId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.chen.account.entity.Order">
-    update order
+  <update id="updateByPrimaryKey" parameterType="com.chen.account.entity.StockOrder">
+    update stock_order
     set stock_id = #{stockId,jdbcType=VARCHAR},
       stock_name = #{stockName,jdbcType=VARCHAR},
       user = #{user,jdbcType=VARCHAR},
-      price = #{price,jdbcType=DOUBLE},
-      state = #{state,jdbcType=INTEGER},
-      type = #{type,jdbcType=INTEGER},
-      time = #{time,jdbcType=TIMESTAMP},
+      order_price = #{orderPrice,jdbcType=DOUBLE},
+      order_state = #{orderState,jdbcType=INTEGER},
+      order_type = #{orderType,jdbcType=INTEGER},
+      stock_time = #{stockTime,jdbcType=TIMESTAMP},
       amount = #{amount,jdbcType=INTEGER},
-      match_time = #{matchTime,jdbcType=TIMESTAMP}
+      match_time = #{matchTime,jdbcType=TIMESTAMP},
+      match_price = #{matchPrice,jdbcType=DOUBLE}
     where order_id = #{orderId,jdbcType=INTEGER}
   </update>
 </mapper>
