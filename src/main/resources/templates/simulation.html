@@ -143,7 +143,7 @@
                     <div class="zxBox01">
                         <div class="tbC01 tbC02">
                             <div class="kTab01">
-                                交易窗口
+
                             </div>
                         </div>
                     </div>
@@ -252,23 +252,7 @@
                                 <a href="javascript:void(0)" class="js-chart-btn" data-target="kChartWrapper"
                                    data-type="4">月K</a>
                             </div>
-                            <div class="js-chart-wrapper" id="chartWrapper"
-                                 style="width: 540px;height: 196px;margin-left: -10px;">
-                                <canvas id="timeChart" style="position: absolute;z-index: 9;"></canvas>
-                                <canvas id="timeTipChart" style="position: absolute;z-index: 10"></canvas>
-                            </div>
-                            <div class="js-chart-wrapper" id="kChartWrapper"
-                                 style="position: relative;display: none;margin-left: -10px;">
-                                <div class="maTab01 js-ma-wrapper" style="margin: 4px 0;">
-                                    <a href="#" data-value="5"><em class="em01"></em><span>MA5</span></a>
-                                    <a href="#" data-value="10"><em class="em02"></em><span>MA10</span></a>
-                                    <a href="#" data-value="20"><em class="em03"></em><span>MA20</span></a>
-                                    <a href="#" data-value="60"><em class="em04"></em><span>MA60</span></a>
-                                </div>
-                                <canvas id="kChart" style="position: absolute;z-index: 9;"></canvas>
-                                <canvas id="sliderChart" style="position: absolute;z-index: 10;"></canvas>
-                                <canvas id="kTipChart" style="position: absolute;z-index: 11"></canvas>
-                            </div>
+                            <div id="container" style="width:540px;height:330px;margin:auto"></div>
                         </div>
                     </div>
                 </div>
@@ -428,6 +412,7 @@
     </div>
 </footer>
 <script src="/tools/jquery.min.js"></script>
+<script src="/simulation/js/highcharts.js"></script>
 <script src="/simulation/js/main.js"></script>
 </body>
 </html>

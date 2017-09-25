@@ -112,4 +112,22 @@ public class StockOrder {
     public void setMatchPrice(Double matchPrice) {
         this.matchPrice = matchPrice;
     }
+
+
+    @Override
+    public String toString() {
+        return "StockOrder{" +
+                "orderId=" + orderId +
+                ", stockId='" + stockId + '\'' +
+                ", stockName='" + stockName + '\'' +
+                ", user='" + user + '\'' +
+                ", orderPrice=" + orderPrice +
+                ", orderState=" + orderState +
+                ", orderType=" + orderType +
+                ", stockTime=" + stockTime +
+                ", amount=" + amount +
+                ", matchTime=" + matchTime +
+                ", matchPrice=" + matchPrice +
+                '}';
+    }
 }

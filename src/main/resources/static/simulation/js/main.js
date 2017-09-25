@@ -1,5 +1,5 @@
 $().ready(function () {
-    var code = window.sessionStorage.getItem('code');
+    code = window.sessionStorage.getItem('code');
     init(code);
     var userData=window.localStorage.getItem('userData');
     if(userData==undefined){
@@ -19,6 +19,7 @@ $().ready(function () {
 var newData;
 var buy;
 var money;
+var code;
 var $account=$("#account"),
     $content=$account.find("p");
 var $watchList=$("#watchList");
@@ -49,7 +50,6 @@ function init(code) {
         });
     });
 };
-
 /*** 返回登录 ***/
 $("#userId").on('click',function(){
     var $val = $(this).text();
@@ -62,7 +62,7 @@ $("#userId").on('click',function(){
 //获取个人持股信息
 function getStockData(phone){
     $.ajax({
-        url: 'http://192.168.43.76:8080/stock/data',
+        url: '/stock/data',
         type: 'POST',
         dataType: 'json',
         timeout: 2000,
@@ -74,7 +74,14 @@ function getStockData(phone){
             alert("ajax请求失败"+data);
         },
         success: function (data) {
-            var newdata = data.response;
+            var newDataa = data.response;
+            var newdata;
+            for(x in newDataa){
+                if(newDataa[x].stockId==code){
+                    console.log(newDataa[x]);
+                    newdata=newDataa[x];
+                }
+            };
             var proportion;
             var marketValue=(Number(newdata.stockMoney)*Number(newdata.haveAmount)).toFixed(2);
             var costing=Number(newdata.buyMoney).toFixed(2);
@@ -94,11 +101,6 @@ function getStockData(phone){
                 <td align="center"><a>交易</a></td>
             </tr>`
             $("#positions").append(content);
-            if(profit>Number(0)){
-                console.log("赚了！");
-            }else{
-                console.log("亏大了！");
-            }
         }
     })
 }
@@ -107,7 +109,7 @@ function initStorang(e){
     var content=`<li class="lio1" style="cursor:pointer;background-color: #f6f8fa;" data-hash='sh/${e.stockId}'>
     <div class="div01">
         <p class="p01">
-            <a>${e.name}</a>
+            <a id="stockName">${e.name}</a>
         </p>
         <p class="p02">${e.stockId}.sh</p>
     </div>
@@ -209,9 +211,32 @@ $("#buy").on("click",function(){
         message="交易失败！";
         message02="交易价格不在涨幅区间内"+"("+downPrice+"~"+upPrice+")";
     }else{
-        //回调函数
-        message="交易成功！";
-        message02="";
+        var $stockName = $("#stockName").text();
+        $.ajax({
+            async:false,
+            url: '/stock/commitOrder',
+            type: 'POST',
+            dataType: 'json',
+            timeout: 2000,
+            cache: false,
+            data: {
+                orderType:'0',
+                user:newData.phone,
+                stockId: code,
+                orderPrice:price,
+                amount:number,
+                stockName:$stockName
+            },
+            error: function (data) {
+                message="交易失败！";
+                message02="Ajax数据提交出错！";
+            },
+            success: function (data){
+                console.log(data);
+                message="交易成功！";
+                message02="";
+            }
+        });
     }
     var container = `<div class="cover">
     <div class="buyMessage">
@@ -238,4 +263,106 @@ $("#buy").on("click",function(){
         $cover.remove();
     });
 
+});
+
+/* 获取订单信息 */
+function printRecord(){
+    var orderType;
+    var orderState;
+    $.ajax({
+        async:true,
+        url: '/stock/commitOrder',
+        type: 'POST',
+        dataType: 'json',
+        timeout: 2000,
+        cache: false,
+        data: {
+            phone:newData.phone,
+            stockId:code
+        },
+        error: function (data) {
+            alert("数据请求失败！");
+        },
+        success: function (data){
+            console.log(data);
+            // var newdata = data.reponse;
+            // if(newdata=="null"){
+            //     console.log("没有订单信息！");
+            // }else{
+            //     if(newdata.orderType==0){
+            //         orderType="买入";
+            //     }else if(newdata.orderType==1){
+            //         orderType="卖出";
+            //     };
+            //     if(newdata.orderState==0){
+            //         orderState="已成交";
+            //     }else if(newdata.orderState==1){
+            //         orderState="等待成交";
+            //     }
+            //     var content = `<tr>
+            //     <td class="ttd">${orderType}</td>
+            //     <td class="ttd">${newdata.stockId}</td>
+            //     <td class="ttd" align="left">${newdata.stockName}</td>
+            //     <td class="ttd" align="right">${newdata.orderPrice}</td>
+            //     <td class="ttd" align="right">${newdata.amount}</td>
+            //     <td class="ttd" align="right">${orderState}</td>
+            //     <td class="ttd" align="right">0@0.00</td>
+            //     <td class="ttd" align="right">${newdata.stockTime}</td>
+            //     <td align="center"><a>交易</a></td>
+            // </tr>`
+            //     $("#orders").append(content);
+        }
+
+
+    })
+
+}
+/* 折线图 */
+chart = new Highcharts.Chart('container', {
+    plotOptions : {
+        series : {
+
+        }
+    },
+    credits : {
+        enabled : false
+    },
+    chart : {
+        // type:"column"
+        type : ""
+        // 指定图标类型，默认是折线图
+    },
+    title : {
+        text : "" // 图标标题
+    },
+    xAxis : {
+        type: 'time',
+
+    },
+    yAxis : {
+        title : {
+            text : '' // 指定y轴的标题
+        }
+    },
+    plotOptions : {
+        line : {
+            events : {
+                legendItemClick : function(event) {
+                    return false;
+                }
+            }
+        },
+        column:{
+            events : {
+                legendItemClick : function(event) {
+                    return false;
+                }
+            }
+        }
+    },
+    series : [ { // 指定数据列
+        name : "", // 列名
+        data : [100,104,101]
+        // 数据
+    }]
 });

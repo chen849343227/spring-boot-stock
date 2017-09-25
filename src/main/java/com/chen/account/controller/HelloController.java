@@ -64,6 +64,10 @@ public class HelloController {
     public String simulation(){
         return "simulation";
     }
+    @RequestMapping("/myself")
+    public String myself(){
+        return "myself";
+    }
 
     @RequestMapping("/home")
     public String home() {
