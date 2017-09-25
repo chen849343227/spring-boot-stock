@@ -20,5 +20,7 @@ public interface IStockService {
 
     Response getOrder(String phone);
 
+    Response getOrderAll(String phone, String stockId);
+
     Response getUserStockData(String phone);
 }

@@ -15,6 +15,8 @@ public interface StockOrderMapperExtends extends StockOrderMapper {
 
     List<StockOrder> selectByPhone(String phone);
 
+    List<StockOrder> selectByPhoneAndStockId(String phone, String stockId);
+
     List<StockOrder> selectByStockId(String stockId);
 
     List<StockOrder> getAll();

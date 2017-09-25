@@ -38,20 +38,22 @@ public class StockMarketController {
 
     @PostMapping("/commitOrder")
     public Response commitOrder(StockOrder order) {
-         return service.submitOrder(order);
+        return service.submitOrder(order);
     }
 
+    @RequestMapping(value = "/allOrder", method = RequestMethod.POST)
+    public Response getAllOrder(HttpServletRequest request) {
+        String stockId = request.getParameter("stockId");
+        String phone = request.getParameter("phone");
+        return service.getOrderAll(phone, stockId);
+    }
 
     @RequestMapping(value = "/data", method = RequestMethod.POST)
-    public Response getUserStockData(HttpServletRequest request,HttpServletResponse httpServletResponse){
+    public Response getUserStockData(HttpServletRequest request, HttpServletResponse httpServletResponse) {
         String phone = request.getParameter("phone");
-        httpServletResponse.setHeader("Access-Control-Allow-Origin","*");
+        httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
         return service.getUserStockData(phone);
     }
-
-
-
-
 
 
     /**
