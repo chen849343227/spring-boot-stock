@@ -25,6 +25,8 @@ public class StockOrder {
 
     private Double matchPrice;
 
+    private Integer matchAmount;
+
     public Integer getOrderId() {
         return orderId;
     }
@@ -111,5 +113,13 @@ public class StockOrder {
 
     public void setMatchPrice(Double matchPrice) {
         this.matchPrice = matchPrice;
+    }
+
+    public Integer getMatchAmount() {
+        return matchAmount;
+    }
+
+    public void setMatchAmount(Integer matchAmount) {
+        this.matchAmount = matchAmount;
     }
 }

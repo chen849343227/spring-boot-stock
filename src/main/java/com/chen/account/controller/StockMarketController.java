@@ -42,9 +42,10 @@ public class StockMarketController {
     }
 
     @RequestMapping(value = "/allOrder", method = RequestMethod.POST)
-    public Response getAllOrder(HttpServletRequest request) {
+    public Response getAllOrder(HttpServletRequest request,HttpServletResponse httpServletResponse) {
         String stockId = request.getParameter("stockId");
         String phone = request.getParameter("phone");
+        httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
         return service.getOrderAll(phone, stockId);
     }
 

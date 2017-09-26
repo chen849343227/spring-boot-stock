@@ -1,6 +1,7 @@
 package com.chen.account.dao;
 
 import com.chen.account.entity.StockOrder;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface StockOrderMapperExtends extends StockOrderMapper {
 
     List<StockOrder> selectByPhone(String phone);
 
-    List<StockOrder> selectByPhoneAndStockId(String phone, String stockId);
+    List<StockOrder> selectByPhoneAndStockId(@Param("user") String phone,@Param("stockId") String stockId);
 
     List<StockOrder> selectByStockId(String stockId);
 

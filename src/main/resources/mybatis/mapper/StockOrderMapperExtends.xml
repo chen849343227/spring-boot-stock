@@ -3,21 +3,22 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.chen.account.dao.StockOrderMapperExtends">
     <resultMap id="BaseResultMap" type="com.chen.account.entity.StockOrder">
-        <id column="order_id" jdbcType="INTEGER" property="orderId"/>
-        <result column="stock_id" jdbcType="VARCHAR" property="stockId"/>
-        <result column="stock_name" jdbcType="VARCHAR" property="stockName"/>
-        <result column="user" jdbcType="VARCHAR" property="user"/>
-        <result column="order_price" jdbcType="DOUBLE" property="orderPrice"/>
-        <result column="order_state" jdbcType="INTEGER" property="orderState"/>
-        <result column="order_type" jdbcType="INTEGER" property="orderType"/>
-        <result column="stock_time" jdbcType="TIMESTAMP" property="stockTime"/>
-        <result column="amount" jdbcType="INTEGER" property="amount"/>
-        <result column="match_time" jdbcType="TIMESTAMP" property="matchTime"/>
-        <result column="match_price" jdbcType="DOUBLE" property="matchPrice"/>
+        <id column="order_id" jdbcType="INTEGER" property="orderId" />
+        <result column="stock_id" jdbcType="VARCHAR" property="stockId" />
+        <result column="stock_name" jdbcType="VARCHAR" property="stockName" />
+        <result column="user" jdbcType="VARCHAR" property="user" />
+        <result column="order_price" jdbcType="DOUBLE" property="orderPrice" />
+        <result column="order_state" jdbcType="INTEGER" property="orderState" />
+        <result column="order_type" jdbcType="INTEGER" property="orderType" />
+        <result column="stock_time" jdbcType="TIMESTAMP" property="stockTime" />
+        <result column="amount" jdbcType="INTEGER" property="amount" />
+        <result column="match_time" jdbcType="TIMESTAMP" property="matchTime" />
+        <result column="match_price" jdbcType="DOUBLE" property="matchPrice" />
+        <result column="match_amount" jdbcType="INTEGER" property="matchAmount" />
     </resultMap>
     <sql id="Base_Column_List">
     order_id, stock_id, stock_name, user, order_price, order_state, order_type, stock_time,
-    amount, match_time, match_price
+    amount, match_time, match_price, match_amount
   </sql>
 
     <select id="selectByPhone" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -46,7 +47,7 @@
         select
         <include refid="Base_Column_List"/>
         from stock_order
-        where stock_id = #{stockId,jdbcType = VARCHAR}
-        and user = #{user,jdbcType = VARCHAR}
+        where user = #{user,jdbcType = VARCHAR}
+        and stock_id = #{stockId,jdbcType = VARCHAR}
     </select>
 </mapper>
