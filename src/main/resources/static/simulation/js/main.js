@@ -14,6 +14,7 @@ $().ready(function () {
         getStockData(newData.phone);
     };
     initLocal();
+    printRecord();
 });
 /*** 声明 ***/
 var newData;
@@ -267,18 +268,20 @@ $("#buy").on("click",function(){
 
 /* 获取订单信息 */
 function printRecord(){
+    console.log(code);
+    console.log(newData.phone);
     var orderType;
     var orderState;
     $.ajax({
         async:true,
-        url: '/stock/commitOrder',
+        url: 'http://192.168.43.76:8080/stock/allOrder',
         type: 'POST',
         dataType: 'json',
         timeout: 2000,
         cache: false,
         data: {
-            phone:newData.phone,
-            stockId:code
+            stockId:code,
+            phone:newData.phone
         },
         error: function (data) {
             alert("数据请求失败！");

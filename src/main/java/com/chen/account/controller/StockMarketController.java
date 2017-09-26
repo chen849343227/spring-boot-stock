@@ -1,11 +1,9 @@
 package com.chen.account.controller;
 
-import com.chen.Application;
 import com.chen.account.entity.StockOrder;
 import com.chen.account.service.impl.StockServiceImpl;
 import com.chen.common.http.entity.Response;
 import com.chen.common.utils.JuheDemo;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping(value = "/stock")
 public class StockMarketController {
-    private static Logger logger = Logger.getLogger(StockMarketController.class);
-
 
     @Autowired
     private StockServiceImpl service;
@@ -42,20 +38,23 @@ public class StockMarketController {
 
     @PostMapping("/commitOrder")
     public Response commitOrder(StockOrder order) {
-        logger.info(order);
         return service.submitOrder(order);
     }
 
-
-    @RequestMapping(value = "/data", method = RequestMethod.POST)
-    public Response getUserStockData(HttpServletRequest request,HttpServletResponse httpServletResponse){
+    @RequestMapping(value = "/allOrder", method = RequestMethod.POST)
+    public Response getAllOrder(HttpServletRequest request) {
+        String stockId = request.getParameter("stockId");
         String phone = request.getParameter("phone");
-        return service.getUserStockData(phone);
+        System.out.println(stockId+"*****"+phone);
+        return service.getOrderAll(phone, stockId);
     }
 
-
-
-
+    @RequestMapping(value = "/data", method = RequestMethod.POST)
+    public Response getUserStockData(HttpServletRequest request, HttpServletResponse httpServletResponse) {
+        String phone = request.getParameter("phone");
+        httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
+        return service.getUserStockData(phone);
+    }
 
 
     /**
