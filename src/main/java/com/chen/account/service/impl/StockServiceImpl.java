@@ -9,9 +9,11 @@ import com.chen.account.entity.StockOrder;
 import com.chen.account.service.IStockService;
 import com.chen.common.http.entity.Response;
 import com.chen.common.http.res.TransmitUtils;
+import com.chen.common.utils.FormatUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,9 +41,6 @@ public class StockServiceImpl implements IStockService {
     @Autowired
     private StockDataMapperExtends stockDataMapperExtends;
 
-    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-
     /**
      * 提交订单
      *
@@ -53,10 +52,11 @@ public class StockServiceImpl implements IStockService {
         order.setOrderState(1);
         //转换时间格式
         Date currentTime = new Date();
-        String dateString = formatter.format(currentTime);
-        ParsePosition pos = new ParsePosition(8);
-        Date currentTime_2 = formatter.parse(dateString, pos);
-        order.setStockTime(currentTime_2);
+        try {
+            order.setStockTime(FormatUtil.formatDate(currentTime));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         int result = stockOrderMapperExtends.insert(order);
         if (result == 1) {
             //插入成功

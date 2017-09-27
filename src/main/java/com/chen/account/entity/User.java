@@ -9,7 +9,7 @@ public class User {
 
     private String password;
 
-    private String money;
+    private Double money;
 
     private String randomstr;
 
@@ -49,11 +49,11 @@ public class User {
         this.password = password;
     }
 
-    public String getMoney() {
+    public Double getMoney() {
         return money;
     }
 
-    public void setMoney(String money) {
+    public void setMoney(Double money) {
         this.money = money;
     }
 

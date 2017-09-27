@@ -1,7 +1,6 @@
 package com.chen.account.dao;
 
 import com.chen.account.entity.User;
-import org.apache.ibatis.annotations.Mapper;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);

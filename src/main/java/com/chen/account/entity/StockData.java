@@ -9,15 +9,15 @@ public class StockData {
 
     private String stockName;
 
-    private String haveAmount;
+    private Integer haveAmount;
 
-    private String sellAmount;
+    private Integer sellAmount;
 
-    private String stockMoney;
+    private Double stockMoney;
 
-    private String buyMoney;
+    private Double buyMoney;
 
-    private String proAmount;
+    private Double proMoney;
 
     public Integer getId() {
         return id;
@@ -51,43 +51,43 @@ public class StockData {
         this.stockName = stockName;
     }
 
-    public String getHaveAmount() {
+    public Integer getHaveAmount() {
         return haveAmount;
     }
 
-    public void setHaveAmount(String haveAmount) {
+    public void setHaveAmount(Integer haveAmount) {
         this.haveAmount = haveAmount;
     }
 
-    public String getSellAmount() {
+    public Integer getSellAmount() {
         return sellAmount;
     }
 
-    public void setSellAmount(String sellAmount) {
+    public void setSellAmount(Integer sellAmount) {
         this.sellAmount = sellAmount;
     }
 
-    public String getStockMoney() {
+    public Double getStockMoney() {
         return stockMoney;
     }
 
-    public void setStockMoney(String stockMoney) {
+    public void setStockMoney(Double stockMoney) {
         this.stockMoney = stockMoney;
     }
 
-    public String getBuyMoney() {
+    public Double getBuyMoney() {
         return buyMoney;
     }
 
-    public void setBuyMoney(String buyMoney) {
+    public void setBuyMoney(Double buyMoney) {
         this.buyMoney = buyMoney;
     }
 
-    public String getProAmount() {
-        return proAmount;
+    public Double getProMoney() {
+        return proMoney;
     }
 
-    public void setProAmount(String proAmount) {
-        this.proAmount = proAmount;
+    public void setProMoney(Double proMoney) {
+        this.proMoney = proMoney;
     }
 }
