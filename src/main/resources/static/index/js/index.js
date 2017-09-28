@@ -21,7 +21,7 @@ $("#loginBtn").on('click', function (e) {
             alert("请求失败，网络异常" + data.message);
         },
         success: function (data) {
-            var newDta=JSON.stringify(data)
+            var newDta=JSON.stringify(data.response)
             if (data.isSuccess) {
                 window.localStorage.setItem('userData',newDta);
                 window.location.href = 'consult';

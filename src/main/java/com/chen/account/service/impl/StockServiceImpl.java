@@ -51,7 +51,7 @@ public class StockServiceImpl implements IStockService {
      */
     @Override
     public Response submitOrder(StockOrder order) {
-        order.setOrderState(1);
+        order.setOrderState(0);
         //转换时间格式
         Date currentTime = new Date();
         String dateString = formatter.format(currentTime);

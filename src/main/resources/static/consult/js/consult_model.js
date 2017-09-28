@@ -35,7 +35,7 @@ $(function () {
         $("#userId").text('未登录');
     }else{
         var newUD=JSON.parse(userData);
-        var userID=newUD.response.username;
+        var userID=newUD.username;
         $("#userName").text(userID);
     }
 

@@ -13,7 +13,7 @@ public class StockOrder {
 
     private Double orderPrice;  //价格
 
-    private Integer orderState;  //状态  1(等待成交) or 0 （已成交）
+    private Integer orderState;  //状态  0(等待成交) or 1 （已成交）
 
     private Integer orderType;  //类型  1(卖) or 0（买）
 
@@ -24,6 +24,8 @@ public class StockOrder {
     private Date matchTime;  //成交时间   也就是撮合时间
 
     private Double matchPrice;
+
+    private Integer matchAmount;
 
     public Integer getOrderId() {
         return orderId;
@@ -113,21 +115,11 @@ public class StockOrder {
         this.matchPrice = matchPrice;
     }
 
+    public Integer getMatchAmount() {
+        return matchAmount;
+    }
 
-    @Override
-    public String toString() {
-        return "StockOrder{" +
-                "orderId=" + orderId +
-                ", stockId='" + stockId + '\'' +
-                ", stockName='" + stockName + '\'' +
-                ", user='" + user + '\'' +
-                ", orderPrice=" + orderPrice +
-                ", orderState=" + orderState +
-                ", orderType=" + orderType +
-                ", stockTime=" + stockTime +
-                ", amount=" + amount +
-                ", matchTime=" + matchTime +
-                ", matchPrice=" + matchPrice +
-                '}';
+    public void setMatchAmount(Integer matchAmount) {
+        this.matchAmount = matchAmount;
     }
 }

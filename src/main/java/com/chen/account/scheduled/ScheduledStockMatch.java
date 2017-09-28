@@ -144,6 +144,8 @@ public class ScheduledStockMatch {
                                 long match_time = System.currentTimeMillis();
                                 Date data = new Date(match_time);
                                 double match_price = (order1.getOrderPrice() + order2.getOrderPrice()) / 2;
+                                //对部分成交的订单生成一个新订单.
+                             //   addOrder(order1,order1.getAmount()-order2.getAmount(),order2.getAmount());
                                 return updateOrder(null, order2, amount, data, match_price);
                             } else if (Objects.equals(order1.getAmount(), order2.getAmount())) {
                                 //买卖数量相等
@@ -159,8 +161,7 @@ public class ScheduledStockMatch {
                                 double match_price = (order1.getOrderPrice() + order2.getOrderPrice()) / 2;
                                 return updateOrder(order1, null, amount, data, match_price);
                             }
-                            //对部分成交的订单生成一个新订单.
-                            // addOrder();
+
                         } else {
                             return false;
                         }
@@ -219,9 +220,11 @@ public class ScheduledStockMatch {
                             if (order1.getAmount() > order2.getAmount()) {
                                 //成交的数量
                                 int amount = order2.getAmount();
+                                //剩余的数量
                                 long match_time = System.currentTimeMillis();
                                 Date data = new Date(match_time);
                                 double match_price = (order1.getOrderPrice() + order2.getOrderPrice()) / 2;
+                               // addOrder(order1,);
                                 return updateOrder(null, order2, amount, data, match_price);
                             }else if (Objects.equals(order1.getAmount(), order2.getAmount())) {
                                 //买卖数量相等
@@ -260,34 +263,38 @@ public class ScheduledStockMatch {
          * @param order1
          * @param order2
          * @param amount
-         * @param data
+         * @param date
          * @param match_price
          * @return
          */
-        private boolean updateOrder(StockOrder order1, StockOrder order2, int amount, Date data, double match_price) {
+        private boolean updateOrder(StockOrder order1, StockOrder order2, int amount, Date date, double match_price) {
             if (order1 != null && order2 != null) {
-                order1.setMatchTime(data);
+                order1.setMatchTime(date);
                 order1.setOrderPrice(match_price);
                 order1.setOrderState(1);
+                order1.setMatchAmount(amount);
                 stockOrderMapperExtends.updateByPrimaryKey(order1);
-                order2.setMatchTime(data);
+                order2.setMatchTime(date);
                 order2.setOrderPrice(match_price);
                 order2.setOrderState(1);
+                order2.setMatchAmount(amount);
                 stockOrderMapperExtends.updateByPrimaryKey(order2);
                 return true;
             }
             //数量被消耗完的订单  更改其状态
             if (order1 != null) {
-                order1.setMatchTime(data);
+                order1.setMatchTime(date);
                 order1.setOrderPrice(match_price);
                 order1.setOrderState(1);
+                order1.setMatchAmount(amount);
                 stockOrderMapperExtends.updateByPrimaryKey(order1);
                 return true;
             }
             if (order2 != null) {
-                order2.setMatchTime(data);
+                order2.setMatchTime(date);
                 order2.setOrderPrice(match_price);
                 order2.setOrderState(1);
+                order2.setMatchAmount(amount);
                 stockOrderMapperExtends.updateByPrimaryKey(order2);
                 return true;
             }
