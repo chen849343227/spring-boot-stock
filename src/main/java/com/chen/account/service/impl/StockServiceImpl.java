@@ -49,7 +49,18 @@ public class StockServiceImpl implements IStockService {
      */
     @Override
     public Response submitOrder(StockOrder order) {
-        order.setOrderState(1);
+        StockData stockData = null;
+        //买单
+        if (order.getOrderType() == 0) {
+            order.setOrderType(0);
+        } else {
+            //卖单
+            order.setOrderType(1);
+            stockData = stockDataMapperExtends.selectByPhoneAndStockId(order.getUser(), order.getStockId());
+            stockData.setSellAmount(stockData.getHaveAmount()-order.getAmount());
+        }
+        //设置订单状态
+        order.setOrderState(0);
         //转换时间格式
         Date currentTime = new Date();
         try {
@@ -57,8 +68,10 @@ public class StockServiceImpl implements IStockService {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        System.out.println(order.toString());
         int result = stockOrderMapperExtends.insert(order);
-        if (result == 1) {
+        int result1 = stockDataMapperExtends.updateByPrimaryKey(stockData);
+        if (result == 1&&result1==1) {
             //插入成功
             return TransmitUtils.transmitResponse(true, StockConstant.COMMIT_ORDER_SUCCESSED, null);
         } else {

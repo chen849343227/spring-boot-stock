@@ -1,4 +1,5 @@
 $().ready(function () {
+    code=window.sessionStorage.getItem('code');
     userData = window.localStorage.getItem('userData');
     if (userData == undefined) {
         $("#userId").text('未登录');
@@ -7,19 +8,21 @@ $().ready(function () {
         console.log(userData);
         userData = {
             "userId":JSON.parse(userData).phone,
-            "userMoney":JSON.parse(userData).money
+            "userMoney":JSON.parse(userData).money,
+            "userName":JSON.parse(userData).username
         };
         staticPage();
         dynamicPage();
-        //var username = newData.username;
-        //console.log(newData);
-        //$("#userId").text(username);
-        //getStockData(newData.phone);
     };
-    // initLocal();
-    // printRecord();
-    // Charts();
-
+});
+/*** 返回登录 ***/
+$("#userId").on('click', function () {
+    var $val = $(this).text();
+    if ($val == '未登录') {
+        window.location.href = 'index';
+    } else {
+        return;
+    }
 });
 /*** 重写alert ***/
 function alert(message,message02){
@@ -49,12 +52,10 @@ function alert(message,message02){
     });
 };
 /*** 声明 ***/
-var userData;
+var userData,code;
 var buy;
-var money;
-var code;
 var dataMeg=[];
-var haveAmount=0;
+//var haveAmount=0;
 var $account = $("#account"),
     $content = $account.find("p");
 var $watchList = $("#watchList");
@@ -71,19 +72,34 @@ var $li0222 = $("#li0222").find("font");
 // },5000);
 /*** 静态 ***/
 function staticPage(){
-    console.log(userData);
-    // var userStockDa=
-        getUserDa(userData.userId);
-    //console.log(userStockDa);
+    $("#userId").text(userData.userName);
+    $content.eq(0).text(userData.userName).css({
+        "line-height": "32px", "height": "32px", "font-size": "14px"
+    });
+    $("#stockCodeInput").val(code);
+    $("[name='qty_str']").val(100);
 };
 /*** 动态 ***/
-
 function dynamicPage(){
+    (function(){
+        var nowTime=new Date();
+        var nowHours=nowTime.getHours();
+        var $time =$(".time001");
+        var meg="";
+        if(nowHours>=9&&nowHours<12){
+            meg="早盘";
+        }else if(nowHours>=12&&nowHours<15){
+            meg="午盘";
+        }else if(nowHours>=15){
+            meg="晚盘";
+        }else{
+            meg="夜盘";
+        };
+        $time.text(meg);
+    })();
 
-};
-/*** 数据请求 ***/
-function getUserDa(userPhone){
-    console.log(userPhone);
+    var phone=userData.userId;
+    var userStockData,StockData;
     $.ajax({
         url: '/stock/data',
         type: 'POST',
@@ -91,86 +107,63 @@ function getUserDa(userPhone){
         timeout: 1000,
         cache: false,
         data: {
-            phone: userPhone
-        },
-        error: function (data) {
-            alert("ajax请求失败" + data);
-        },
-        success(data){
-            console.log(data);
-            //return data;
-        }
-    });
-}
-/**** 页面初始请求 ***/
-function init(code) {
-    var nowTime=new Date();
-    var nowHours=nowTime.getHours();
-    var $time =$(".time001");
-    if(nowHours>=9&&nowHours<12){
-        $time.text("早盘");
-    }else if(nowHours>=12&&nowHours<15){
-        $time.text("午盘");
-    }else if(nowHours>=15){
-        $time.text("晚盘");
-    }else{
-        $time.text("收盘");
-    }
-    $.ajax({
-            url: '/stock/detail',
-            type: 'POST',
-            dataType: 'json',
-            timeout: 1000,
-            cache: false,
-            data: {
-                stockId: code
-            },
-            error: function (data) {
-                alert("ajax请求失败" + data);
-            },
-            success: function (data) {
-                console.log(data);
-                initStorang(data.response);
-            }
-    });
-};
-/*** 返回登录 ***/
-$("#userId").on('click', function () {
-    var $val = $(this).text();
-    if ($val == '未登录') {
-        window.location.href = 'index';
-    } else {
-        return;
-    }
-});
-
-//获取个人持股信息
-function getStockData(phone) {
-    $.ajax({
-        url: '/stock/data',
-        type: 'POST',
-        dataType: 'json',
-        timeout: 2000,
-        cache: false,
-        data: {
             phone: phone
         },
         error: function (data) {
             alert("ajax请求失败" + data);
         },
-        success: function (data) {
-            var newDataa = data.response;
+        success(data){
+            userStockData=data;
+        }
+    });
+    $.ajax({
+        url: '/stock/detail',
+        type: 'POST',
+        dataType: 'json',
+        timeout: 1000,
+        cache: false,
+        data: {
+            stockId: code
+        },
+        error: function (data) {
+            alert("ajax请求失败" + data);
+        },
+        success(data){
+            StockData=data;
+        }
+    });
+    printRecord();
+    var repeat = setTimeout(function(){
+        if(userStockData!=undefined&&StockData!=undefined){
+            console.log(userStockData);
+            console.log(StockData);
+            getStockData(userStockData,StockData);
+            clearTimeout(repeat);
+        }
+    },500);
+};
+
+/*** 数据填充刷新 ***/
+function getStockData(userStockData,StockData) {
+
+    /** 个人持股信息 **/
+    (function(){
+        console.log(userStockData);
+        var newDataa = userStockData.response;
+        var userStockContent="";
+        if(newDataa==null){
+            userStockContent=`<tr><td class="ttd" align="center" colspan="9">您没有该支股票的持股信息</td></tr>`;
+        }else{
             var newdata = [];
             for (var i = 0; i < newDataa.length; i++) {
                 if (newDataa[i].stockId == code) {
                     newdata[newdata.length] = newDataa[i];
                 }
-            }
+            };
             var stockId,stockName,stockMoney=0,haveAmount=0,sellAmount=0,marketValue=0,costing=0,profit=0,profitRatio=0;
             stockId=newdata[0].stockId;
             stockName=newdata[0].stockName;
             stockMoney=newdata[newdata.length-1].stockMoney;
-
             for(var i=0;i<newdata.length;i++){
                 haveAmount +=Number(newdata[i].haveAmount);
                 sellAmount +=Number(newdata[i].sellAmount);
@@ -180,13 +173,7 @@ function getStockData(phone) {
             profit =(marketValue-costing).toFixed(2);
             profitRatio=(profit / costing * 100).toFixed(2) + '%';
             costing=(costing/haveAmount).toFixed(2);
-            // var marketValue = (Number(newdata.stockMoney) * Number(newdata.haveAmount)).toFixed(2);
-            // var costing = Number(newdata.buyMoney).toFixed(2);
-            // var totalCosting = costing * Number(newdata.haveAmount);
-            // var profit = (marketValue - totalCosting).toFixed(2);
-            // var profitRatio = (profit / totalCosting * 100).toFixed(2) + '%';
-            console.log(data);
-            var content = `<tr>
+            userStockContent = `<tr>
                 <td class="ttd">${stockId}</td>
                 <td class="ttd">${stockName}</td>
                 <td class="ttd" align="left">${haveAmount}@${stockMoney}</td>
@@ -196,73 +183,75 @@ function getStockData(phone) {
                 <td class="ttd" align="right">${profit}</td>
                 <td class="ttd" align="right">${profitRatio}</td>
                 <td align="center"><a>交易</a></td>
-            </tr>`
-            $("#positions").html("").append(content);
+            </tr>`;
+            $li0222.eq(1).text(sellAmount);
+            userData.sellAmount=sellAmount;
+            var allMarketValue,surplus;
+            // $content.eq(4).text((0).toFixed(2));
+            // $content.eq(6).text(residue.toFixed(2));
+            // $content.eq(8).text(0);
+        };
+        var userMoney=Number(userData.userMoney);
+        if (userMoney > 10000) {
+            var allMoney = Math.floor(userMoney / 10000) + "万";
+        } else {
+            var allMoney = userMoney.toFixed(2);
+        };
+        $content.eq(2).text(allMoney);
+        $("#positions").html("").append(userStockContent);
+    })();
+
+    /*** 页面加载信息 ***/
+    (function(){
+        console.log(StockData);
+        var e=StockData.response;
+        var content =
+        `<li class="lio1" style="cursor:pointer;background-color: #f6f8fa;" data-hash='sh/${e.stockId}'>
+            <div class="div01">
+                <p class="p01">
+                    <a id="stockName">${e.name}</a>
+                </p>
+                <p class="p02">${e.stockId}.sh</p>
+            </div>
+            <div class="div02 down">
+                <p class="p01">${e.lastestPri}</p>
+            </div>
+        </li>`;
+        var buy = Math.floor(userData.userMoney / e.inPic);
+        var newbuy = buy;
+        var firstPrice;
+        if (newbuy > 10000) {
+            newbuy = Math.floor(newbuy / 1000) + "k";
+        };
+        if(firstPrice==undefined){
+            firstPrice=e.inPic;
         }
-    })
-}
+        $("#price").val(e.lastestPri.toFixed(2));  //价格
+        $watchList.html("").append(content);
+        $container.eq(0).text(e.stockId + " " + e.name).attr("title", e.stockId + " " + e.name);
+        $container.eq(1).text(e.lastestPri);
+        $container.eq(7).text(e.maxPri);
+        $container.eq(8).text(e.minPri);
+        $container.eq(9).text(e.openPri);
+        $container.eq(10).text(e.formPri);
+        $container.eq(11).text((e.traAmount / 10000).toFixed(2) + "万");
+        $container.eq(12).text(e.traNumber);
+        $container.eq(13).text(e.priearn);
+        $container.eq(14).text(e.formPri);
+        $li02.eq(0).text(e.name);
+        $li02.eq(2).text(e.lastestPri.toFixed(2));
+        $li022.eq(0).text(e.inPic);
+        $li022.eq(1).text(e.outPic);
+        $li0222.eq(0).text(newbuy);
+    })();
 
-/*** 初始化界面-动态部分 ***/
-function initStorang(e) {
-    var content = `<li class="lio1" style="cursor:pointer;background-color: #f6f8fa;" data-hash='sh/${e.stockId}'>
-    <div class="div01">
-        <p class="p01">
-            <a id="stockName">${e.name}</a>
-        </p>
-        <p class="p02">${e.stockId}.sh</p>
-    </div>
-    <div class="div02 down">
-        <p class="p01">${e.lastestPri}</p>
-    </div>
-</li>`;
-    var buy = Math.floor(newData.money / e.inPic);
-    var newbuy = buy;
-    if (newbuy > 10000) {
-        newbuy = Math.floor(newbuy / 1000) + "k";
-    }
-    $watchList.html("").append(content);
-    $container.eq(0).text(e.stockId + " " + e.name).attr("title", e.stockId + " " + e.name);
-    $container.eq(1).text(e.lastestPri);
-    $container.eq(7).text(e.maxPri);
-    $container.eq(8).text(e.minPri);
-    $container.eq(9).text(e.openPri);
-    $container.eq(10).text(e.formPri);
-    $container.eq(11).text((e.traAmount / 10000).toFixed(2) + "万");
-    $container.eq(12).text(e.traNumber);
-    $container.eq(13).text(e.priearn);
-    $container.eq(14).text(e.formPri);
-    $("#stockCodeInput").val(e.stockId);
-    $("#price").val(e.inPic);
-    $("[name='qty_str']").val(100);
-    $li02.eq(0).text(e.name);
-    $li02.eq(2).text(e.maxPri);
-    $li022.eq(0).text(e.inPic);
-    $li022.eq(1).text(e.outPic);
-    $li0222.eq(0).text(newbuy);
-    $li0222.eq(1).text(haveAmount);
-};
-/* 账户部分信息 */
-function initLocal() {
-    if (newData.money > 10000) {
-        var allMoney = Math.floor(newData.money / 10000) + "万";
-    } else {
-        var allMoney = newData.money.toFixed(2);
-    }
-    $content.eq(0).text(newData.username).css({
-        "line-height": "32px", "height": "32px", "font-size": "14px"
-    });
-    $content.eq(2).text(allMoney);
-    $content.eq(4).text((0).toFixed(2));
-    money = Number(newData.money) - Number($content.eq(4).text());
-    $content.eq(6).text(money.toFixed(2));
-    $content.eq(8).text(0);
 };
 
-
-/**** 买入卖出 ***/
+/*** 买或者卖 ***/
 $("#buy").on("click", function () {
     var initPrice = Number($li022.eq(0).text());
     var message, message02, price=0, number=0;
+    var money=userData.userMoney;
     price = Number($("#price").val());
     number = Number($("[name='qty_str']").val());
     var buy_money = Math.floor(price * number);
@@ -287,8 +276,8 @@ $("#buy").on("click", function () {
     };
 });
 
+/*** 买或者卖 ***/
 $("#sell").on("click", function () {
-    haveAmount;
     var initPrice = Number($li022.eq(0).text());
     var message, message02, price=0, number=0;
     price = Number($("#price").val());
@@ -303,7 +292,7 @@ $("#sell").on("click", function () {
     if (sell_money == 0) {
         return false;
     }
-    if (number > haveAmount) {
+    if (number > userData.sellAmount) {
         message = "交易失败！";
         message02 = "交易的数量超过持股量。";
     }
@@ -314,6 +303,7 @@ $("#sell").on("click", function () {
         submitBuySell(1,price,number);
     };
 });
+/*** 买或者卖 ***/
 function submitBuySell(type,price,number){
     var $stockName = $("#stockName").text();
     var message,message02;
@@ -325,8 +315,8 @@ function submitBuySell(type,price,number){
         timeout: 2000,
         cache: false,
         data: {
-            orderType: '0',
-            user: newData.phone,
+            orderType: type,
+            user: userData.userId,
             stockId: code,
             orderPrice: price,
             amount: number,
@@ -343,7 +333,7 @@ function submitBuySell(type,price,number){
         }
     });
     alert(message,message02);
-}
+};
 /* 获取订单信息 */
 $("#order").on('click', function (e) {
     e.preventDefault();
@@ -351,7 +341,7 @@ $("#order").on('click', function (e) {
     $("#dealPart").hide().prev().show();
     printRecord();
 });
-
+/*** 订单信息 ***/
 function printRecord() {
     $.ajax({
         async: true,
@@ -362,7 +352,7 @@ function printRecord() {
         cache: false,
         data: {
             stockId: code,
-            phone: newData.phone
+            phone: userData.userId
         },
         error: function (data) {
             alert("数据请求失败！");
@@ -371,9 +361,8 @@ function printRecord() {
             console.log(data);
             var newdata = data.response;
             var orderType, orderState, content;
-            ;
-            if (newdata.length == 0) {
-                content = `<tr><td>还没有该支股票的订单信息！</td></tr>`;
+            if (newdata== null) {
+                content = `<tr><td class="ttd" align="center" colspan="9">还没有该支股票的订单信息！</td></tr>`;
                 $("#orders").append(content);
             } else {
                 var dataLen = newdata.length;
@@ -405,11 +394,11 @@ function printRecord() {
                         </tr>`;
                     }(i));
                 }
-            }
+            };
             $("#orders").html("").append(content);
         }
-    })
-}
+    });
+};
 
 /* 获取成交记录 */
 $("#deal").on('click', function (e) {
@@ -425,10 +414,9 @@ function charts(data){
         dataMeg.shift();
     };
     console.log(dataMeg);
-}
-/* 折线图 */
+};
 
-
+/*** 折线图 ***/
 function Charts() {
     var newData=[];
     var newStockMeg =window.localStorage.getItem('stockMeg');

@@ -1,9 +1,11 @@
 package com.chen.account.scheduled;
 
 import com.chen.account.dao.StockDataMapperExtends;
+import com.chen.account.dao.StockDetailMapperExtends;
 import com.chen.account.dao.StockOrderMapperExtends;
 import com.chen.account.dao.UserMapperExtends;
 import com.chen.account.entity.StockData;
+import com.chen.account.entity.StockDetail;
 import com.chen.account.entity.StockOrder;
 import com.chen.account.entity.User;
 import com.chen.common.utils.FormatUtil;
@@ -13,8 +15,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -43,6 +49,9 @@ public class ScheduledStockMatch {
     @Autowired
     private UserMapperExtends userMapperExtends;
 
+    @Autowired
+    private StockDetailMapperExtends stockDetailMapperExtends;
+
     //存储撮合后的订单
     private StockOrder matchOrder;
 
@@ -54,7 +63,7 @@ public class ScheduledStockMatch {
         logger.info(current.getName() + ":" + current.getId());
         //从数据库取数据(除掉相同的股票ID)
         List<StockOrder> stockIds = stockOrderMapperExtends.getStockId();
-       // logger.info(stockIds == null);
+        // logger.info(stockIds == null);
         /**这里将股票分类 */
         if (stockIds.size() != 0) {
             lists = new ArrayList[stockIds.size()];
@@ -118,15 +127,15 @@ public class ScheduledStockMatch {
          * @param orders 总的订单
          */
         private void splitOrder(List<StockOrder> orders) {
+            boolean result;
             for (int i = 0; i < orders.size(); i++) {
                 //代表买单
                 if (orders.get(i).getOrderType() == 0) {
                     bigOrders.add(orders.get(i));
-                    try {
-                        //将买单添加到买单队列里面
-                        bigQueue.put(orders.get(i));
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    //将买单添加到买单队列里面
+                    result = bigQueue.offer(orders.get(i));
+                    if (!result) {
+                        return;
                     }
                 } else {   //卖单
                     askOrders.add(orders.get(i));
@@ -134,11 +143,10 @@ public class ScheduledStockMatch {
             }
             for (int i = askOrders.size() - 1; i >= 0; i--) {
                 //  System.out.println(askOrders.get(i).toString());
-                try {
-                    //将卖单添加到卖单队列里面
-                    askQueue.put(askOrders.get(i));
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                //将卖单添加到卖单队列里面
+                result = askQueue.offer(askOrders.get(i));
+                if (!result) {
+                    return;
                 }
             }
         }
@@ -156,50 +164,56 @@ public class ScheduledStockMatch {
             //买单长度大于卖单长度
             if (bigOrders.size() > askOrders.size()) {
                 for (int i = 0; i < bigOrders.size(); i++) {
-                    try {
-                        //先取数据
-                        order1 = bigQueue.take();
-                        order2 = askQueue.take();
-                        //首先买单价格必须大于卖单价格才能撮合
-                        if (order1.getOrderPrice() > order2.getOrderPrice()) {
-                            return updateOrder(order1, order2);
-                        } else {
-                            return false;
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    //先取数据
+                    order1 = bigQueue.poll();
+                    if (order1 == null) {
+                        return false;
+                    }
+                    order2 = askQueue.poll();
+                    if (order2 == null) {
+                        return false;
+                    }
+                    //首先买单价格必须大于卖单价格才能撮合
+                    if (order1.getOrderPrice() > order2.getOrderPrice()) {
+                        return updateOrder(order1, order2);
+                    } else {
+                        return false;
                     }
                 }
             } else if (bigOrders.size() == askOrders.size()) {
                 for (int i = 0; i < bigOrders.size(); i++) {
-                    try {
-                        //先取数据
-                        order1 = bigQueue.take();
-                        order2 = askQueue.take();
-                        //首先买单价格必须大于卖单价格才能撮合
-                        if (order1.getOrderPrice() > order2.getOrderPrice()) {
-                            return updateOrder(order1, order2);
-                        } else {
-                            return false;
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    //先取数据
+                    order1 = bigQueue.poll();
+                    if (order1 == null) {
+                        return false;
+                    }
+                    order2 = askQueue.poll();
+                    if (order2 == null) {
+                        return false;
+                    }
+                    //首先买单价格必须大于卖单价格才能撮合
+                    if (order1.getOrderPrice() > order2.getOrderPrice()) {
+                        return updateOrder(order1, order2);
+                    } else {
+                        return false;
                     }
                 }
             } else {
                 for (int i = 0; i < askOrders.size(); i++) {
-                    try {
-                        //先取数据
-                        order1 = bigQueue.take();
-                        order2 = askQueue.take();
-                        //首先买单价格必须大于卖单价格才能撮合
-                        if (order1.getOrderPrice() > order2.getOrderPrice()) {
-                            return updateOrder(order1, order2);
-                        } else {
-                            return false;
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    //先取数据
+                    order1 = bigQueue.poll();
+                    if (order1 == null) {
+                        return false;
+                    }
+                    order2 = askQueue.poll();
+                    if (order2 == null) {
+                        return false;
+                    }
+                    //首先买单价格必须大于卖单价格才能撮合
+                    if (order1.getOrderPrice() > order2.getOrderPrice()) {
+                        return updateOrder(order1, order2);
+                    } else {
+                        return false;
                     }
                 }
             }
@@ -221,6 +235,7 @@ public class ScheduledStockMatch {
             int amount;
             //成交均价
             double match_price = (order1.getOrderPrice() + order2.getOrderPrice()) / 2;
+            match_price = new BigDecimal(match_price).setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue();
             try {
                 //格式化时间
                 date = FormatUtil.formatDate(new Date());
@@ -228,7 +243,8 @@ public class ScheduledStockMatch {
                 e.printStackTrace();
             }
             //买单数量大于等于卖单数量
-            if (order1.getAmount() >= order2.getAmount()) {
+            if (order1.getAmount() > order2.getAmount()) {
+                System.out.println("买单数量大于卖单数量");
                 int a, b;
                 amount = order1.getAmount() - order2.getAmount();
                 //买单数量部分成交
@@ -239,49 +255,66 @@ public class ScheduledStockMatch {
                 order1.setMatchAmount(order2.getAmount());
                 a = stockOrderMapperExtends.updateByPrimaryKey(order1);
                 //卖单完全成交
+                int order2Amount = order2.getAmount();
                 order2.setMatchTime(date);
                 order2.setMatchPrice(match_price);
                 order2.setOrderState(1);
                 order2.setMatchAmount(order2.getAmount());
+                order2.setAmount(0);
                 b = stockOrderMapperExtends.updateByPrimaryKey(order2);
                 //订单状态都修改成功了,
                 if (a == 1 && b == 1) {
                     //对用户的持有股票和金额进行修改
                     //设置买单 买入之后的状态
-                    StockData stockData = new StockData();
+                    StockData stockData = stockDataMapperExtends.selectByPhoneAndStockId(order1.getUser(), order1.getStockId());
+                    int haveNumber ;
+                    if (stockData != null) {
+                        haveNumber = order2Amount + stockData.getHaveAmount();
+                    } else {
+                        stockData = new StockData();
+                        haveNumber = order2Amount;
+                    }
                     User user;
                     //设置手机号
                     stockData.setPhone(order1.getUser());
                     //设置价格
                     stockData.setBuyMoney(order1.getOrderPrice());
+                    // int haveNumber = order2Amount+stockData.getHaveAmount();
                     //持有数量
-                    stockData.setHaveAmount(order2.getAmount());
+                    stockData.setHaveAmount(haveNumber);
+                    stockData.setSellAmount(haveNumber);
                     stockData.setStockId(order1.getStockId());
                     stockData.setStockName(order1.getStockName());
                     stockData.setStockMoney(order1.getMatchPrice());
+                    stockData.setProMoney(new BigDecimal((stockData.getBuyMoney() - match_price) * (stockData.getHaveAmount() - order1.getAmount())).setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue());
                     //更新用户账户
                     user = userMapperExtends.selectByPhone(order1.getUser());
-                    user.setMoney(user.getMoney() - (order2.getAmount() * match_price));
-                    userMapperExtends.updateByPrimaryKey(user);
-                    if (DEBUG) {
-                        logger.info("*****买家用户账户更新完成*****");
+                    if (user != null) {
+                        user.setMoney(user.getMoney() - (order1.getAmount() * match_price));
+                        if (DEBUG) {
+                            logger.info("*****买家用户账户更新完成*****");
+                        }
+                        if (stockDataMapperExtends.selectByPhoneAndStockId(order1.getUser(), order1.getStockId()) != null) {
+                            stockDataMapperExtends.updateByPrimaryKey(stockData);
+                        } else {
+                            stockDataMapperExtends.insert(stockData);
+                        }
                     }
-                    stockDataMapperExtends.updateByPrimaryKey(stockData);
                     if (DEBUG) {
                         logger.info("*****买家用户持股数据更新完成*****");
                     }
                     //设置卖单 卖出之后的状态
                     stockData = stockDataMapperExtends.selectByPhoneAndStockId(order2.getUser(), order2.getStockId());
                     //设置卖家持有的剩余股票
-                    stockData.setHaveAmount(stockData.getHaveAmount() - order2.getAmount());
-                    //设置卖家可卖的股票
-                    stockData.setSellAmount(stockData.getHaveAmount() - order2.getAmount());
+                    stockData.setHaveAmount(stockData.getHaveAmount() - order2Amount);
+                    /*//设置卖家可卖的股票
+                    stockData.setSellAmount(stockData.getHaveAmount());*/
                     //设置股票金额
                     stockData.setStockMoney(match_price);
                     //设置盈亏金额
-                    stockData.setProMoney((stockData.getBuyMoney() - match_price) * (stockData.getHaveAmount() - order2.getAmount()));
+                    stockData.setProMoney( new BigDecimal((stockData.getBuyMoney() - match_price) * (stockData.getHaveAmount() - order2Amount)).setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue());
                     user = userMapperExtends.selectByPhone(order2.getUser());
-                    user.setMoney(user.getMoney() + (order2.getAmount() * match_price));
+                    user.setMoney(user.getMoney() + (order2Amount * match_price));
                     userMapperExtends.updateByPrimaryKey(user);
                     if (DEBUG) {
                         logger.info("*****卖家用户账户更新完成*****");
@@ -290,50 +323,163 @@ public class ScheduledStockMatch {
                     if (DEBUG) {
                         logger.info("*****卖家用户持股数据更新完成*****");
                     }
+                    //更新股票的市价
+                    StockDetail stockDetail =  stockDetailMapperExtends.selectByStockId(order1.getStockId());
+                    stockDetail.setLastestPri(match_price);
+                    System.out.println(stockDetail);
+                    System.out.println(stockDetailMapperExtends.updateByPrimaryKey(stockDetail));
                     return true;
                 } else {
                     return false;
                 }
-            } else {
-                //卖单数量大于买单数量
+            } else if (Objects.equals(order1.getAmount(), order2.getAmount())) {
+                System.out.println("买单数量等于卖单数量");
                 int a, b;
-                amount = order2.getAmount() - order1.getAmount();
+                int orderAmount = order1.getAmount();
+                amount = order1.getAmount() - order2.getAmount();
+                System.out.println("两个订单相减:" + amount);
                 //买单完全成交
                 order1.setMatchTime(date);
                 order1.setMatchPrice(match_price);
                 order1.setOrderState(1);
-                order1.setMatchAmount(order2.getAmount());
+                order1.setAmount(amount);
+                order1.setMatchAmount(orderAmount);
                 a = stockOrderMapperExtends.updateByPrimaryKey(order1);
-                //卖单数量部分成交
+                if (DEBUG) {
+                    logger.info("*****买家用户订单更新完成*****");
+                }
+                //卖单完全成交
                 order2.setMatchTime(date);
                 order2.setMatchPrice(match_price);
-                order2.setOrderState(2);
+                order2.setOrderState(1);
                 order2.setAmount(amount);
-                order2.setMatchAmount(order2.getAmount());
+                order2.setMatchAmount(orderAmount);
                 b = stockOrderMapperExtends.updateByPrimaryKey(order2);
                 //订单状态都修改成功了,
                 if (a == 1 && b == 1) {
                     //对用户的持有股票和金额进行修改
                     //设置买单 买入之后的状态
-                    StockData stockData = new StockData();
+                    StockData stockData = stockDataMapperExtends.selectByPhoneAndStockId(order1.getUser(), order1.getStockId());
+                    int haveNumber ;
+                    if (stockData != null) {
+                        haveNumber = orderAmount + stockData.getHaveAmount();
+                    } else {
+                        stockData = new StockData();
+                        haveNumber = orderAmount;
+                    }
                     User user;
                     //设置手机号
                     stockData.setPhone(order1.getUser());
                     //设置价格
                     stockData.setBuyMoney(order1.getOrderPrice());
                     //持有数量
-                    stockData.setHaveAmount(order1.getAmount());
+                    stockData.setHaveAmount(haveNumber);
+                    stockData.setSellAmount(haveNumber);
                     stockData.setStockId(order1.getStockId());
                     stockData.setStockName(order1.getStockName());
                     stockData.setStockMoney(order1.getMatchPrice());
+                    stockData.setProMoney(new BigDecimal((stockData.getBuyMoney() - match_price) * (stockData.getHaveAmount() - orderAmount)).setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue());
                     //更新用户账户
                     user = userMapperExtends.selectByPhone(order1.getUser());
                     if (user != null) {
-                        user.setMoney(user.getMoney() - (order1.getAmount() * match_price));
+                        user.setMoney(user.getMoney() - (orderAmount * match_price));
                         if (DEBUG) {
                             logger.info("*****买家用户账户更新完成*****");
                         }
-                        stockDataMapperExtends.updateByPrimaryKey(stockData);
+                        if (stockDataMapperExtends.selectByPhoneAndStockId(order1.getUser(), order1.getStockId()) != null) {
+                            stockDataMapperExtends.updateByPrimaryKey(stockData);
+                        } else {
+                            stockDataMapperExtends.insert(stockData);
+                        }
+                    }
+                    if (DEBUG) {
+                        logger.info("*****买家用户持股数据更新完成*****");
+                    }
+                    //设置卖单 卖出之后的状态
+                    stockData = stockDataMapperExtends.selectByPhoneAndStockId(order2.getUser(), order2.getStockId());
+                    //设置卖家持有的剩余股票
+                    stockData.setHaveAmount(stockData.getHaveAmount() - orderAmount);
+                    /*//设置卖家可卖的股票
+                    stockData.setSellAmount(stockData.getHaveAmount() - orderAmount);*/
+                    //设置股票金额
+                    stockData.setStockMoney(match_price);
+                    //设置盈亏金额
+                    stockData.setProMoney(new BigDecimal((stockData.getBuyMoney() - match_price) * (stockData.getHaveAmount() - orderAmount)).setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue());
+                    user = userMapperExtends.selectByPhone(order2.getUser());
+                    user.setMoney(user.getMoney() + (orderAmount * match_price));
+                    userMapperExtends.updateByPrimaryKey(user);
+                    if (DEBUG) {
+                        logger.info("*****卖家用户账户更新完成*****");
+                    }
+                    stockDataMapperExtends.updateByPrimaryKey(stockData);
+                    if (DEBUG) {
+                        logger.info("*****卖家用户持股数据更新完成*****");
+                    }
+                    //更新股票的市价
+                    StockDetail stockDetail =  stockDetailMapperExtends.selectByStockId(order1.getStockId());
+                    stockDetail.setLastestPri(match_price);
+                    System.out.println(stockDetailMapperExtends.updateByPrimaryKey(stockDetail));
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                System.out.println("买单数量小于卖单数量");
+                //卖单数量大于买单数量
+                int a, b;
+                int order1Amount = order1.getAmount();
+                amount = order2.getAmount() - order1.getAmount();
+                //买单完全成交
+                order1.setMatchTime(date);
+                order1.setMatchPrice(match_price);
+                order1.setOrderState(1);
+                order1.setAmount(0);
+                order1.setMatchAmount(order1Amount);
+                a = stockOrderMapperExtends.updateByPrimaryKey(order1);
+                //卖单数量部分成交
+                order2.setMatchTime(date);
+                order2.setMatchPrice(match_price);
+                order2.setOrderState(2);
+                order2.setAmount(amount);
+                order2.setMatchAmount(order1Amount);
+                b = stockOrderMapperExtends.updateByPrimaryKey(order2);
+                //订单状态都修改成功了,
+                if (a == 1 && b == 1) {
+                    //对用户的持有股票和金额进行修改
+                    //设置买单 买入之后的状态
+                    StockData stockData = stockDataMapperExtends.selectByPhoneAndStockId(order1.getUser(), order1.getStockId());
+                    int haveNumber = 0;
+                    if (stockData != null) {
+                        haveNumber = order1Amount + stockData.getHaveAmount();
+                    } else {
+                        stockData = new StockData();
+                        haveNumber = order1Amount;
+                    }
+                    User user;
+                    //设置手机号
+                    stockData.setPhone(order1.getUser());
+                    //设置价格
+                    stockData.setBuyMoney(order1.getOrderPrice());
+                    //将持股的所有数量相加
+                    //持有数量
+                    stockData.setHaveAmount(haveNumber);
+                    stockData.setSellAmount(haveNumber);
+                    stockData.setStockId(order1.getStockId());
+                    stockData.setStockName(order1.getStockName());
+                    stockData.setStockMoney(order1.getMatchPrice());
+                    stockData.setProMoney(new BigDecimal((stockData.getBuyMoney() - match_price) * (stockData.getHaveAmount() - order1Amount)).setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue());
+                    //更新用户账户
+                    user = userMapperExtends.selectByPhone(order1.getUser());
+                    if (user != null) {
+                        user.setMoney(user.getMoney() - (order1Amount * match_price));
+                        if (DEBUG) {
+                            logger.info("*****买家用户账户更新完成*****");
+                        }
+                        if (stockDataMapperExtends.selectByPhoneAndStockId(order1.getUser(), order1.getStockId()) != null) {
+                            stockDataMapperExtends.updateByPrimaryKey(stockData);
+                        } else {
+                            stockDataMapperExtends.insert(stockData);
+                        }
                     }
                     if (DEBUG) {
                         logger.info("*****买家用户持股数据更新完成*****");
@@ -343,16 +489,16 @@ public class ScheduledStockMatch {
                     if (stockData != null) {
                         logger.info(stockData);
                         //设置卖家持有的剩余股票
-                        stockData.setHaveAmount(stockData.getHaveAmount() - order1.getAmount());
-                        //设置卖家可卖的股票
-                        stockData.setSellAmount(stockData.getHaveAmount() - order1.getAmount());
+                        stockData.setHaveAmount(stockData.getHaveAmount() - order1Amount);
+                       /* //设置卖家可卖的股票
+                        stockData.setSellAmount(stockData.getHaveAmount() - order1Amount);*/
                         //设置股票金额
                         stockData.setStockMoney(match_price);
                         //设置盈亏金额
-                        stockData.setProMoney((stockData.getBuyMoney() - match_price) * (stockData.getHaveAmount() - order1.getAmount()));
+                        stockData.setProMoney(new BigDecimal((stockData.getBuyMoney() - match_price) * (stockData.getHaveAmount() - order1Amount)).setScale(2,   BigDecimal.ROUND_HALF_UP).doubleValue());
                         user = userMapperExtends.selectByPhone(order2.getUser());
                         if (user != null) {
-                            user.setMoney(user.getMoney() - (order1.getAmount() * match_price));
+                            user.setMoney(user.getMoney() - (order1Amount * match_price));
                             if (DEBUG) {
                                 logger.info("*****卖家用户账户更新完成*****");
                             }
@@ -361,6 +507,11 @@ public class ScheduledStockMatch {
                         if (DEBUG) {
                             logger.info("*****卖家用户持股数据更新完成*****");
                         }
+                        //更新股票的市价
+                        StockDetail stockDetail =  stockDetailMapperExtends.selectByStockId(order1.getStockId());
+                        stockDetail.setLastestPri(match_price);
+                        System.out.println(stockDetail);
+                        System.out.println(stockDetailMapperExtends.updateByPrimaryKey(stockDetail));
                         return true;
                     } else {
                         return false;

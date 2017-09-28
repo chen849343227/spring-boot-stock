@@ -10,13 +10,13 @@ public class StockDetail {
 
     private String openPri;   //今开
 
-    private String formPri;  //昨开
+    private Double formPri;  //昨开
 
     private String maxPri;   //最高
 
     private String minPri;  //最低价
 
-    private String lastestPri;    //最新价
+    private Double lastestPri;    //最新价
 
     private String upPic;  //涨跌
 
@@ -60,11 +60,11 @@ public class StockDetail {
         this.openPri = openPri;
     }
 
-    public String getFormPri() {
+    public Double getFormPri() {
         return formPri;
     }
 
-    public void setFormPri(String formPri) {
+    public void setFormPri(Double formPri) {
         this.formPri = formPri;
     }
 
@@ -84,11 +84,11 @@ public class StockDetail {
         this.minPri = minPri;
     }
 
-    public String getLastestPri() {
+    public Double getLastestPri() {
         return lastestPri;
     }
 
-    public void setLastestPri(String lastestPri) {
+    public void setLastestPri(Double lastestPri) {
         this.lastestPri = lastestPri;
     }
 
@@ -162,5 +162,28 @@ public class StockDetail {
 
     public void setTime(Time stockTime) {
         this.stockTime = stockTime;
+    }
+
+
+    @Override
+    public String toString() {
+        return "StockDetail{" +
+                "stockId='" + stockId + '\'' +
+                ", name='" + name + '\'' +
+                ", openPri='" + openPri + '\'' +
+                ", formPri=" + formPri +
+                ", maxPri='" + maxPri + '\'' +
+                ", minPri='" + minPri + '\'' +
+                ", lastestPri=" + lastestPri +
+                ", upPic='" + upPic + '\'' +
+                ", stockLimit='" + stockLimit + '\'' +
+                ", inPic='" + inPic + '\'' +
+                ", outPic='" + outPic + '\'' +
+                ", traAmount='" + traAmount + '\'' +
+                ", traNumber='" + traNumber + '\'' +
+                ", priearn='" + priearn + '\'' +
+                ", stockDate=" + stockDate +
+                ", stockTime=" + stockTime +
+                '}';
     }
 }

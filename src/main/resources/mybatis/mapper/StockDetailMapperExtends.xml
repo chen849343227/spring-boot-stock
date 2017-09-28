@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.chen.account.dao.StockDetailMapperExtends" >
-  <resultMap id="BaseResultMap" type="com.chen.account.entity.StockDetail" >
-    <id column="stock_id" property="stockId" jdbcType="VARCHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="open_pri" property="openPri" jdbcType="VARCHAR" />
-    <result column="form_pri" property="formPri" jdbcType="VARCHAR" />
-    <result column="max_pri" property="maxPri" jdbcType="VARCHAR" />
-    <result column="min_pri" property="minPri" jdbcType="VARCHAR" />
-    <result column="lastest_pri" property="lastestPri" jdbcType="VARCHAR" />
-    <result column="up_pic" property="upPic" jdbcType="VARCHAR" />
-    <result column="limit" property="limit" jdbcType="VARCHAR" />
-    <result column="in_pic" property="inPic" jdbcType="VARCHAR" />
-    <result column="out_pic" property="outPic" jdbcType="VARCHAR" />
-    <result column="tra_amount" property="traAmount" jdbcType="VARCHAR" />
-    <result column="tra_number" property="traNumber" jdbcType="VARCHAR" />
-    <result column="priearn" property="priearn" jdbcType="VARCHAR" />
-    <result column="date" property="date" jdbcType="BIGINT" />
-    <result column="time" property="time" jdbcType="TIME" />
+<mapper namespace="com.chen.account.dao.StockDetailMapperExtends">
+  <resultMap id="BaseResultMap" type="com.chen.account.entity.StockDetail">
+    <id column="stock_id" jdbcType="VARCHAR" property="stockId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="open_pri" jdbcType="VARCHAR" property="openPri" />
+    <result column="form_pri" jdbcType="DOUBLE" property="formPri" />
+    <result column="max_pri" jdbcType="VARCHAR" property="maxPri" />
+    <result column="min_pri" jdbcType="VARCHAR" property="minPri" />
+    <result column="lastest_pri" jdbcType="DOUBLE" property="lastestPri" />
+    <result column="up_pic" jdbcType="VARCHAR" property="upPic" />
+    <result column="stock_limit" jdbcType="VARCHAR" property="stockLimit" />
+    <result column="in_pic" jdbcType="VARCHAR" property="inPic" />
+    <result column="out_pic" jdbcType="VARCHAR" property="outPic" />
+    <result column="tra_amount" jdbcType="VARCHAR" property="traAmount" />
+    <result column="tra_number" jdbcType="VARCHAR" property="traNumber" />
+    <result column="priearn" jdbcType="VARCHAR" property="priearn" />
+    <result column="stock_date" jdbcType="BIGINT" property="stockDate" />
+    <result column="stock_time" jdbcType="TIME" property="stockTime" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    stock_id, name, open_pri, form_pri, max_pri, min_pri, lastest_pri, up_pic, limit, 
-    in_pic, out_pic, tra_amount, tra_number, priearn, date, time
+  <sql id="Base_Column_List">
+    stock_id, name, open_pri, form_pri, max_pri, min_pri, lastest_pri, up_pic, stock_limit,
+    in_pic, out_pic, tra_amount, tra_number, priearn, stock_date, stock_time
   </sql>
+  <select id="selectByStockId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from stock_detail
+    where stock_id = #{stockId,jdbcType=VARCHAR}
+  </select>
 
 </mapper>

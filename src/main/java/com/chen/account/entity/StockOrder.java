@@ -122,4 +122,22 @@ public class StockOrder {
     public void setMatchAmount(Integer matchAmount) {
         this.matchAmount = matchAmount;
     }
+
+    @Override
+    public String toString() {
+        return "StockOrder{" +
+                "orderId=" + orderId +
+                ", stockId='" + stockId + '\'' +
+                ", stockName='" + stockName + '\'' +
+                ", user='" + user + '\'' +
+                ", orderPrice=" + orderPrice +
+                ", orderState=" + orderState +
+                ", orderType=" + orderType +
+                ", stockTime=" + stockTime +
+                ", amount=" + amount +
+                ", matchTime=" + matchTime +
+                ", matchPrice=" + matchPrice +
+                ", matchAmount=" + matchAmount +
+                '}';
+    }
 }

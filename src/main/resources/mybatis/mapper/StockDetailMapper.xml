@@ -5,10 +5,10 @@
     <id column="stock_id" jdbcType="VARCHAR" property="stockId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="open_pri" jdbcType="VARCHAR" property="openPri" />
-    <result column="form_pri" jdbcType="VARCHAR" property="formPri" />
+    <result column="form_pri" jdbcType="DOUBLE" property="formPri" />
     <result column="max_pri" jdbcType="VARCHAR" property="maxPri" />
     <result column="min_pri" jdbcType="VARCHAR" property="minPri" />
-    <result column="lastest_pri" jdbcType="VARCHAR" property="lastestPri" />
+    <result column="lastest_pri" jdbcType="DOUBLE" property="lastestPri" />
     <result column="up_pic" jdbcType="VARCHAR" property="upPic" />
     <result column="stock_limit" jdbcType="VARCHAR" property="stockLimit" />
     <result column="in_pic" jdbcType="VARCHAR" property="inPic" />
@@ -41,8 +41,8 @@
       tra_number, priearn, stock_date, 
       stock_time)
     values (#{stockId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{openPri,jdbcType=VARCHAR}, 
-      #{formPri,jdbcType=VARCHAR}, #{maxPri,jdbcType=VARCHAR}, #{minPri,jdbcType=VARCHAR}, 
-      #{lastestPri,jdbcType=VARCHAR}, #{upPic,jdbcType=VARCHAR}, #{stockLimit,jdbcType=VARCHAR}, 
+      #{formPri,jdbcType=DOUBLE}, #{maxPri,jdbcType=VARCHAR}, #{minPri,jdbcType=VARCHAR},
+      #{lastestPri,jdbcType=DOUBLE}, #{upPic,jdbcType=VARCHAR}, #{stockLimit,jdbcType=VARCHAR},
       #{inPic,jdbcType=VARCHAR}, #{outPic,jdbcType=VARCHAR}, #{traAmount,jdbcType=VARCHAR}, 
       #{traNumber,jdbcType=VARCHAR}, #{priearn,jdbcType=VARCHAR}, #{stockDate,jdbcType=BIGINT}, 
       #{stockTime,jdbcType=TIME})
@@ -110,7 +110,7 @@
         #{openPri,jdbcType=VARCHAR},
       </if>
       <if test="formPri != null">
-        #{formPri,jdbcType=VARCHAR},
+        #{formPri,jdbcType=DOUBLE},
       </if>
       <if test="maxPri != null">
         #{maxPri,jdbcType=VARCHAR},
@@ -119,7 +119,7 @@
         #{minPri,jdbcType=VARCHAR},
       </if>
       <if test="lastestPri != null">
-        #{lastestPri,jdbcType=VARCHAR},
+        #{lastestPri,jdbcType=DOUBLE},
       </if>
       <if test="upPic != null">
         #{upPic,jdbcType=VARCHAR},
@@ -160,7 +160,7 @@
         open_pri = #{openPri,jdbcType=VARCHAR},
       </if>
       <if test="formPri != null">
-        form_pri = #{formPri,jdbcType=VARCHAR},
+        form_pri = #{formPri,jdbcType=DOUBLE},
       </if>
       <if test="maxPri != null">
         max_pri = #{maxPri,jdbcType=VARCHAR},
@@ -169,7 +169,7 @@
         min_pri = #{minPri,jdbcType=VARCHAR},
       </if>
       <if test="lastestPri != null">
-        lastest_pri = #{lastestPri,jdbcType=VARCHAR},
+        lastest_pri = #{lastestPri,jdbcType=DOUBLE},
       </if>
       <if test="upPic != null">
         up_pic = #{upPic,jdbcType=VARCHAR},
@@ -205,10 +205,10 @@
     update stock_detail
     set name = #{name,jdbcType=VARCHAR},
       open_pri = #{openPri,jdbcType=VARCHAR},
-      form_pri = #{formPri,jdbcType=VARCHAR},
+      form_pri = #{formPri,jdbcType=DOUBLE},
       max_pri = #{maxPri,jdbcType=VARCHAR},
       min_pri = #{minPri,jdbcType=VARCHAR},
-      lastest_pri = #{lastestPri,jdbcType=VARCHAR},
+      lastest_pri = #{lastestPri,jdbcType=DOUBLE},
       up_pic = #{upPic,jdbcType=VARCHAR},
       stock_limit = #{stockLimit,jdbcType=VARCHAR},
       in_pic = #{inPic,jdbcType=VARCHAR},

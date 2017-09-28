@@ -1,5 +1,7 @@
 package com.chen.account.dao;
 
+import com.chen.account.entity.StockDetail;
+
 /**
  * author long
  * <p>
@@ -8,5 +10,5 @@ package com.chen.account.dao;
  * desc
  */
 public interface StockDetailMapperExtends extends  StockDetailMapper {
-
+        StockDetail selectByStockId(String stockId);
 }
