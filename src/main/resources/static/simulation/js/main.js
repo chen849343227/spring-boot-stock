@@ -53,7 +53,7 @@ function alert(message,message02){
 };
 /*** 声明 ***/
 var userData,code;
-var buy,buyPirce;
+var buy,buyPirce,sellNumber;
 var dataMeg=[];
 //var haveAmount=0;
 var $account = $("#account"),
@@ -205,6 +205,7 @@ function getStockData(userStockData,StockData) {
         var newDataa = userStockData.response;
         var userStockContent="";
         if(newDataa==null){
+            sellNumber=0;
             userStockContent=`<tr><td class="ttd" align="center" colspan="9">您没有该支股票的持股信息</td></tr>`;
         }else{
             var newdata = [];
@@ -222,6 +223,7 @@ function getStockData(userStockData,StockData) {
                 sellAmount +=Number(newdata[i].sellAmount);
                 costing +=Number(newdata[i].haveAmount)*Number(newdata[i].buyMoney);
             };
+            sellNumber=sellAmount;
             marketValue =stockMoney*haveAmount.toFixed(2);
             profit =(marketValue-costing).toFixed(2);
             profitRatio=(profit / costing * 100).toFixed(2) + '%';
@@ -238,7 +240,6 @@ function getStockData(userStockData,StockData) {
                 <td align="center"><a>交易</a></td>
             </tr>`;
             $li0222.eq(1).text(sellAmount);
-            userData.sellAmount=sellAmount;
             var allMarketValue,surplus;
             // $content.eq(4).text((0).toFixed(2));
             // $content.eq(6).text(residue.toFixed(2));
@@ -286,6 +287,7 @@ $("#buy").on("click", function () {
 
 /*** 买或者卖 ***/
 $("#sell").on("click", function () {
+    console.log(sellNumber);
     var initPrice = Number($li022.eq(0).text());
     var message, message02, price=0, number=0;
     price = Number($("#price").val());
@@ -300,13 +302,17 @@ $("#sell").on("click", function () {
     if (sell_money == 0) {
         return false;
     }
-    if (number > userData.sellAmount) {
+    if (number > sellNumber) {
         message = "交易失败！";
         message02 = "交易的数量超过持股量。";
+        alert(message,message02);
+        return;
     }
     if (price > upPrice || price < downPrice) {
         message = "交易失败！";
         message02 = "交易价格不在涨幅区间内" + "(" + downPrice + "~" + upPrice + ")";
+        alert(message,message02);
+        return;
     } else {
         submitBuySell(1,price,number);
     };
