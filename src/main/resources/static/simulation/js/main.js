@@ -72,17 +72,19 @@ var $li0222 = $("#li0222").find("font");
 /*** 静态 ***/
 function staticPage(){
     console.log(userData);
-    var userStockDa=getUserDa(userData.phone);
-    console.log(userStockDa);
+    // var userStockDa=
+        getUserDa(userData.userId);
+    //console.log(userStockDa);
 };
 /*** 动态 ***/
 
 function dynamicPage(){
-    console.log(userData);
+
 };
 /*** 数据请求 ***/
 function getUserDa(userPhone){
-    return $.ajax({
+    console.log(userPhone);
+    $.ajax({
         url: '/stock/data',
         type: 'POST',
         dataType: 'json',
@@ -95,7 +97,8 @@ function getUserDa(userPhone){
             alert("ajax请求失败" + data);
         },
         success(data){
-            return data;
+            console.log(data);
+            //return data;
         }
     });
 }
