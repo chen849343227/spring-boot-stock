@@ -72,7 +72,8 @@ var $li0222 = $("#li0222").find("font");
 /*** 静态 ***/
 function staticPage(){
     console.log(userData);
-
+    var userStockDa=getUserDa(userData.phone);
+    console.log(userStockDa);
 };
 /*** 动态 ***/
 
@@ -80,7 +81,24 @@ function dynamicPage(){
     console.log(userData);
 };
 /*** 数据请求 ***/
-function get
+function getUserDa(userPhone){
+    return $.ajax({
+        url: '/stock/data',
+        type: 'POST',
+        dataType: 'json',
+        timeout: 1000,
+        cache: false,
+        data: {
+            phone: userPhone
+        },
+        error: function (data) {
+            alert("ajax请求失败" + data);
+        },
+        success(data){
+            return data;
+        }
+    });
+}
 /**** 页面初始请求 ***/
 function init(code) {
     var nowTime=new Date();
@@ -237,38 +255,7 @@ function initLocal() {
     $content.eq(8).text(0);
 };
 
-/*** 加点计数 ***/
-var $iconfont = $("span").find(".iconfont");
-$iconfont.eq(0).on("click", function () {
-    var $value = $(this).parent().parent().children().first();
-    var value = Number($value.val());
-    var newVal = value + Number(0.01);
-    $value.val(newVal.toFixed(2));
-});
-$iconfont.eq(1).on("click", function () {
-    var $value = $(this).parent().parent().children().first();
-    var value = Number($value.val());
-    if (value == 0) {
-        return false;
-    }
-    var newVal = value - Number(0.01);
-    $value.val(newVal.toFixed(2));
-});
-$iconfont.eq(2).on("click", function () {
-    var $value = $(this).parent().parent().children().first();
-    var value = Number($value.val());
-    var newVal = value + Number(100);
-    $value.val(newVal);
-});
-$iconfont.eq(3).on("click", function () {
-    var $value = $(this).parent().parent().children().first();
-    var value = Number($value.val());
-    if (value == 0) {
-        return false;
-    }
-    var newVal = value - Number(100);
-    $value.val(newVal);
-});
+
 /**** 买入卖出 ***/
 $("#buy").on("click", function () {
     var initPrice = Number($li022.eq(0).text());
@@ -515,11 +502,44 @@ function Charts() {
         // 新增点操作
         chart.series[0].addPoint(add,true,delete_wd,false);
     }
-    var repeat=setInterval(function(){
-        if($(".time001").text()=="收盘"){
-            clearInterval(repeat);
-        };
-        getNewMeg();
-    },2000);
-}
+    // var repeat=setInterval(function(){
+    //     if($(".time001").text()=="收盘"){
+    //         clearInterval(repeat);
+    //     };
+    //     getNewMeg();
+    // },2000);
+};
+
+/*** 加点计数 ***/
+var $iconfont = $("span").find(".iconfont");
+$iconfont.eq(0).on("click", function () {
+    var $value = $(this).parent().parent().children().first();
+    var value = Number($value.val());
+    var newVal = value + Number(0.01);
+    $value.val(newVal.toFixed(2));
+});
+$iconfont.eq(1).on("click", function () {
+    var $value = $(this).parent().parent().children().first();
+    var value = Number($value.val());
+    if (value == 0) {
+        return false;
+    }
+    var newVal = value - Number(0.01);
+    $value.val(newVal.toFixed(2));
+});
+$iconfont.eq(2).on("click", function () {
+    var $value = $(this).parent().parent().children().first();
+    var value = Number($value.val());
+    var newVal = value + Number(100);
+    $value.val(newVal);
+});
+$iconfont.eq(3).on("click", function () {
+    var $value = $(this).parent().parent().children().first();
+    var value = Number($value.val());
+    if (value == 0) {
+        return false;
+    }
+    var newVal = value - Number(100);
+    $value.val(newVal);
+});
 

@@ -90,7 +90,7 @@ public class AccountServiceImpl implements IAccountService {
             user.setCreateat(createAt);
             user.setUpdateat(createAt);
             user.setPhone(phoneNumber);
-            user.setMoney("100000000");
+            user.setMoney(100000000.0);
             user.setUsername(username);
             user.setPassword(password);
             user.setRandomstr(randomStr);

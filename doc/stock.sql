@@ -31,7 +31,7 @@ CREATE TABLE `stock_data` (
   `sell_amount` varchar(45) NOT NULL,
   `stock_money` varchar(45) NOT NULL,
   `buy_money` varchar(45) NOT NULL,
-  `pro_amount` varchar(45) NOT NULL,
+  `pro_money` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
