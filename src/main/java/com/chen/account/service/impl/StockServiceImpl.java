@@ -69,7 +69,7 @@ public class StockServiceImpl implements IStockService {
     @Override
     public Response getStockMarketList() {
         List<StockMarket> stockMarket = stockMarketMapper.getAll();
-        if (stockMarket != null) {
+        if (stockMarket != null && stockMarket.size() != 0) {
             return TransmitUtils.transmitResponse(true, StockConstant.REQUEST_DATA_SUCCESS, stockMarket);
         } else {
             return TransmitUtils.transmitErrorResponse(StockConstant.REQUEST_DATA_NULL, StockConstant.CODE_COMMIT_ORDER_FAIL, null);
@@ -97,7 +97,7 @@ public class StockServiceImpl implements IStockService {
     public Response getOrder(String phone) {
         if (phone != null) {
             List<StockOrder> order = stockOrderMapperExtends.selectByPhone(phone);
-            if (order != null) {
+            if (order != null && order.size() != 0) {
                 return TransmitUtils.transmitResponse(true, StockConstant.REQUEST_DATA_SUCCESS, order);
             } else {
                 return TransmitUtils.transmitErrorResponse(StockConstant.REQUEST_DATA_NULL, StockConstant.CODE_STOCK_DATA_NULL, null);
@@ -109,7 +109,8 @@ public class StockServiceImpl implements IStockService {
 
     /**
      * 通过手机号和股票ID来筛选
-     * @param phone 手机号
+     *
+     * @param phone   手机号
      * @param stockId 股票ID
      * @return ${phone}持有的对应${stockId}的股票
      */
@@ -117,7 +118,7 @@ public class StockServiceImpl implements IStockService {
     public Response getOrderAll(String phone, String stockId) {
         if (phone != null && stockId != null) {
             List<StockOrder> orders = stockOrderMapperExtends.selectByPhoneAndStockId(phone, stockId);
-            if (orders != null) {
+            if (orders != null && orders.size() != 0) {
                 return TransmitUtils.transmitResponse(true, StockConstant.REQUEST_DATA_SUCCESS, orders);
             } else {
                 return TransmitUtils.transmitErrorResponse(StockConstant.REQUEST_DATA_NULL, StockConstant.CODE_STOCK_DATA_NULL, null);
@@ -137,7 +138,7 @@ public class StockServiceImpl implements IStockService {
     @Override
     public Response getUserStockData(String phone) {
         List<StockData> stockData = stockDataMapperExtends.selectByPhone(phone);
-        if (stockData != null) {
+        if (stockData != null && stockData.size() != 0) {
             return TransmitUtils.transmitResponse(true, StockConstant.REQUEST_DATA_SUCCESS, stockData);
         } else {
             return TransmitUtils.transmitErrorResponse(StockConstant.REQUEST_DATA_NULL, StockConstant.CODE_STOCK_DATA_NULL, null);
