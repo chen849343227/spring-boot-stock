@@ -90,4 +90,19 @@ public class StockData {
     public void setProMoney(Double proMoney) {
         this.proMoney = proMoney;
     }
+
+    @Override
+    public String toString() {
+        return "StockData{" +
+                "id=" + id +
+                ", phone='" + phone + '\'' +
+                ", stockId='" + stockId + '\'' +
+                ", stockName='" + stockName + '\'' +
+                ", haveAmount=" + haveAmount +
+                ", sellAmount=" + sellAmount +
+                ", stockMoney=" + stockMoney +
+                ", buyMoney=" + buyMoney +
+                ", proMoney=" + proMoney +
+                '}';
+    }
 }

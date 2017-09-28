@@ -5,7 +5,7 @@ $().ready(function () {
         $("#userId").text('未登录');
         return false;
     } else {
-        console.log(userData);
+        //console.log(userData);
         userData = {
             "userId":JSON.parse(userData).phone,
             "userMoney":JSON.parse(userData).money,
@@ -53,7 +53,7 @@ function alert(message,message02){
 };
 /*** 声明 ***/
 var userData,code;
-var buy;
+var buy,buyPirce;
 var dataMeg=[];
 //var haveAmount=0;
 var $account = $("#account"),
@@ -65,11 +65,13 @@ var $li02 = $("#li02").find("span");
 var $li022 = $("#li022").find("font");
 var $li0222 = $("#li0222").find("font");
 /*** 定时请求 ***/
-// var getMessage=setInterval(function(){
-//     init(code);
-//     getStockData(newData.phone);
-//     initLocal();
-// },5000);
+function rep(){
+    dynamicPage();
+    printRecord();
+    console.log("hello");
+    getMessage=setTimeout(rep,10000);
+};
+setTimeout(rep,3000);
 /*** 静态 ***/
 function staticPage(){
     $("#userId").text(userData.userName);
@@ -78,6 +80,13 @@ function staticPage(){
     });
     $("#stockCodeInput").val(code);
     $("[name='qty_str']").val(100);
+    var repea = setInterval(function(){
+        if(buyPirce!=undefined){
+            $("#price").val(buyPirce.toFixed(2));  //价格
+            clearInterval(repea);
+        }
+    },500);
+    Charts();
 };
 /*** 动态 ***/
 function dynamicPage(){
@@ -92,7 +101,9 @@ function dynamicPage(){
             meg="午盘";
         }else if(nowHours>=15){
             meg="晚盘";
+            //window.localStorage.removeItem('stockMeg');
         }else{
+            window.localStorage.removeItem('stockMeg');
             meg="夜盘";
         };
         $time.text(meg);
@@ -104,13 +115,13 @@ function dynamicPage(){
         url: '/stock/data',
         type: 'POST',
         dataType: 'json',
-        timeout: 1000,
+        timeout: 2000,
         cache: false,
         data: {
             phone: phone
         },
         error: function (data) {
-            alert("ajax请求失败" + data);
+           // alert("ajax请求失败" + data);
         },
         success(data){
             userStockData=data;
@@ -120,35 +131,77 @@ function dynamicPage(){
         url: '/stock/detail',
         type: 'POST',
         dataType: 'json',
-        timeout: 1000,
+        timeout: 2000,
         cache: false,
         data: {
             stockId: code
         },
         error: function (data) {
-            alert("ajax请求失败" + data);
+           // alert("ajax请求失败" + data);
         },
         success(data){
             StockData=data;
         }
     });
     printRecord();
-    var repeat = setTimeout(function(){
+    var repeat = setInterval(function(){
         if(userStockData!=undefined&&StockData!=undefined){
-            console.log(userStockData);
-            console.log(StockData);
             getStockData(userStockData,StockData);
-            clearTimeout(repeat);
+            clearInterval(repeat);
         }
     },500);
 };
 
 /*** 数据填充刷新 ***/
 function getStockData(userStockData,StockData) {
-
+    var newStockPrice=0;
+    /*** 页面加载信息 ***/
+    (function(){
+        // console.log(StockData);
+        var e=StockData.response;
+        newStockPrice=Number(e.lastestPri);
+        buyPirce=newStockPrice;
+        var content =
+            `<li class="lio1" style="cursor:pointer;background-color: #f6f8fa;" data-hash='sh/${e.stockId}'>
+            <div class="div01">
+                <p class="p01">
+                    <a id="stockName">${e.name}</a>
+                </p>
+                <p class="p02">${e.stockId}.sh</p>
+            </div>
+            <div class="div02 down">
+                <p class="p01">${e.lastestPri}</p>
+            </div>
+        </li>`;
+        var buy = Math.floor(userData.userMoney / e.inPic);
+        var newbuy = buy;
+        var firstPrice;
+        if (newbuy > 10000) {
+            newbuy = Math.floor(newbuy / 1000) + "k";
+        };
+        if(firstPrice==undefined){
+            firstPrice=e.inPic;
+        }
+        $watchList.html("").append(content);
+        $container.eq(0).text(e.stockId + " " + e.name).attr("title", e.stockId + " " + e.name);
+        $container.eq(1).text(e.lastestPri);
+        $container.eq(7).text(e.maxPri);
+        $container.eq(8).text(e.minPri);
+        $container.eq(9).text(e.openPri);
+        $container.eq(10).text(e.formPri);
+        $container.eq(11).text((e.traAmount / 10000).toFixed(2) + "万");
+        $container.eq(12).text(e.traNumber);
+        $container.eq(13).text(e.priearn);
+        //$container.eq(14).text(e.formPri);
+        $li02.eq(0).text(e.name);
+        $li02.eq(2).text(newStockPrice.toFixed(2));
+        $li022.eq(0).text(e.inPic);
+        $li022.eq(1).text(e.outPic);
+        $li0222.eq(0).text(newbuy);
+    })();
     /** 个人持股信息 **/
     (function(){
-        console.log(userStockData);
+        //console.log(userStockData);
         var newDataa = userStockData.response;
         var userStockContent="";
         if(newDataa==null){
@@ -163,7 +216,7 @@ function getStockData(userStockData,StockData) {
             var stockId,stockName,stockMoney=0,haveAmount=0,sellAmount=0,marketValue=0,costing=0,profit=0,profitRatio=0;
             stockId=newdata[0].stockId;
             stockName=newdata[0].stockName;
-            stockMoney=newdata[newdata.length-1].stockMoney;
+            stockMoney=newStockPrice;
             for(var i=0;i<newdata.length;i++){
                 haveAmount +=Number(newdata[i].haveAmount);
                 sellAmount +=Number(newdata[i].sellAmount);
@@ -200,51 +253,6 @@ function getStockData(userStockData,StockData) {
         $content.eq(2).text(allMoney);
         $("#positions").html("").append(userStockContent);
     })();
-
-    /*** 页面加载信息 ***/
-    (function(){
-        console.log(StockData);
-        var e=StockData.response;
-        var content =
-        `<li class="lio1" style="cursor:pointer;background-color: #f6f8fa;" data-hash='sh/${e.stockId}'>
-            <div class="div01">
-                <p class="p01">
-                    <a id="stockName">${e.name}</a>
-                </p>
-                <p class="p02">${e.stockId}.sh</p>
-            </div>
-            <div class="div02 down">
-                <p class="p01">${e.lastestPri}</p>
-            </div>
-        </li>`;
-        var buy = Math.floor(userData.userMoney / e.inPic);
-        var newbuy = buy;
-        var firstPrice;
-        if (newbuy > 10000) {
-            newbuy = Math.floor(newbuy / 1000) + "k";
-        };
-        if(firstPrice==undefined){
-            firstPrice=e.inPic;
-        }
-        $("#price").val(e.lastestPri.toFixed(2));  //价格
-        $watchList.html("").append(content);
-        $container.eq(0).text(e.stockId + " " + e.name).attr("title", e.stockId + " " + e.name);
-        $container.eq(1).text(e.lastestPri);
-        $container.eq(7).text(e.maxPri);
-        $container.eq(8).text(e.minPri);
-        $container.eq(9).text(e.openPri);
-        $container.eq(10).text(e.formPri);
-        $container.eq(11).text((e.traAmount / 10000).toFixed(2) + "万");
-        $container.eq(12).text(e.traNumber);
-        $container.eq(13).text(e.priearn);
-        $container.eq(14).text(e.formPri);
-        $li02.eq(0).text(e.name);
-        $li02.eq(2).text(e.lastestPri.toFixed(2));
-        $li022.eq(0).text(e.inPic);
-        $li022.eq(1).text(e.outPic);
-        $li0222.eq(0).text(newbuy);
-    })();
-
 };
 
 /*** 买或者卖 ***/
@@ -324,7 +332,7 @@ function submitBuySell(type,price,number){
         },
         error: function (data) {
             message = "交易失败！";
-            message02 = "Ajax数据提交出错！";
+           // message02 = "Ajax数据提交出错！";
         },
         success: function (data) {
             message = "交易成功！";
@@ -355,10 +363,10 @@ function printRecord() {
             phone: userData.userId
         },
         error: function (data) {
-            alert("数据请求失败！");
+           // alert("数据请求失败！");
         },
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             var newdata = data.response;
             var orderType, orderState, content;
             if (newdata== null) {
@@ -408,19 +416,33 @@ $("#deal").on('click', function (e) {
 });
 
 function charts(data){
-    console.log(data);
+    //console.log(data);
     dataMeg[dataMeg.length]=Number(data.formPri);
     if(dataMeg.length==999){
         dataMeg.shift();
     };
-    console.log(dataMeg);
+    //console.log(dataMeg);
 };
 
 /*** 折线图 ***/
 function Charts() {
     var newData=[];
     var newStockMeg =window.localStorage.getItem('stockMeg');
-    console.log(typeof newStockMeg);
+    if(newStockMeg==undefined){
+        newData=[];
+    }else{
+        var Data = newStockMeg.split(',');
+        var len=Data.length;
+        var a=0;
+        for(var i=len;i>0;i--){
+            newData[a]=Number(Data[i]);
+            a++;
+            if(a>=200){
+                break;
+            }
+        };
+        newData=newData.reverse();
+    };
     chart = new Highcharts.Chart('container', {
         plotOptions: {
             series: {}
@@ -471,34 +493,34 @@ function Charts() {
             url: '/stock/detail',
             type: 'POST',
             dataType: 'json',
-            timeout: 1000,
+            timeout: 2000,
             cache: false,
             data: {
                 stockId: code
             },
             error: function (data) {
-                alert("ajax请求失败" + data);
+               // alert("ajax请求失败" + data);
             },
             success: function (data) {
-                newData[newData.length]=data.response.formPri;
+                newData[newData.length]=data.response.lastestPri;
                 window.localStorage.setItem('stockMeg',newData);
                 addMeg(data.response);
             }
         });
     };
     function addMeg(data){
-        var add = Number(data.formPri);
+        var add = Number(data.lastestPri);
         var delete_wd = chart.series[0];
-        delete_wd = delete_wd.data.length > 999; // 当数据点数量超过999个，则指定删除第一个点
+        delete_wd = delete_wd.data.length > 199; // 当数据点数量超过999个，则指定删除第一个点
         // 新增点操作
         chart.series[0].addPoint(add,true,delete_wd,false);
     }
-    // var repeat=setInterval(function(){
-    //     if($(".time001").text()=="收盘"){
-    //         clearInterval(repeat);
-    //     };
-    //     getNewMeg();
-    // },2000);
+    var repeat=setInterval(function(){
+        if($(".time001").text()=="收盘"){
+            clearInterval(repeat);
+        };
+        getNewMeg();
+    },5000);
 };
 
 /*** 加点计数 ***/

@@ -34,7 +34,7 @@ public class StockDetail {
 
     private Long stockDate;  //日期
 
-    private Time stockTime;  //时间
+    private Date stockTime;  //时间
 
     public String getStockId() {
         return stockId;
@@ -100,11 +100,11 @@ public class StockDetail {
         this.upPic = upPic;
     }
 
-    public String getLimit() {
+    public String getStockLimit() {
         return stockLimit;
     }
 
-    public void setLimit(String stockLimit) {
+    public void setStockLimit(String stockLimit) {
         this.stockLimit = stockLimit;
     }
 
@@ -148,22 +148,21 @@ public class StockDetail {
         this.priearn = priearn;
     }
 
-    public Long getDate() {
+    public Long getStockDate() {
         return stockDate;
     }
 
-    public void setDate(Long stockDate) {
+    public void setStockDate(Long stockDate) {
         this.stockDate = stockDate;
     }
 
-    public Date getTime() {
+    public Date getStockTime() {
         return stockTime;
     }
 
-    public void setTime(Time stockTime) {
+    public void setStockTime(Date stockTime) {
         this.stockTime = stockTime;
     }
-
 
     @Override
     public String toString() {

@@ -41,8 +41,8 @@
       tra_number, priearn, stock_date, 
       stock_time)
     values (#{stockId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{openPri,jdbcType=VARCHAR}, 
-      #{formPri,jdbcType=DOUBLE}, #{maxPri,jdbcType=VARCHAR}, #{minPri,jdbcType=VARCHAR},
-      #{lastestPri,jdbcType=DOUBLE}, #{upPic,jdbcType=VARCHAR}, #{stockLimit,jdbcType=VARCHAR},
+      #{formPri,jdbcType=DOUBLE}, #{maxPri,jdbcType=VARCHAR}, #{minPri,jdbcType=VARCHAR}, 
+      #{lastestPri,jdbcType=DOUBLE}, #{upPic,jdbcType=VARCHAR}, #{stockLimit,jdbcType=VARCHAR}, 
       #{inPic,jdbcType=VARCHAR}, #{outPic,jdbcType=VARCHAR}, #{traAmount,jdbcType=VARCHAR}, 
       #{traNumber,jdbcType=VARCHAR}, #{priearn,jdbcType=VARCHAR}, #{stockDate,jdbcType=BIGINT}, 
       #{stockTime,jdbcType=TIME})
